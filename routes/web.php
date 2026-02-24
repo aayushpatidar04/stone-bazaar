@@ -29,7 +29,14 @@ Route::post('save-product-enquiry', [BasicController::class, 'saveProductEnquiry
 
 Route::get('architects', [BasicController::class, 'architects'])->name('architects');
 Route::get('architect-details/{id}', [BasicController::class, 'architect'])->name('architect');
+Route::get('architect-gallery/{id}', [BasicController::class, 'architectGallery'])->name('architect-gallery');
+Route::get('architect-catalogue/{id}', [BasicController::class, 'architectCatalogue'])->name('architect-catalogue');
 Route::post('save-architect-enquiry', [BasicController::class, 'saveArchitectEnquiry'])->name('save-architect-enquiry');
+
+Route::get('contact', [BasicController::class, 'contact'])->name('contact');
+Route::post('submit-contact-form', [BasicController::class, 'submitContactForm'])->name('submit-contact-form');
+
+Route::get('pricing', [BasicController::class, 'plans'])->name('plans');
 
 Auth::routes();
 Route::group(['middleware' => ['auth']], function (){
@@ -56,7 +63,14 @@ Route::group(['middleware' => ['auth', 'role:Admin']], function () {
     Route::post('/admin/forward-product-enquiry/{id}', [AdminController::class, 'forwardProductEnquiry'])->name('admin.forward-product-enquiry');
     Route::post('/admin/forward-architect-enquiry/{id}', [AdminController::class, 'forwardArchitectEnquiry'])->name('admin.forward-architect-enquiry');
     
+    Route::get('/admin/queries', [AdminController::class, 'queries'])->name('admin.queries');
+    Route::post('/admin/close-query/{id}', [AdminController::class, 'closeQuery'])->name('admin.close-query');
+    Route::post('/admin/delete-query/{id}', [AdminController::class, 'deleteQuery'])->name('admin.delete-query');
+
+    Route::get('/admin/plans', [AdminController::class, 'plans'])->name('admin.plans');
+    Route::post('/admin/add-plan', [AdminController::class, 'addPlan'])->name('admin.addPlan');
 });
+
 
 
 

@@ -135,7 +135,7 @@
                 @endforeach
             </div><!-- /.row -->
             <div class="text-center mt-2">
-                <a href="" class="floens-btn"><span>View All</span><i class="icon-right-arrow"></i></a>
+                <a href="{{ Route('architect-gallery', ['id' => $architect->id]) }}" class="floens-btn"><span>View All</span><i class="icon-right-arrow"></i></a>
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -280,8 +280,7 @@
                                         <div class="contact-one__info__icon">
                                             <span class="icon-phone-call"></span>
                                         </div><!-- /.contact-one__info__icon -->
-                                        <p class="contact-one__info__text"><a href="tel:+919876543210">+91 9876 5643
-                                                210</a></p><!-- /.contact-one__info__text -->
+                                        <p class="contact-one__info__text"><a href="tel:+919352703082"> +91 9352703082</a></p><!-- /.contact-one__info__text -->
                                     </div><!-- /.contact-one__info__item__inner -->
                                 </div><!-- /.contact-one__info__item -->
                                 <div class="contact-one__info__item">
@@ -290,7 +289,7 @@
                                             <span class="icon-paper-plane"></span>
                                         </div><!-- /.contact-one__info__icon -->
                                         <p class="contact-one__info__text"><a
-                                                href="mailto:needhelp@stone-bazaar.com">needhelp@stone-bazaar.com</a></p>
+                                                href="mailto:stonebazaar01@gmail.com">stonebazaar01@gmail.com</a></p>
                                         <!-- /.contact-one__info__text -->
                                     </div><!-- /.contact-one__info__item__inner -->
                                 </div><!-- /.contact-one__info__item -->
@@ -299,8 +298,7 @@
                                         <div class="contact-one__info__icon">
                                             <span class="icon-location"></span>
                                         </div><!-- /.contact-one__info__icon -->
-                                        <address class="contact-one__info__text"><a href="#">85 Ketch Harbour Road
-                                                Kisangarh, PA 19020</a></address>
+                                        <address class="contact-one__info__text"><a href="#">Stone Bazaar, Kishangarh, Rajasthan (Marble Hub of India)</a></address>
                                         <!-- /.contact-one__info__text -->
                                     </div><!-- /.contact-one__info__item__inner -->
                                 </div><!-- /.contact-one__info__item -->

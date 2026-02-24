@@ -12371,7 +12371,7 @@ li:hover .sidebar__comments__icon::after {
     animation: zumpBottom 2s linear infinite;
 }
 .pricing-card:hover .pricing-card__content {
-    background-color: var(--floens-white, #ffffff);
+    background-color: var(--floens-white2, #000000);
 }
 .pricing-card:hover .pricing-card__content__bg {
     opacity: 1;

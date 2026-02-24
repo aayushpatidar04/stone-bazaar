@@ -11,8 +11,10 @@ use App\Mail\ProductEnquirySubmitted;
 use App\Models\ArchitectEnquiry;
 use App\Models\Product;
 use App\Models\ProductEnquiry;
+use App\Models\Query;
 use App\Models\SellerDomain;
 use App\Models\SellerEnquiry;
+use App\Models\SubscriptionPlan;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -57,7 +59,8 @@ class BasicController extends Controller
         return view('website.seller-details', compact('seller', 'sellerGallery', 'sellerProducts'));
     }
 
-    public function sellerGallery($id){
+    public function sellerGallery($id)
+    {
         $seller = User::find($id);
         $sellerGallery = $seller->sellerGallery->groupBy('type');
         return view('website.seller-gallery', compact('seller', 'sellerGallery'));
@@ -192,6 +195,34 @@ class BasicController extends Controller
         return view('website.architect-details', compact('architect', 'architectGallery'));
     }
 
+    public function architectGallery($id)
+    {
+        $architect = User::find($id);
+        $architectGallery = $architect->architectGallery->groupBy('type');
+        return view('website.architect-gallery', compact('architect', 'architectGallery'));
+    }
+
+    public function architectCatalogue($id)
+    {
+        $architect = User::with(['architect', 'architectGallery'])->find($id);
+
+        $html = view('catalogue.architect', compact('architect'))->render();
+        // dd($html);
+
+        $mpdf = new Mpdf([
+            'margin_top' => 0,
+            'margin_bottom' => 0,
+            'margin_left' => 0,
+            'margin_right' => 0,
+            'orientation' => 'L',
+            'tempDir' => public_path('app/mpdf'),
+        ]);
+
+        $mpdf->setBasePath(public_path());
+        $mpdf->WriteHTML($html);
+        return $mpdf->Output('catalogue.pdf', 'D');
+    }
+
     public function saveArchitectEnquiry(Request $request)
     {
         try {
@@ -225,4 +256,43 @@ class BasicController extends Controller
         ]);
     }
 
+    public function contact()
+    {
+        return view('website.contact');
+    }
+
+    public function submitContactForm(Request $request)
+    {
+        try {
+            $data = $request->validate([
+                'name' => 'required',
+                'company_name' => 'nullable',
+                'email' => 'required|email',
+                'phone' => 'required|numeric|digits:10',
+                'vendor_category' => 'nullable',
+                'message' => 'required',
+            ]);
+
+            $data['status'] = 'pending';
+
+        } catch (ValidationException $e) {
+            return response()->json([
+                'errors' => $e->errors(),
+                'message' => 'Validation failed',
+            ], 400);
+        }
+
+        $query = Query::create($data);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Query submitted successfully! Team will connect with you soon.',
+        ]);
+    }
+
+    public function plans()
+    {
+        $plans = SubscriptionPlan::all();
+        return view('website.plans', compact('plans'));
+    }
 }

@@ -91,6 +91,7 @@ class RegisterController extends Controller
                 'email' => $data['email'], 
                 'phone_number' => $data['phone_number'], 
                 'password' => Hash::make($data['password']), 
+                'expiry_date' => now()->addMonths(6),
             ]);
             
             if($data['role'] == 'Seller'){

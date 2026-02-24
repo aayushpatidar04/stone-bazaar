@@ -528,6 +528,20 @@
                                             <span class="pcoded-mtext">Enquiries</span>
                                         </a>
                                     </li>
+                                    <li id="queries">
+                                        <a href="{{ Route('admin.queries') }}">
+                                            <span class="pcoded-micon"><i
+                                                    class="fa-regular fa-question-circle"></i></span>
+                                            <span class="pcoded-mtext">Support Queries</span>
+                                        </a>
+                                    </li>
+                                    <li id="plans">
+                                        <a href="{{ Route('admin.plans') }}">
+                                            <span class="pcoded-micon"><i
+                                                    class="fa-regular fa-money-bill-alt"></i></span>
+                                            <span class="pcoded-mtext">Subscription Plans</span>
+                                        </a>
+                                    </li>
                                 @endif
                                 @if (Auth::user()->hasRole('Seller'))
                                     <li id="products">

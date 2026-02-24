@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\ArchitectEnquiry;
 use App\Models\ProductEnquiry;
+use App\Models\Query;
 use App\Models\SellerEnquiry;
+use App\Models\SubscriptionPlan;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -182,6 +184,60 @@ class AdminController extends Controller
             'user' => $architect,
             'logs' => $architect->architect->verificationLogs()
         ]);
+    }
+
+    public function queries(){
+        $pending_queries = Query::where('status', 'pending')->get();
+        $closed_queries = Query::where('status', 'closed')->latest()->get();
+        return view('dashboard.admin.queries', compact('pending_queries', 'closed_queries'));
+    }
+
+    public function closeQuery($id){
+        $query = Query::findOrFail($id);
+
+        $query->status = 'closed';
+        $query->save();
+
+        return response()->json([
+            'message' => 'Query closed successfully',
+            'query' => $query
+        ]);
+    }
+
+    public function deleteQuery($id){
+        $query = Query::findOrFail($id);
+        $query->delete();
+
+        return response()->json([
+            'message' => 'Query deleted successfully',
+        ]);
+    }
+
+    public function plans(){
+        $plans = SubscriptionPlan::all();
+        return view('dashboard.admin.plans', compact('plans'));
+    }
+
+    public function addPlan(Request $request){
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'ideal_for' => 'required|string|max:255',
+            'benefits' => 'required',
+            'price_quarterly' => 'required|numeric|min:0',
+            'price_annual' => 'required|numeric|min:0',
+            'discount_percent' => 'required|numeric|min:0|max:100',
+        ]);
+
+        $plan = new SubscriptionPlan();
+        $plan->name = $request->input('name');
+        $plan->ideal_for = $request->input('ideal_for');
+        $plan->benefits = json_decode($request->input('benefits'), true);
+        $plan->price_quarterly = $request->input('price_quarterly');
+        $plan->price_annual = $request->input('price_annual');
+        $plan->discount_percent = $request->input('discount_percent');
+        $plan->save();
+
+        return redirect()->back()->with('message', 'Plan added successfully');
     }
     
 }

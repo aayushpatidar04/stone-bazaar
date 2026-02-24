@@ -30,6 +30,8 @@ class User extends Authenticatable
         'app_token',
         'web_token',
         'auth_token',
+        'expiry_date',
+        'subscription_plan_id',
     ];
 
     /**
@@ -138,6 +140,11 @@ class User extends Authenticatable
 
     public function architectEnquiries(){
         return $this->hasMany(ArchitectEnquiry::class, 'user_id');
+    }
+
+    public function sellerSubscriptions()
+    {
+        return $this->hasMany(SellerSubscription::class);
     }
 
 }

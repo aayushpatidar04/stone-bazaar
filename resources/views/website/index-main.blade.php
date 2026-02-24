@@ -10,9 +10,18 @@
     <!-- favicons Icons -->
     <link rel="apple-touch-icon" href="{{ asset('assets/images/favicon.png') }}" />
     <link rel="icon" type="image/png" href="{{ asset('assets/images/favicon.png') }}" />
-    <meta name="description"
-        content="Stone Bazaar | Verified Stones, Trusted Connections - The Digital Marketplace for Marble & Granite." />
+    <meta name="description" content="Stone Bazaar | Verified Stones, Trusted Connections - The Digital Marketplace for Marble & Granite." />
 
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VFZR4RVH2D"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-VFZR4RVH2D');
+    </script>
+    
     <!-- fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com/">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
@@ -30,8 +39,7 @@
     <link rel="stylesheet" href="{{ asset('website-assets/vendors/fontawesome/css/all.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('website-assets/vendors/jquery-ui/jquery-ui.css') }}" />
     <link rel="stylesheet" href="{{ asset('website-assets/vendors/jarallax/jarallax.css') }}" />
-    <link rel="stylesheet"
-        href="{{ asset('website-assets/vendors/jquery-magnific-popup/jquery.magnific-popup.css') }}" />
+    <link rel="stylesheet" href="{{ asset('website-assets/vendors/jquery-magnific-popup/jquery.magnific-popup.css') }}" />
     <link rel="stylesheet" href="{{ asset('website-assets/vendors/nouislider/nouislider.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('website-assets/vendors/nouislider/nouislider.pips.css') }}" />
     <link rel="stylesheet" href="{{ asset('website-assets/vendors/tiny-slider/tiny-slider.css') }}" />
@@ -68,15 +76,15 @@
                     <ul class="list-unstyled topbar-one__info">
                         <li class="topbar-one__info__item">
                             <span class="icon-paper-plane"></span>
-                            <a href="mailto:needhelp@stone-bazaar.com">needhelp@stone-bazaar.com</a>
+                            <a href="mailto:stonebazaar01@gmail.com">stonebazaar01@gmail.com</a>
                         </li>
                         <li class="topbar-one__info__item">
                             <span class="icon-phone-call"></span>
-                            <a href="tel:+9156980036420">+91 9876 543 210</a>
+                            <a href="tel:+919352703082">+91 9352703082</a>
                         </li>
                         <li class="topbar-one__info__item">
                             <span class="icon-location"></span>
-                            <address>85 Ketch Harbour Road Kisangarh, PA 19020</address>
+                            <address>Stone Bazaar, Kishangarh, Rajasthan (Marble Hub of India)</address>
                         </li>
                     </ul><!-- /.list-unstyled topbar-one__info -->
                     <div class="topbar-one__right">
@@ -126,15 +134,15 @@
                                     <a href="about.html">About</a>
                                 </li>
 
-                                <li class="dropdown">
-                                    <a href="#">Services</a>
-                                    <ul>
-                                        <li><a href="#">Oak Flooring</a></li>
-                                    </ul>
+                                <li>
+                                    <a href="{{ Route('sellers') }}">Vendors</a>
                                 </li>
 
                                 <li>
-                                    <a href="contact.html">Contact</a>
+                                    <a href="{{ Route('contact') }}">Contact</a>
+                                </li>
+                                <li>
+                                    <a href="{{ Route('plans') }}">Pricing</a>
                                 </li>
                             </ul>
                         </nav><!-- /.main-header__nav -->
@@ -254,26 +262,16 @@
             <div class="main-footer__top">
                 <div class="container">
                     <div class="row">
-                        <div class="col-xl-4 col-lg-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="00ms">
+                        <div class="col-xl-3 col-lg-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="00ms">
                             <div class="footer-widget footer-widget--about">
                                 <a href="{{ Route('index') }}" class="footer-widget__logo">
                                     <img src="{{ asset('website-assets/images/logo-white.png') }}" width="150"
                                         alt="Stone Bazaar">
                                 </a>
-                                <p class="footer-widget__about-text">Stone Bazaar is a verified B2B marketplace
-                                    connecting marble sellers, architects, and buyers with trusted inquiries, catalogs,
-                                    and business management tools.</p><!-- /.footer-widget__about-text -->
-                                <form action="#" data-url="MAILCHIMP_FORM_URL"
-                                    class="footer-widget__newsletter mc-form">
-                                    <input type="text" name="EMAIL" placeholder="enter email">
-                                    <button type="submit" class="icon-right-arrow">
-                                        <span class="sr-only">submit</span><!-- /.sr-only -->
-                                    </button>
-                                </form><!-- /.footer-widget__newsletter mc-form -->
-                                <div class="mc-form__response"></div><!-- /.mc-form__response -->
+                                <p class="footer-widget__about-text">India’s Dedicated B2B Marketplace for Marble & Granite Vendors.</p><!-- /.footer-widget__about-text -->
                             </div><!-- /.footer-widget -->
                         </div><!-- /.col-xl-4 col-lg-6 -->
-                        <div class="col-xl-2 col-lg-3 col-md-3 col-sm-6 wow fadeInUp" data-wow-duration="1500ms"
+                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 wow fadeInUp" data-wow-duration="1500ms"
                             data-wow-delay="200ms">
                             <div class="footer-widget footer-widget--links footer-widget--links-one">
                                 <div class="footer-widget__top">
@@ -284,8 +282,8 @@
                                     <li><a href="about.html">About Us</a></li>
                                     <li><a href="services.html">Our Services</a></li>
                                     <li><a href="team.html">Meet the Team</a></li>
-                                    <li><a href="blog-grid-right.html">Recent News</a></li>
-                                    <li><a href="contact.html">Contact</a></li>
+                                    <li><a href="{{ Route('plans') }}">Subscription Plans</a></li>
+                                    <li><a href="{{ Route('contact') }}">Contact</a></li>
                                 </ul><!-- /.list-unstyled footer-widget__links -->
                             </div><!-- /.footer-widget -->
                         </div><!-- /.col-xl-2 col-lg-3 col-md-3 col-sm-6 -->
@@ -294,14 +292,14 @@
                             <div class="footer-widget footer-widget--links footer-widget--links-two">
                                 <div class="footer-widget__top">
                                     <div class="footer-widget__title-box"></div><!-- /.footer-widget__title-box -->
-                                    <h2 class="footer-widget__title">Services</h2><!-- /.footer-widget__title -->
+                                    <h2 class="footer-widget__title">Quick Links</h2><!-- /.footer-widget__title -->
                                 </div><!-- /.footer-widget__top -->
                                 <ul class="list-unstyled footer-widget__links">
-                                    <li><a href="#">Popular Marble</a></li>
-                                    <li><a href="#">Marble By Colors</a></li>
-                                    <li><a href="#">Marble By Spaces</a></li>
-                                    <li><a href="#">Granite By Colors</a></li>
-                                    <li><a href="#">Granite By Spaces</a></li>
+                                    <li><a href="{{ Route('sellers') }}">Vendors</a></li>
+                                    <li><a href="{{ Route('architects') }}">Architects/Designers</a></li>
+                                    <li><a href="{{ Route('register', ['role' => 'Seller']) }}">Become a Vendor</a></li>
+                                    <li><a href="#">Privacy Policy</a></li>
+                                    <li><a href="#">Terms & Conditions</a></li>
                                 </ul><!-- /.list-unstyled footer-widget__links -->
                             </div><!-- /.footer-widget -->
                         </div><!-- /.col-xl-3 col-lg-3 col-md-4 col-sm-6 -->
@@ -313,12 +311,10 @@
                                     <h2 class="footer-widget__title">Get inTouch</h2><!-- /.footer-widget__title -->
                                 </div><!-- /.footer-widget__top -->
                                 <ul class="list-unstyled footer-widget__info">
-                                    <li><a href="https://www.google.com/maps">85 Ketch Harbour Road Kisangarh, PA
-                                            19020</a></li>
+                                    <li><a href="https://www.google.com/maps">Stone Bazaar, Kishangarh, Rajasthan (Marble Hub of India)</a></li>
                                     <li><span class="icon-paper-plane"></span> <a
-                                            href="mailto:needhelp@stone-bazaar.com">needhelp@stone-bazaar.com</a></li>
-                                    <li><span class="icon-phone-call"></span> <a href="tel:+9156980036420">+91 9876
-                                            543 210</a></li>
+                                            href="mailto:stonebazaar01@gmail.com">stonebazaar01@gmail.com</a></li>
+                                    <li><span class="icon-phone-call"></span> <a href="tel:+919352703082"> +91 9352703082</a></li>
                                 </ul><!-- /.list-unstyled -->
                             </div><!-- /.footer-widget -->
                         </div><!-- /.col-xl-3 col-lg-6 col-md-5 -->
@@ -384,11 +380,11 @@
             <ul class="mobile-nav__contact list-unstyled">
                 <li>
                     <i class="fa fa-envelope"></i>
-                    <a href="mailto:needhelp@stone-bazaar.com">needhelp@stone-bazaar.com</a>
+                    <a href="mailto:stonebazaar01@gmail.com">stonebazaar01@gmail.com</a>
                 </li>
                 <li>
                     <i class="fa fa-phone-alt"></i>
-                    <a href="tel:+9156980036420">+91 9876 543 210</a>
+                    <a href="tel:+919352703082">+91 9352703082</a>
                 </li>
             </ul><!-- /.mobile-nav__contact -->
             <div class="mobile-nav__social">
@@ -448,11 +444,11 @@
                 <h4 class="sidebar-one__title">Information</h4>
                 <ul class="sidebar-one__info__list">
                     <li><span class="icon-location-2"></span>
-                        <address>85 Ketch Harbour Road Kisangarh, PA 19020</address>
+                        <address>Stone Bazaar, Kishangarh, Rajasthan (Marble Hub of India)</address>
                     </li>
                     <li><span class="icon-paper-plane"></span> <a
-                            href="mailto:needhelp@stone-bazaar.com">needhelp@stone-bazaar.com</a></li>
-                    <li><span class="icon-phone-call"></span> <a href="tel:+9156980036420">+91 9876 543 210</a></li>
+                            href="mailto:stonebazaar01@gmail.com">stonebazaar01@gmail.com</a></li>
+                    <li><span class="icon-phone-call"></span> <a href="tel:+919352703082">+91 9352703082</a></li>
                 </ul><!-- /.sidebar-one__info__list -->
             </div><!-- /.sidebar-one__info -->
             <div class="sidebar-one__social floens-social sidebar-one__item">

@@ -288,7 +288,7 @@
                 <div style="flex:1; padding: 10px;">
                     <h4 style="font-size: 20px; margin-bottom: 5px; color:#ffd700;">Kishangarh (Corporate Office)</h4>
                     <p>Makrana Road, Madanganj - Kishangarh - 305801,<br>District Ajmer (Rajasthan) India<br>Tel :
-                        +91-9876-543210, 260101</p>
+                        +91- 9352703082, 260101</p>
                 </div>
             </div>
 
