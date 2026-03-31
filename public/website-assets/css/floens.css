@@ -314,7 +314,7 @@ body {
     font-size: 16px;
     line-height: 1.75;
     font-weight: 500;
-    background-color: #232323e6;
+    background-color: #ebe8da /*#232323e6 */;
 }
 
 .bg-white-texture {
@@ -1095,7 +1095,7 @@ p {
 .scroll-to-top.show {
     opacity: 1;
     visibility: visible;
-    bottom: 70px;
+    bottom: 100px;
 }
 
 /* ratings */

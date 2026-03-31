@@ -10,18 +10,22 @@
     <!-- favicons Icons -->
     <link rel="apple-touch-icon" href="{{ asset('assets/images/favicon.png') }}" />
     <link rel="icon" type="image/png" href="{{ asset('assets/images/favicon.png') }}" />
-    <meta name="description" content="Stone Bazaar | Verified Stones, Trusted Connections - The Digital Marketplace for Marble & Granite." />
+    <meta name="description"
+        content="Stone Bazaar | Verified Stones, Trusted Connections - The Digital Marketplace for Marble & Granite." />
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-VFZR4RVH2D"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-    
-      gtag('config', 'G-VFZR4RVH2D');
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-VFZR4RVH2D');
     </script>
-    
+
     <!-- fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com/">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
@@ -39,7 +43,8 @@
     <link rel="stylesheet" href="{{ asset('website-assets/vendors/fontawesome/css/all.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('website-assets/vendors/jquery-ui/jquery-ui.css') }}" />
     <link rel="stylesheet" href="{{ asset('website-assets/vendors/jarallax/jarallax.css') }}" />
-    <link rel="stylesheet" href="{{ asset('website-assets/vendors/jquery-magnific-popup/jquery.magnific-popup.css') }}" />
+    <link rel="stylesheet"
+        href="{{ asset('website-assets/vendors/jquery-magnific-popup/jquery.magnific-popup.css') }}" />
     <link rel="stylesheet" href="{{ asset('website-assets/vendors/nouislider/nouislider.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('website-assets/vendors/nouislider/nouislider.pips.css') }}" />
     <link rel="stylesheet" href="{{ asset('website-assets/vendors/tiny-slider/tiny-slider.css') }}" />
@@ -52,6 +57,53 @@
     <!-- template styles -->
     <link rel="stylesheet" href="{{ asset('website-assets/css/floens.css') }}" />
     @yield('css-content')
+
+    <style>
+        /* Hide by default */
+        .mobile-bottom-nav {
+            display: none;
+        }
+
+        /* Show only on mobile */
+        @media (max-width: 768px) {
+            .main-header {
+                display: none;
+                /* hide the top header */
+            }
+
+            .mobile-bottom-nav {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: #d5c5a9;
+                border-top: 1px solid #ddd;
+                padding: 8px 0;
+                z-index: 9999;
+            }
+
+            .mobile-bottom-nav__item {
+                flex: 1;
+                text-align: center;
+                color: #333;
+                font-size: 12px;
+                text-decoration: none;
+            }
+
+            .mobile-bottom-nav__item i {
+                display: block;
+                font-size: 18px;
+                margin-bottom: 3px;
+            }
+
+            .mobile-bottom-nav__item span {
+                display: block;
+            }
+        }
+    </style>
 </head>
 
 <body class="custom-cursor">
@@ -59,7 +111,7 @@
     <div class="custom-cursor__cursor"></div>
     <div class="custom-cursor__cursor-two"></div>
 
-    
+
     <div class="preloader">
         <div class="preloader__content">
             <div class="preloader__image" style="background-image: url(/assets/images/favicon.png);"></div>
@@ -268,7 +320,8 @@
                                     <img src="{{ asset('website-assets/images/logo-white.png') }}" width="150"
                                         alt="Stone Bazaar">
                                 </a>
-                                <p class="footer-widget__about-text">India’s Dedicated B2B Marketplace for Marble & Granite Vendors.</p><!-- /.footer-widget__about-text -->
+                                <p class="footer-widget__about-text">India’s Dedicated B2B Marketplace for Marble &
+                                    Granite Vendors.</p><!-- /.footer-widget__about-text -->
                             </div><!-- /.footer-widget -->
                         </div><!-- /.col-xl-4 col-lg-6 -->
                         <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 wow fadeInUp" data-wow-duration="1500ms"
@@ -297,7 +350,8 @@
                                 <ul class="list-unstyled footer-widget__links">
                                     <li><a href="{{ Route('sellers') }}">Vendors</a></li>
                                     <li><a href="{{ Route('architects') }}">Architects/Designers</a></li>
-                                    <li><a href="{{ Route('register', ['role' => 'Seller']) }}">Become a Vendor</a></li>
+                                    <li><a href="{{ Route('register', ['role' => 'Seller']) }}">Become a Vendor</a>
+                                    </li>
                                     <li><a href="#">Privacy Policy</a></li>
                                     <li><a href="#">Terms & Conditions</a></li>
                                 </ul><!-- /.list-unstyled footer-widget__links -->
@@ -311,10 +365,12 @@
                                     <h2 class="footer-widget__title">Get inTouch</h2><!-- /.footer-widget__title -->
                                 </div><!-- /.footer-widget__top -->
                                 <ul class="list-unstyled footer-widget__info">
-                                    <li><a href="https://www.google.com/maps">Stone Bazaar, Kishangarh, Rajasthan (Marble Hub of India)</a></li>
+                                    <li><a href="https://www.google.com/maps">Stone Bazaar, Kishangarh, Rajasthan
+                                            (Marble Hub of India)</a></li>
                                     <li><span class="icon-paper-plane"></span> <a
                                             href="mailto:stonebazaar01@gmail.com">stonebazaar01@gmail.com</a></li>
-                                    <li><span class="icon-phone-call"></span> <a href="tel:+919352703082"> +91 9352703082</a></li>
+                                    <li><span class="icon-phone-call"></span> <a href="tel:+919352703082"> +91
+                                            9352703082</a></li>
                                 </ul><!-- /.list-unstyled -->
                             </div><!-- /.footer-widget -->
                         </div><!-- /.col-xl-3 col-lg-6 col-md-5 -->
@@ -426,6 +482,45 @@
         <!-- /.mobile-nav__content -->
     </div>
     <!-- /.mobile-nav__wrapper -->
+
+    <!-- Mobile Bottom Navigation -->
+    <!-- Mobile Bottom Navigation -->
+    <nav class="mobile-bottom-nav">
+        <a href="{{ Route('index') }}" class="mobile-bottom-nav__item">
+            <i class="fa fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="about.html" class="mobile-bottom-nav__item">
+            <i class="fa fa-info-circle"></i>
+            <span>About</span>
+        </a>
+        <a href="{{ Route('plans') }}" class="mobile-bottom-nav__item">
+            <i class="fa fa-tags"></i>
+            <span>Pricing</span>
+        </a>
+        <a href="{{ Route('sellers') }}" class="mobile-bottom-nav__item">
+            <i class="fa fa-users"></i>
+            <span>Vendors</span>
+        </a>
+        <a href="{{ Route('contact') }}" class="mobile-bottom-nav__item">
+            <i class="fa fa-phone"></i>
+            <span>Contact</span>
+        </a>
+
+        <!-- Menu Drawer Button -->
+        <a href="javascript:void(0)" class="mobile-bottom-nav__item mobile-nav__toggler">
+            <i class="fa fa-bars"></i>
+            <span>Menu</span>
+        </a>
+
+        <!-- Sidebar Button -->
+        <a href="javascript:void(0)" class="mobile-bottom-nav__item sidebar-btn__toggler">
+            <i class="fa fa-ellipsis-v"></i>
+            <span>More</span>
+        </a>
+    </nav>
+
+
 
     <aside class="sidebar-one">
         <div class="sidebar-one__overlay sidebar-btn__toggler"></div><!-- /.siderbar-ovarlay -->

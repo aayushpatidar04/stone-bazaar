@@ -8,6 +8,23 @@
             border-spacing: 0 12px;
             /* 12px vertical gap between rows */
         }
+
+        .comments-form .form-one__control input {
+            padding: 15px 20px;
+            border: 1px solid #000;
+            color: #000;
+            background-color: transparent;
+        }
+
+        .form-one textarea {
+            height: 143px;
+            padding-left: 20px;
+            padding-top: 20px;
+            padding-bottom: 0;
+            border: 1px solid #000;
+            background-color: transparent;
+            color: #000;
+        }
     </style>
 @endsection
 @section('content')
@@ -18,7 +35,9 @@
         <div class="page-header__bg" style="background-image: url({{ $displayImage['image'] }}); filter: blur(2px);"></div>
         <!-- /.page-header__bg -->
         <div class="container">
-            <h2 class="page-header__title" style="@if(strtolower($product->color) == 'black') text-shadow: -1px -1px 2px white, 1px -1px 2px white, -1px  1px 2px white, 1px  1px 2px white; @else text-shadow: -1px -1px 2px black, 1px -1px 2px black, -1px  1px 2px black, 1px  1px 2px black; @endif">{{ $product->name }}</h2>
+            <h2 class="page-header__title"
+                style="@if (strtolower($product->color) == 'black') text-shadow: -1px -1px 2px white, 1px -1px 2px white, -1px  1px 2px white, 1px  1px 2px white; @else text-shadow: -1px -1px 2px black, 1px -1px 2px black, -1px  1px 2px black, 1px  1px 2px black; @endif">
+                {{ $product->name }}</h2>
             @if ($seller->seller->logo)
                 <div>
                     <img src="{{ $seller->seller->logo }}" alt="{{ $seller->seller->business_name ?? $seller->name }}"
@@ -28,7 +47,7 @@
         </div><!-- /.container -->
     </section><!-- /.page-header -->
 
-    <section class="product-details section-space">
+    <section class="product-details section-space bg-white-texture">
         <div class="container">
             <!-- /.product-details -->
             <div class="row gutter-y-50">
@@ -61,7 +80,8 @@
                     <div class="product-details__content">
                         <div class="product-details__top">
                             <div class="product-details__top__left">
-                                <h3 class="product-details__name">{{ $product->name }}</h3><!-- /.product-title -->
+                                <h3 class="product-details__name text-dark">{{ $product->name }}</h3>
+                                <!-- /.product-title -->
                                 @if ($product->color)
                                     <h4 class="product-details__price">{{ $product->color }}</h4><!-- /.product-price -->
                                 @endif
@@ -69,13 +89,13 @@
                         </div>
                         @if ($product->quality)
                             <div class="product-details__excerpt">
-                                <p class="product-details__excerpt__text1">
+                                <p class="product-details__excerpt__text1 text-dark">
                                     {!! nl2br(e($product->quality)) !!}
                                 </p>
                             </div><!-- /.excerp-text -->
                         @endif
                         @if ($product->sizes)
-                            <table class="my-3 product-details">
+                            <table class="my-3 product-details text-dark">
                                 <tbody>
                                     <tr>
                                         <td style="width: 120px;"><b>Sizes : </b></td>
@@ -94,7 +114,7 @@
                             <hr style="opacity: 1;">
                         @endif
                         <div class="product-details__excerpt">
-                            <p class="product-details__excerpt__text1">
+                            <p class="product-details__excerpt__text1 text-dark">
                                 {{ ucfirst($product->subcategory->domain->domain) }} is available in various colors,
                                 shades, and textures. We love its rich, smooth look and have discovered unique ways to
                                 incorporate {{ strtolower($product->subcategory->domain->domain) }} into our homes.
@@ -134,34 +154,42 @@
             <!-- /.product-comment-form -->
             <div class="product-details__comments-form comments-form">
                 <div class="product-details__comments-form__top">
-                    <h3 class="product-details__comments-form__title comments-form__title sec-title__title">Product Enquiry
+                    <h3 class="product-details__comments-form__title comments-form__title sec-title__title text-dark">
+                        Product Enquiry
                     </h3><!-- /.comments-form__title -->
-                    <p class="product-details__comments-form__text">Your email address will not be published. Required
+                    <p class="product-details__comments-form__text text-dark">Your email address will not be published.
+                        Required
                         fields are marked *</p>
                 </div><!-- /.product-details__comments-form__top -->
-                <form method="POST" action="{{ Route('save-product-enquiry') }}" class="comments-form__form contact-form-validated form-one">
+                <form method="POST" action="{{ Route('save-product-enquiry') }}"
+                    class="comments-form__form contact-form-validated form-one">
                     @csrf
                     <input type="hidden" name="product_id" value="{{ $product->id }}">
                     <div class="form-one__group form-one__group--grid">
                         <div class="form-one__control form-one__control--input wow fadeInUp" data-wow-duration="1500ms"
                             data-wow-delay="00mms">
-                            <input type="text" name="name" value="{{ old('name') }}" placeholder="Your name" required>
+                            <input type="text" name="name" value="{{ old('name') }}" placeholder="Your name"
+                                required>
                         </div><!-- /.form-one__control -->
                         <div class="form-one__control form-one__control--input wow fadeInUp" data-wow-duration="1500ms"
                             data-wow-delay="100mms">
-                            <input type="email" name="email" value="{{ old('email') }}" placeholder="your email" required>
+                            <input type="email" name="email" value="{{ old('email') }}" placeholder="your email"
+                                required>
                         </div><!-- /.form-one__control -->
                         <div class="form-one__control form-one__control--input wow fadeInUp" data-wow-duration="1500ms"
                             data-wow-delay="00mms">
-                            <input type="text" name="phone" minlength="10" maxlength="10" pattern="[6-9][0-9]{9}" value="{{ old('phone') }}" placeholder="Your contact number" required>
+                            <input type="text" name="phone" minlength="10" maxlength="10" pattern="[6-9][0-9]{9}"
+                                value="{{ old('phone') }}" placeholder="Your contact number" required>
                         </div><!-- /.form-one__control -->
                         <div class="form-one__control form-one__control--input wow fadeInUp" data-wow-duration="1500ms"
                             data-wow-delay="00mms">
-                            <input type="text" name="state" value="{{ old('state') }}" placeholder="Your state" required>
+                            <input type="text" name="state" value="{{ old('state') }}" placeholder="Your state"
+                                required>
                         </div><!-- /.form-one__control -->
                         <div class="form-one__control form-one__control--input wow fadeInUp" data-wow-duration="1500ms"
                             data-wow-delay="100mms">
-                            <input type="text" name="city" value="{{ old('city') }}" placeholder="your city" required>
+                            <input type="text" name="city" value="{{ old('city') }}" placeholder="your city"
+                                required>
                         </div><!-- /.form-one__control -->
                         <div class="form-one__control form-one__control--full wow fadeInUp" data-wow-duration="1500ms"
                             data-wow-delay="200mms">

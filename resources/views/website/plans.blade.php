@@ -19,15 +19,15 @@
         <div class="container">
             <div class="sec-title sec-title--center">
 
-                <h3 class="sec-title__title">Our Flexible Pricing Plan</h3><!-- /.sec-title__title -->
+                <h3 class="sec-title__title text-dark">Our Flexible Pricing Plan</h3><!-- /.sec-title__title -->
             </div><!-- /.sec-title -->
 
 
             <div class="pricing-page__main-tab-box tabs-box">
                 <div class="tab-box-buttons">
                     <ul class="tab-buttons">
-                        <li data-tab="#Yearly" class="tab-btn active-btn">Yearly</li>
-                        <li data-tab="#Quarterly" class="tab-btn">
+                        <li data-tab="#Yearly" class="tab-btn active-btn text-dark">Yearly</li>
+                        <li data-tab="#Quarterly" class="tab-btn text-dark">
                             <div class="tab-btn__switch">
                                 <div class="tab-btn__switch__box"></div>
                                 Quarterly

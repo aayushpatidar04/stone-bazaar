@@ -23,7 +23,7 @@
         </div><!-- /.container -->
     </section><!-- /.page-header -->
 
-    <section class="team-one team-one--page section-space">
+    <section class="team-one--page section-space bg-white-texture">
         <div class="container">
             <div class="row gutter-y-30">
                 @foreach ($sellers as $seller)

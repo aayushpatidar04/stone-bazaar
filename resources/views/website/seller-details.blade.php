@@ -170,7 +170,7 @@
     <section class="gallery-one" style="padding: 50px 0;">
         <div class="container">
             <div class="text-center">
-                <h3 class="sec-title__title mb-2">Gallery</h3>
+                <h3 class="sec-title__title mb-2 text-dark">Gallery</h3>
                 <ul class="list-unstyled post-filter gallery-one__filter__list">
                     <li class="active" data-filter=".filter-item"><span>all</span></li>
                     @foreach ($sellerGallery as $type => $images)
@@ -262,7 +262,7 @@
     <section class="gallery-one product-page--carousel" style="padding: 50px 0;">
         <div class="container-fluid">
             <div class="text-center">
-                <h3 class="sec-title__title mb-2">Professional Endorsements</h3>
+                <h3 class="sec-title__title mb-2 text-dark">Professional Endorsements</h3>
             </div>
             <div class="product-page__carousel floens-owl__carousel floens-owl__carousel--basic-nav owl-carousel owl-theme"
                 data-owl-options='{

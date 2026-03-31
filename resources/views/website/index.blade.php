@@ -17,6 +17,180 @@
             height: 280px;
             /* fixed height */
         }
+
+        @media (max-width: 768px) {
+            #vendors {
+                display: none;
+                /* hide sellers carousel on mobile */
+            }
+
+            .main-slider-two {
+                display: none;
+                /* hide slider only on mobile */
+            }
+        }
+
+        .hero-banner-mobile {
+            display: none;
+            padding: 0 0 10px 0;
+            background: url('/website-assets/images/backgrounds/about-bg-2-1.png') no-repeat center center;
+            background-size: cover;
+            color: #333;
+        }
+
+        .hero-banner-mobile__title {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .hero-banner-mobile__subtitle {
+            font-size: 1.5rem;
+            color: #636363;
+        }
+
+        .hero-banner-mobile__desc {
+            line-height: 1;
+            color: #000;
+            font-size: 0.9rem;
+        }
+
+        .hero-banner-mobile__features {
+            display: flex;
+            flex-direction: row;
+            margin: 15px 0;
+            font-size: 10px;
+            line-height: 1;
+        }
+
+        .hero-banner-mobile__actions .btn {
+            margin: 5px 0;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        .hero-banner-mobile__stones img {
+            width: 70%;
+        }
+
+        /* Show only on mobile */
+        @media (max-width: 768px) {
+            .hero-banner-mobile {
+                display: block;
+            }
+        }
+
+        .stats-mobile {
+            display: none;
+            padding: 10px 0px;
+            background: #f5efe2;
+        }
+
+        .stats-mobile__grid {
+            display: flex;
+            justify-content: space-between;
+            border-radius: 8px;
+            box-shadow: #000000 0px 4px 12px;
+            border: 1px solid#00000032
+        }
+
+        .stats-mobile__item {
+            margin: 15px 0px;
+            padding: 0px 4px;
+            text-align: center;
+        }
+
+        .stats-mobile__item i {
+            font-size: 22px;
+            margin-bottom: 8px;
+            color: #d4a017;
+            /* gold accent */
+        }
+
+        .stats-mobile__item h4 {
+            font-size: 18px;
+            margin: 0;
+            font-weight: bold;
+            color: #000;
+        }
+
+        .stats-mobile__item p {
+            font-size: 11px;
+            margin: 5px 0 0;
+            color: #000;
+        }
+
+        /* Show only on mobile */
+        @media (max-width: 768px) {
+            .stats-mobile {
+                display: block;
+            }
+        }
+
+        .vendors-mobile {
+            display: none;
+            /* hidden by default */
+            padding: 30px 15px;
+            background: #f5efe2;
+        }
+
+        .vendors-mobile__title {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            font-weight: bold;
+            font-family: 'Times New Roman', Times, serif;
+            color: #000;
+        }
+
+        .vendors-mobile__list {
+            display: grid;
+            grid-template-columns: 2fr 2fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .vendors-mobile__item {
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        }
+
+        .vendors-mobile__item img {
+            width: 100%;
+            margin-bottom: 8px;
+        }
+
+        .vendors-mobile__item p {
+            margin: 0px;
+            color: #000;
+            font-weight: bold;
+            line-height: 1;
+        }
+
+        .vendors-mobile__vendor {
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            border: 1px solid #00000032;
+        }
+
+        .vendors-mobile__vendor h5 {
+            margin: 0;
+            font-size: 1rem;
+            color: #000;
+        }
+
+        .vendors-mobile__vendor p {
+            font-size: 0.9rem;
+            margin: 0;
+            color: #000;
+            line-height: 1;
+        }
+
+        /* Show only on mobile */
+        @media (max-width: 768px) {
+            .vendors-mobile {
+                display: block;
+            }
+        }
     </style>
 @endsection
 @section('content')
@@ -271,62 +445,70 @@
     </section><!-- /.main-slider-two -->
     <!-- main slider end -->
 
-    {{-- <!-- testimonial start -->
-    <div class="client-carousel client-carousel--two">
-        <div class="container">
-            <div class="client-carousel__one floens-owl__carousel owl-theme owl-carousel"
-                data-owl-options='{
-                "items": 5,
-                "margin": 65,
-                "smartSpeed": 700,
-                "loop":true,
-                "autoplay": 6000,
-                "nav":false,
-                "dots":false,
-                "navText": ["<span class=\"fa fa-angle-left\"></span>","<span class=\"fa fa-angle-right\"></span>"],
-                "responsive":{
-                    "0":{
-                        "items": 1,
-                        "margin": 30
-                    },
-                    "500":{
-                        "items": 2,
-                        "margin": 40
-                    },
-                    "768":{
-                        "items": 3,
-                        "margin": 50
-                    },
-                    "992":{
-                        "items": 3,
-                        "margin": 70
-                    },
-                    "1200":{
-                        "items": 3,
-                        "margin": 149
-                    }
-                }
-                }'>
-                <div class="client-carousel__one__item">
-                    <img src="{{ asset('website-assets/images/resources/client1.jpeg') }}" alt="RK Marbles">
-                </div><!-- /.owl-slide-item-->
-                <div class="client-carousel__one__item">
-                    <img src="{{ asset('website-assets/images/resources/client2.jpeg') }}" alt="RK Marbles">
-                </div><!-- /.owl-slide-item-->
-                <div class="client-carousel__one__item">
-                    <img src="{{ asset('website-assets/images/resources/client3.jpeg') }}" alt="RK Marbles">
-                </div><!-- /.owl-slide-item-->
-                <div class="client-carousel__one__item">
-                    <img src="{{ asset('website-assets/images/resources/client4.jpeg') }}" alt="RK Marbles">
-                </div><!-- /.owl-slide-item-->
+    <!-- Mobile Hero Section -->
+    <section class="hero-banner-mobile">
+        <div style="background-color: #d5c5a9; font-size: 12px; padding: 5px;">Connect you business with Architects,
+            Interior Designers, and Builders.</div>
+        <div class="container text-center">
+            <img src="{{ asset('website-assets/images/logo-yellow.png') }}" alt="Stone Bazaar Logo" style="width: 20%;">
 
-            </div><!-- /.thm-owl__slider -->
-        </div><!-- /.container -->
-    </div><!-- /.client-carousel -->
-    <!-- testimonial end --> --}}
+            <h2 class="hero-banner-mobile__subtitle" style="font-family: 'Times New Roman', Times, serif;">
+                India’s Premier Marketplace for <span style="color: #000;">Marble & Granite</span>
+            </h2>
+            <p class="hero-banner-mobile__desc">
+                Discover premium quality marble, granite, and natural stones from India’s most trusted vendors.
+            </p>
+
+            <div class="hero-banner-mobile__features justify-content-between items-center">
+                <span><i class="fa fa-shield-alt"></i> 100% Verified Vendors</span>
+                <span><i class="fa fa-map-marker-alt"></i> Kishangarh’s Finest Stones</span>
+                <span><i class="fa fa-globe"></i> Worldwide Delivery</span>
+            </div>
+
+            <div class="hero-banner-mobile__stones">
+                <img src="{{ asset('website-assets/images/backgrounds/home.png') }}" alt="Stone Bazaar Stones">
+            </div>
+
+            <div class="hero-banner-mobile__actions d-flex gap-3">
+                <a href="{{ Route('plans') }}" class="btn btn-warning">Get Best Price</a>
+                <a href="https://wa.me/919352703082" target="_blank" class="btn btn-outline-dark">Chat on WhatsApp</a>
+            </div>
+            <hr style="margin:2px 50px; color: #000000; opacity: 1;">
+        </div>
+    </section>
+
+    <!-- Mobile Stats Section -->
+    <section class="stats-mobile">
+        <div class="text-center" style="padding: 5px;">
+            <div class="stats-mobile__grid">
+                <div class="stats-mobile__item" style="border-right: #00000032 1px solid;">
+                    <i class="fa fa-layer-group"></i>
+                    <h4>500+</h4>
+                    <p>Premium Products</p>
+                </div>
+                <div class="stats-mobile__item" style="border-right: #00000032 1px solid;">
+                    <i class="fa fa-shield-alt"></i>
+                    <h4>200+</h4>
+                    <p>Verified Vendors</p>
+                </div>
+                <div class="stats-mobile__item" style="border-right: #00000032 1px solid;">
+                    <i class="fa fa-map-marker-alt"></i>
+                    <h4>300+</h4>
+                    <p>Cities Served</p>
+                </div>
+                <div class="stats-mobile__item">
+                    <i class="fa fa-globe"></i>
+                    <h4>20+</h4>
+                    <p>Countries Exported</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
 
     <!-- services start -->
-    <section class="services-two section-space-two bg-white-texture">
+    <section id="vendors" class="services-two section-space-two bg-white-texture">
         <div class="container">
             <div class="services-two__top">
                 <div class="row gutter-y-50 align-items-center">
@@ -335,7 +517,7 @@
 
                             <h6 class="sec-title__tagline">sellers</h6><!-- /.sec-title__tagline -->
 
-                            <h3 class="sec-title__title">We Connects Best Marbles and Granite Dealers with you</h3>
+                            <h3 class="sec-title__title text-dark">We Connects Best Marbles and Granite Dealers with you</h3>
                             <!-- /.sec-title__title -->
                         </div><!-- /.sec-title -->
 
@@ -434,6 +616,81 @@
     </section><!-- /.services-two section-space-two -->
     <!-- services end -->
 
+    <!-- Mobile Vendors Section -->
+    <section class="vendors-mobile">
+        <div class="container">
+            <!-- Featured Vendors -->
+            <div class="vendors-mobile__featured">
+                <h3 class="vendors-mobile__title">Featured Verified Vendors</h3>
+                @foreach ($sellers as $seller)
+                    @php
+                        $image =
+                            $seller->seller->logo ??
+                            ($seller->seller->warehouse_image ??
+                                ($seller->seller->office_image ??
+                                    asset('website-assets/images/services/service-2-1.jpg')));
+                    @endphp
+
+                    <div class="vendors-mobile__vendor">
+                        <div class="d-flex gap-3">
+                            <img src="{{ $image }}" alt="{{ $seller->seller->business_name }}"
+                                style="width: 100px; height: auto;">
+                            <div>
+                                <h5>{{ $seller->seller->business_name ?? $seller->name }}</h5>
+                                <p><i class="fa fa-map-marker-alt"></i> {{ $seller->seller->address }}</p>
+                                <a href="{{ Route('seller-products', ['id' => $seller->id]) }}" class="btn btn-sm btn-primary mt-2">View Products</a>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+                <div class="text-center">
+                    <a href="{{ Route('sellers') }}">
+                        <span>View All Vendors</span>
+                        <i class="icon-right-arrow"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Explore Stones -->
+            <div class="vendors-mobile__stones mt-3">
+                <h3 class="vendors-mobile__title">Explore Our Stones</h3>
+                <div class="vendors-mobile__list">
+                    <div class="vendors-mobile__item">
+                        <img src="{{ asset('website-assets/images/backgrounds/marble.jpg') }}" alt="Marble">
+                        <div class="py-1 px-2">
+                            <p>Marble</p>
+                            <p style="font-size: small; font-weight: 100;">Elegant & Timeless</p>
+                        </div>
+                    </div>
+                    <div class="vendors-mobile__item">
+                        <img src="{{ asset('website-assets/images/backgrounds/granite.jpg') }}" alt="Granite">
+                        <div class="px-2 py-1">
+                            <p>Granite</p>
+                            <p style="font-size: small; font-weight: 100;">Durable & Strong</p>
+                        </div>
+                    </div>
+                    <div class="vendors-mobile__item">
+                        <img src="{{ asset('website-assets/images/backgrounds/greenstone.jpg') }}" alt="Greenstone">
+                        <div class="px-2 py-1">
+                            <p>Greenstone</p>
+                            <p style="font-size: small; font-weight: 100;">Natural Beauty</p>
+                        </div>
+                    </div>
+                    <div class="vendors-mobile__item">
+                        <img src="{{ asset('website-assets/images/backgrounds/italian.jpg') }}" alt="Italian Marble">
+                        <div class="px-2 py-1">
+                            <p>Italian Marble</p>
+                            <p style="font-size: small; font-weight: 100;">Elegant & Luxurious</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    
     <!-- about start -->
     <section class="about-two section-space">
         <div class="about-two__bg" style="background-image: url(/website-assets/images/backgrounds/about-bg-2-1.png);">
@@ -522,7 +779,7 @@
     <!-- about end -->
 
     <!-- expertise start -->
-    <section class="expertise-one section-space bg-white-texture">
+    <section class="expertise-one section-space bg-light">
         <div class="container-fluid">
             <div class="row gutter-y-50">
                 <div class="col-lg-6">
@@ -531,18 +788,18 @@
 
                             <h6 class="sec-title__tagline">expertise</h6><!-- /.sec-title__tagline -->
 
-                            <h3 class="sec-title__title">Expert Partners for Architects & Designers</h3>
+                            <h3 class="sec-title__title text-dark">Expert Partners for Architects & Designers</h3>
                             <!-- /.sec-title__title -->
                         </div><!-- /.sec-title -->
 
 
-                        <p class="expertise-one__text">Stone Bazaar empowers architects and designers with access to
+                        <p class="expertise-one__text text-dark">Stone Bazaar empowers architects and designers with access to
                             premium marble and granite, curated for projects that demand both beauty and durability. We
                             simplify sourcing, connect you with trusted dealers, and provide inspiration to bring unique
                             design visions to life.</p><!-- /.expertise-one__text -->
                         <div class="expertise-one__progress">
                             <div class="progress-box">
-                                <h4 class="progress-box__title">Material Knowledge</h4><!-- /.progress-box__title -->
+                                <h4 class="progress-box__title text-dark">Material Knowledge</h4><!-- /.progress-box__title -->
                                 <div class="progress-box__bar">
                                     <div class="progress-box__bar__inner count-bar" data-percent='90%'>
                                         <div class="progress-box__number count-text">95%</div>
@@ -550,7 +807,7 @@
                                 </div><!-- /.progress-box__bar -->
                             </div><!-- /.progress-box -->
                             <div class="progress-box">
-                                <h4 class="progress-box__title">Custom Design Collaboration</h4>
+                                <h4 class="progress-box__title text-dark">Custom Design Collaboration</h4>
                                 <!-- /.progress-box__title -->
                                 <div class="progress-box__bar">
                                     <div class="progress-box__bar__inner count-bar" data-percent='70%'>
@@ -559,7 +816,7 @@
                                 </div><!-- /.progress-box__bar -->
                             </div><!-- /.progress-box -->
                             <div class="progress-box">
-                                <h4 class="progress-box__title">Reliable Sourcing & Delivery</h4>
+                                <h4 class="progress-box__title text-dark">Reliable Sourcing & Delivery</h4>
                                 <!-- /.progress-box__title -->
                                 <div class="progress-box__bar">
                                     <div class="progress-box__bar__inner count-bar" data-percent='96%'>
@@ -582,7 +839,7 @@
     </section><!-- /.expertise-one section-space -->
     <!-- expertise end -->
 
-    <section class="services-two section-space-two bg-light">
+    <section class="services-two section-space-two bg-white-texture">
         <div class="container">
             <div class="services-two__top">
                 <div class="row gutter-y-50 align-items-center">
@@ -846,11 +1103,11 @@
 
                             <h6 class="sec-title__tagline">Our FAQ</h6><!-- /.sec-title__tagline -->
 
-                            <h3 class="sec-title__title">Frequently Asked <br> Questions ?</h3><!-- /.sec-title__title -->
+                            <h3 class="sec-title__title text-dark">Frequently Asked <br> Questions ?</h3><!-- /.sec-title__title -->
                         </div><!-- /.sec-title -->
 
 
-                        <p class="faq-one__text">Mollis massa turpis, eu sodales sem maximus ut. Nullam condimentum eget
+                        <p class="faq-one__text text-dark">Mollis massa turpis, eu sodales sem maximus ut. Nullam condimentum eget
                             arcu nec dapibus. Nullam tincidunt ex ut tempus malesuada.</p><!-- /.faq-one__text -->
                         <div class="faq-accordion floens-accordion" data-grp-name="floens-accordion">
                             <div class="accordion active">
@@ -913,7 +1170,7 @@
     <!-- faq end -->
 
     <!-- team start -->
-    <section class="team-one team-one--about section-space-two" id="team">
+    {{-- <section class="team-one team-one--about section-space-two" id="team">
         <div class="team-one__bg" style="background-image: url('/website-assets/images/backgrounds/team-bg-1-1.png');">
         </div>
         <!-- /.team-one__bg -->
@@ -1085,7 +1342,7 @@
             </div><!-- /.team-one__carousel -->
         </div><!-- /.container -->
     </section><!-- /.team-one section-space-two -->
-    <!-- team end -->
+    <!-- team end -->  --}}
 
     <!-- testimonials start -->
     <section class="testimonials-two section-space-two bg-white-texture" id="testimonials">
@@ -1094,7 +1351,7 @@
 
                 <h6 class="sec-title__tagline">testimonial</h6><!-- /.sec-title__tagline -->
 
-                <h3 class="sec-title__title">What People are Talking <br> About Stone Bazaar</h3>
+                <h3 class="sec-title__title text-dark">What People are Talking <br> About Stone Bazaar</h3>
                 <!-- /.sec-title__title -->
             </div><!-- /.sec-title -->
 
@@ -1351,7 +1608,7 @@
 
                             <h6 class="sec-title__tagline">news room</h6><!-- /.sec-title__tagline -->
 
-                            <h3 class="sec-title__title">See Latest News <br> from the Blog Posts</h3>
+                            <h3 class="sec-title__title text-dark">See Latest News <br> from the Blog Posts</h3>
                             <!-- /.sec-title__title -->
                         </div><!-- /.sec-title -->
 

@@ -35,7 +35,7 @@
         </div><!-- /.container -->
     </section><!-- /.page-header -->
 
-    <section class="product-page product-page--left section-space-bottom">
+    <section class="product-page product-page--left section-space-bottom bg-white-texture">
         <div class="container">
             <div class="row gutter-y-60">
                 <div class="col-xl-3 col-lg-4">
@@ -88,7 +88,7 @@
                 <div class="col-xl-9 col-lg-8">
                     <div id="product-list">
                         <div class="product__info-top">
-                            <p class="product__showing-text-box">
+                            <p class="product__showing-text-box text-dark">
                                 Showing {{ $products->firstItem() }}-{{ $products->lastItem() }} of
                                 {{ $products->total() }}
                                 Results
@@ -104,7 +104,7 @@
                                     $displayImage = collect($product->images)->firstWhere('type', 'display');
                                 @endphp
                                 <div class="col-xl-4 col-lg-6 col-md-6 ">
-                                    <a href="">
+                                    <a href="{{ Route('product-details', $product->id) }}" class="product__item-link">
                                         <div class="product__item wow fadeInUp" data-wow-duration='1500ms'
                                             data-wow-delay='000ms'>
                                             <div class="product__item__image">
@@ -118,7 +118,7 @@
                                     </a>
                                 </div><!-- /.col-md-6 col-lg-4 -->
                             @endforeach
-                            <div class="col-12">
+                            <div class="col-12 text-dark">
                                 {{ $products->links('vendor.pagination.custom') }}
                             </div>
                         </div>

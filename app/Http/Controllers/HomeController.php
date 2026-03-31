@@ -54,14 +54,13 @@ class HomeController extends Controller
             $architectEnquiries = ArchitectEnquiry::with(['user.architect'])->latest()->get();
             return view('dashboard.admin.enquiries', compact('sellerEnquiries', 'productEnquiries', 'architectEnquiries'));
         }elseif(Auth::user()->hasRole('Seller')){
-           
             $sellerEnquiries = SellerEnquiry::with(['user.seller'])->whereNot('status', 'pending')->where('user_id', Auth::id())->latest()->get();
             $productEnquiries = ProductEnquiry::with(['product.subcategory.domain.user.seller'])->whereNot('status', 'pending')->whereHas('product.subcategory.domain.user', function ($q) { $q->where('id', Auth::id()); })->latest()->get();
             return view('dashboard.seller.enquiries', compact('sellerEnquiries', 'productEnquiries'));
         }elseif(Auth::user()->hasRole('Architect')){
-           
             $architectEnquiries = ArchitectEnquiry::with(['user.architect'])->whereNot('status', 'pending')->where('user_id', Auth::id())->latest()->get();
             return view('dashboard.architect.enquiries', compact('architectEnquiries'));
         }
     }
+    
 }
