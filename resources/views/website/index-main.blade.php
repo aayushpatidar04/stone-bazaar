@@ -503,7 +503,7 @@
             <span>Vendors</span>
         </a>
         <a href="{{ Route('contact') }}" class="mobile-bottom-nav__item">
-            <i class="fa fa-phone"></i>
+            <i class="fa fa-phone fa-flip-horizontal"></i>
             <span>Contact</span>
         </a>
 

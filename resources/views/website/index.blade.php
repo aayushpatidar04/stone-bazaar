@@ -450,7 +450,7 @@
         <div style="background-color: #d5c5a9; font-size: 12px; padding: 5px;">Connect you business with Architects,
             Interior Designers, and Builders.</div>
         <div class="container text-center">
-            <img src="{{ asset('website-assets/images/logo-yellow.png') }}" alt="Stone Bazaar Logo" style="width: 20%;">
+            <img src="{{ asset('website-assets/images/logo-dark.png') }}" alt="Stone Bazaar Logo" style="width: 20%;">
 
             <h2 class="hero-banner-mobile__subtitle" style="font-family: 'Times New Roman', Times, serif;">
                 India’s Premier Marketplace for <span style="color: #000;">Marble & Granite</span>
