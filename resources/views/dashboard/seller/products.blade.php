@@ -127,7 +127,16 @@
                                                 style="background-image: url('{{ $displayImage['image'] }}'); background-size: cover; background-position: center; height: 350px;">
                                             </div>
                                             <div class="card-footer">
-                                                <span><b>{{ $product->name }}</b></span>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <span><b>{{ $product->name }}</b></span>
+                                                    <div class="btn-group" role="group">
+                                                        <button type="button" class="btn btn-sm btn-warning edit-product" 
+                                                            data-product="{{ json_encode($product) }}" 
+                                                            data-modal="add-product"><i class="fa-solid fa-edit"></i></button>
+                                                        <button type="button" class="btn btn-sm btn-danger delete-product" 
+                                                            data-product-id="{{ $product->id }}"><i class="fa-solid fa-trash"></i></button>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -180,12 +189,16 @@
     <div class="md-modal md-effect-1" id="add-product" tabindex="-1" role="dialog"
         style="overflow-y: auto; max-height: 90vh;">
         <div class="md-content">
-            <h3>Add Product</h3>
+            <h3 id="product-modal-title">Add Product</h3>
             <div>
                 <form id="add-product-form" action="{{ Route('seller.addProduct') }}" method="POST" class="p-3"
                     enctype="multipart/form-data">
                     @csrf
+                    <input type="hidden" id="form-method" name="_method" value="POST">
                     <input type="hidden" name="subcategory" value="{{ old('subcategory') }}">
+                    <input type="hidden" id="product-id" name="product_id" value="">
+                    <input type="hidden" id="existing-images" name="existing_images" value="">
+                    <input type="hidden" id="removed-images" name="removed_images[]" value="">
 
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" id="productTabs" role="tablist">
@@ -220,6 +233,15 @@
 
                         <!-- Images -->
                         <div class="tab-pane fade" id="images" role="tabpanel">
+                            <!-- Existing Images Section (Edit Mode) -->
+                            <div id="existing-images-section" class="mb-4" style="display: none;">
+                                <h5>Existing Images</h5>
+                                <div id="existing-images-container" class="row">
+                                </div>
+                                <hr>
+                                <h5>Add New Images</h5>
+                            </div>
+
                             <div class="mb-3">
                                 <div id="image-fields">
                                     <div class="row p-t-10 p-b-10 image-row mb-3">
@@ -352,16 +374,179 @@
             $(document).on('click', '.md-close', function() {
                 $('#add-subcategory').removeClass('md-show');
                 $('#add-product').removeClass('md-show');
+                
+                // Reset product form when closing
+                if ($('#product-id').val()) {
+                    resetProductForm();
+                }
             });
 
             $(document).on('click', '[data-modal="add-product"]', function() {
                 // parse JSON from data attributes
                 const subcategory = $(this).data('subcategory');
 
+                // Reset form for adding new product
+                resetProductForm();
+                
                 $('#add-product input[name="subcategory"]').val(subcategory);
 
                 // show modal
                 $('#add-product').addClass('md-show');
+            });
+
+            // Edit product handler
+            $(document).on('click', '.edit-product', function() {
+                const product = $(this).data('product');
+
+                // Change modal title
+                $('#product-modal-title').text('Edit Product');
+
+                // Set form method and action
+                $('#form-method').val('POST');
+                $('#product-id').val(product.id);
+                $('#add-product-form').attr('action', `{{ route('seller.updateProduct', ['id' => '__ID__']) }}`.replace('__ID__', product.id));
+
+                // Store existing images for later use
+                $('#existing-images').val(JSON.stringify(product.images));
+
+                // Fill basic info
+                $('input[name="name"]').val(product.name);
+                $('textarea[name="description"]').val(product.description);
+
+                // Clear and reset image section
+                $('#image-fields').html(`
+                    <div class="row p-t-10 p-b-10 image-row mb-3">
+                        <div class="col-lg-4 col-md-6 col-sm-12">
+                            <label for="image-0" class="image-trigger">
+                                <img src="{{ asset('assets/images/product-edit/select-image.png') }}"
+                                    class="img-fluid width-100 m-b-20 preview" alt="No image selected">
+                            </label>
+                            <input type="file" name="images[]" id="image-0"
+                                class="form-control mt-2 image-input d-none" accept="image/*">
+                        </div>
+                        <div class="col-lg-8 col-md-6 col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <div class="col-xs-6 edit-left">
+                                            <div class="form-radio">
+                                                <div class="radio radiofill">
+                                                    <label class="form-label">
+                                                        <input type="radio" name="type[0]" value="display">
+                                                        <i class="helper"></i>Display Image
+                                                    </label>
+                                                </div>
+                                                <div class="radio radiofill">
+                                                    <label class="form-label">
+                                                        <input type="radio" name="type[0]" value="book match">
+                                                        <i class="helper"></i>Book Match
+                                                    </label>
+                                                </div>
+                                                <div class="radio radiofill">
+                                                    <label class="form-label">
+                                                        <input type="radio" name="type[0]" value="other">
+                                                        <i class="helper"></i>Other
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="edit-right text-end">
+                                                <button type="button" class="btn btn-success add-image" style="margin: 0;">
+                                                    Add <i class="icofont icofont-plus f-16 m-l-5"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `);
+
+                // Display existing images
+                displayExistingImages(product.images);
+
+                // Fill specifications
+                if (product.finishes) {
+                    setTagifyValue('finishes', product.finishes);
+                }
+                if (product.sizes) {
+                    setTagifyValue('sizes', product.sizes);
+                }
+                $('input[name="thickness"]').val(product.thickness || '');
+                $('input[name="color"]').val(product.color || '');
+                $('textarea[name="quality"]').val(product.quality || '');
+                if (product.usage_area) {
+                    setTagifyValue('usage_area', product.usage_area);
+                }
+
+                // Reset tabs
+                $('#basic-tab').tab('show');
+
+                // show modal
+                $('#add-product').addClass('md-show');
+            });
+
+            // Delete product handler
+            $(document).on('click', '.delete-product', function() {
+                const productId = $(this).data('product-id');
+                
+                if (!confirm('Are you sure you want to delete this product?')) {
+                    return;
+                }
+
+                $.ajax({
+                    url: `{{ route('seller.deleteProduct', ['id' => '__ID__']) }}`.replace('__ID__', productId),
+                    method: 'POST',
+                    data: {
+                        '_token': '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        if (response.status) {
+                            // Remove product from DOM
+                            $(`.delete-product[data-product-id="${productId}"]`).closest('.col-lg-3').fadeOut(300, function() {
+                                $(this).remove();
+                            });
+                            alert('Product deleted successfully');
+                        }
+                    },
+                    error: function(xhr) {
+                        alert('Error deleting product');
+                    }
+                });
+            });
+
+            // Remove existing image handler
+            $(document).on('click', '.remove-existing-image', function() {
+                const imageUrl = $(this).data('image-url');
+                const imageCard = $(this).closest('[data-image-url]');
+                
+                // Add to removed images
+                let removedImages = [];
+                $('input[name="removed_images[]"]').each(function() {
+                    if ($(this).val()) {
+                        removedImages.push($(this).val());
+                    }
+                });
+                
+                if (!removedImages.includes(imageUrl)) {
+                    // Add hidden input for removed image
+                    $('#add-product-form').append(`<input type="hidden" name="removed_images[]" value="${imageUrl}">`);
+                }
+                
+                // Remove from existing images JSON
+                let existingImages = JSON.parse($('#existing-images').val() || '[]');
+                existingImages = existingImages.filter(img => img.image !== imageUrl);
+                $('#existing-images').val(JSON.stringify(existingImages));
+                
+                // Remove from display
+                imageCard.fadeOut(300, function() {
+                    $(this).remove();
+                    
+                    // Hide section if no images left
+                    if ($('#existing-images-container').children().length === 0) {
+                        $('#existing-images-section').hide();
+                    }
+                });
             });
 
             $(document).on('submit', '#add-subcategory-form', function(e) {
@@ -409,6 +594,8 @@
                 submitBtn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Saving...');
 
                 let formData = new FormData(this); // for file uploads
+                const productId = $('#product-id').val();
+                
                 $.ajax({
                     url: form.attr('action'),
                     method: form.attr('method'),
@@ -416,27 +603,49 @@
                     processData: false,
                     contentType: false,
                     success: function(response) {
-                        // response should contain the new product data
-                        let displayImage = response.product.images.find(img => img.type === 'display');
-                        let productHtml = `
-                            <div class="col-lg-3 col-md-4 col-sm-6">
-                                <div class="card">
-                                    <div class="card-body" 
-                                        style="background-image: url('${displayImage.image}'); 
-                                                background-size: cover; background-position: center; height: 350px;">
-                                    </div>
-                                    <div class="card-footer">
-                                        <span><b>${response.product.name}</b></span>
+                        if (productId) {
+                            // Edit mode - refresh the page
+                            alert('Product updated successfully');
+                            location.reload();
+                        } else {
+                            // Add mode - add to DOM
+                            let displayImage = response.product.images.find(img => img.type === 'display');
+                            let productHtml = `
+                                <div class="col-lg-3 col-md-4 col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body" 
+                                            style="background-image: url('${displayImage.image}'); 
+                                                    background-size: cover; background-position: center; height: 350px;">
+                                        </div>
+                                        <div class="card-footer">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <span><b>${response.product.name}</b></span>
+                                                <div class="btn-group" role="group">
+                                                    <button type="button" class="btn btn-sm btn-warning edit-product" 
+                                                        data-product='${JSON.stringify(response.product)}' 
+                                                        data-modal="add-product"><i class="fa-solid fa-edit"></i></button>
+                                                    <button type="button" class="btn btn-sm btn-danger delete-product" 
+                                                        data-product-id="${response.product.id}"><i class="fa-solid fa-trash"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        `;
-                        $(`#${response.product.seller_subcategory_id}-products .row`).append(productHtml);
+                            `;
+                            $(`#${response.product.seller_subcategory_id}-products .row`).append(productHtml);
+                            
+                            // Reset form for next product
+                            resetProductForm();
+                        }
                         $('#add-product').removeClass('md-show');
                         submitBtn.prop('disabled', false).html('Submit');
                     },
                     error: function(xhr) {
-                        alert('Error adding product');
+                        let message = 'Error saving product';
+                        if (xhr.responseJSON && xhr.responseJSON.errors) {
+                            message = Object.values(xhr.responseJSON.errors).flat().join(', ');
+                        }
+                        alert(message);
                         submitBtn.prop('disabled', false).html('Submit');
                     }
                 });
@@ -518,13 +727,137 @@
 
         document.addEventListener("DOMContentLoaded", function() {
             document.querySelectorAll('.tagify').forEach(function(input) {
-                new Tagify(input, {
+                const tagify = new Tagify(input, {
                     delimiters: ",", // comma separated values 
                     dropdown: {
                         enabled: 0 // show suggestions only when typing 
                     }
                 });
+                // Store tagify instance on the input element
+                input.tagify = tagify;
             });
         });
+
+        // Helper function to set tagify field values
+        function setTagifyValue(fieldName, values) {
+            const input = document.getElementById(fieldName);
+            if (input && input.tagify) {
+                input.tagify.removeAllTags();
+                input.tagify.addTags(values);
+            } else {
+                // Fallback if tagify is not initialized yet
+                input.value = values.join(', ');
+            }
+        }
+
+        // Helper function to reset the product form for adding new product
+        function resetProductForm() {
+            $('#product-modal-title').text('Add Product');
+            $('#product-id').val('');
+            $('#existing-images').val('');
+            $('#add-product-form')[0].reset();
+            $('#add-product-form').attr('action', "{{ route('seller.addProduct') }}");
+            
+            // Clear tagify fields
+            clearTagifyField('finishes');
+            clearTagifyField('sizes');
+            clearTagifyField('usage_area');
+            
+            // Clear removed images
+            $('input[name="removed_images[]"]').remove();
+            
+            // Hide existing images section
+            $('#existing-images-section').hide();
+            $('#existing-images-container').empty();
+            
+            // Reset image field to default
+            $('#image-fields').html(`
+                <div class="row p-t-10 p-b-10 image-row mb-3">
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <label for="image-0" class="image-trigger">
+                            <img src="{{ asset('assets/images/product-edit/select-image.png') }}"
+                                class="img-fluid width-100 m-b-20 preview" alt="No image selected">
+                        </label>
+                        <input type="file" name="images[]" id="image-0"
+                            class="form-control mt-2 image-input d-none" accept="image/*" required>
+                    </div>
+                    <div class="col-lg-8 col-md-6 col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-xs-6 edit-left">
+                                        <div class="form-radio">
+                                            <div class="radio radiofill">
+                                                <label class="form-label">
+                                                    <input type="radio" name="type[0]" value="display" required>
+                                                    <i class="helper"></i>Display Image
+                                                </label>
+                                            </div>
+                                            <div class="radio radiofill">
+                                                <label class="form-label">
+                                                    <input type="radio" name="type[0]" value="book match" required>
+                                                    <i class="helper"></i>Book Match
+                                                </label>
+                                            </div>
+                                            <div class="radio radiofill">
+                                                <label class="form-label">
+                                                    <input type="radio" name="type[0]" value="other" required>
+                                                    <i class="helper"></i>Other
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="edit-right text-end">
+                                            <button type="button" class="btn btn-success add-image" style="margin: 0;">
+                                                Add <i class="icofont icofont-plus f-16 m-l-5"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `);
+        }
+
+        // Helper function to clear tagify field
+        function clearTagifyField(fieldName) {
+            const input = document.getElementById(fieldName);
+            if (input && input.tagify) {
+                input.tagify.removeAllTags();
+            } else {
+                input.value = '';
+            }
+        }
+
+        // Helper function to display existing images in edit mode
+        function displayExistingImages(images) {
+            const container = $('#existing-images-container');
+            container.empty();
+
+            if (images && images.length > 0) {
+                $('#existing-images-section').show();
+                
+                images.forEach((img, index) => {
+                    const html = `
+                        <div class="col-lg-3 col-md-4 col-sm-6 mb-3" data-image-url="${img.image}">
+                            <div class="card">
+                                <img src="${img.image}" class="card-img-top" alt="Existing image" style="height: 150px; object-fit: cover;">
+                                <div class="card-body p-2 d-flex justify-content-between align-items-center">
+                                    <small class="badge bg-info">${img.type}</small>
+                                    <button type="button" class="btn btn-sm btn-danger remove-existing-image" 
+                                            data-image-url="${img.image}" title="Remove this image">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    container.append(html);
+                });
+            } else {
+                $('#existing-images-section').hide();
+            }
+        }
     </script>
 @endsection

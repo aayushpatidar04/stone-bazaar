@@ -141,7 +141,7 @@
         </ul>
         <!-- fieldsets -->
         <fieldset>
-            <img class="logo" src="{{ asset('assets/images/logo.png') }}" alt="Stone Bazaar"
+            <img class="logo" src="{{ asset('assets/images/logo-dark.png') }}" alt="Stone Bazaar"
                 style="width:200px; height: auto;">
             <input type="hidden" name="role" value="Seller"/>
             <h3 class="fs-subtitle">Let’s have a new beginning. Sign up for new you</h3>
@@ -190,7 +190,7 @@
             <button type="button" name="next" class="btn btn-primary next" value="Next">Next</button>
         </fieldset>
         <fieldset>
-            <img class="logo" src="{{ asset('assets/images/logo.png') }}" alt="Stone Bazaar"
+            <img class="logo" src="{{ asset('assets/images/logo-dark.png') }}" alt="Stone Bazaar"
                 style="width: 200px; height: auto;">
 
             <h3 class="fs-subtitle">Little bit about your business</h3>
@@ -211,7 +211,7 @@
             <button type="button" name="next" class="btn btn-primary next" value="Next">Next</button>
         </fieldset>
         <fieldset>
-            <img class="logo" src="{{ asset('assets/images/logo.png') }}" alt="Stone Bazaar"
+            <img class="logo" src="{{ asset('assets/images/logo-dark.png') }}" alt="Stone Bazaar"
                 style="width:200px; height: auto;">
 
             <h3 class="fs-subtitle">And something about your location!</h3>

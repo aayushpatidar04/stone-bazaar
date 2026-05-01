@@ -65,8 +65,16 @@
                             <tr data-seller='@json($seller)'>
                                 <td>{{ $seller->name }}</td>
                                 <td>
-                                    <a href="javascript:void(0);" class="waves-effect md-trigger" data-modal="modal-8"><i
-                                            class="fa-solid fa-road-circle-check"></i></a>
+                                    @if (!$seller->seller->is_featured)
+                                        <a href="javascript:void(0);" class="waves-effect md-trigger"
+                                            data-bs-toggle="tooltip" data-bs-placement="left" title="Mark as Featured"><i
+                                                class="fa-solid fa-user-check"></i></a>
+                                    @else
+                                        <a href="javascript:void(0);" class="waves-effect md-trigger"
+                                            data-bs-toggle="tooltip" data-bs-placement="left" title="Remove from Featured"><i
+                                                class="fa-solid fa-user-minus"></i></a>
+                                    @endif
+
                                 </td>
                             </tr>
                         @endforeach
@@ -232,6 +240,59 @@
                     }
                 });
             });
+
+            document.querySelectorAll('.fa-user-check').forEach(icon => {
+                icon.addEventListener('click', function() {
+                    const row = this.closest('tr');
+                    const seller = JSON.parse(row.dataset.seller);
+
+                    console.log(seller.seller.id);
+
+                    fetch(`/sellers/${seller.seller.id}/feature`, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({})
+                        })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.success) {
+                                alert('Seller marked as featured!');
+                                window.location.reload();
+                            }
+                        })
+                        .catch(err => console.log(err));
+                });
+            });
+            
+            document.querySelectorAll('.fa-user-minus').forEach(icon => {
+                icon.addEventListener('click', function() {
+                    const row = this.closest('tr');
+                    const seller = JSON.parse(row.dataset.seller);
+
+                    console.log(seller.seller.id);
+
+                    fetch(`/sellers/${seller.seller.id}/feature-x`, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({})
+                        })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.success) {
+                                alert('Seller removed from featured!');
+                                window.location.reload();
+                            }
+                        })
+                        .catch(err => console.log(err));
+                });
+            });
+        
         });
 
         $(document).ready(function() {
@@ -681,7 +742,7 @@
             $(document).on('click', '.md-close', function() {
                 $('#seller-details').removeClass('md-show');
             });
-            
+
         });
     </script>
 

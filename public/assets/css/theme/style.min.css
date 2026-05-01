@@ -11649,7 +11649,7 @@ body.menu-bottom #collapse-menu {
 }
 
 .btn-primary:hover, .sweet-alert button.confirm:hover, .wizard>.actions a:hover {
-    background-color: #ffffff;
+    background-color: #000;
     border-color: #ffffff
 }
 

@@ -74,8 +74,8 @@
                     <form class="md-float-material form-material" method="POST" action="{{ route('login') }}">
                         @csrf
                         <div class="text-center">
-                            <img src="{{ asset('assets/images/logo.png') }}" alt="Stone Bazaar"
-                                style="width: 200px; height: auto;">
+                            <img src="{{ asset('assets/images/logo-white.png') }}" alt="Stone Bazaar"
+                                style="width: 100px; height: auto;">
                         </div>
                         <div class="auth-box card">
                             <div class="card-body">

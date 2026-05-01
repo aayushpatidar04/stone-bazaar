@@ -32,6 +32,7 @@
             z-index: -1;
             text-align: center;
         }
+
         .cover .background2 {
             width: 100%;
             height: 100%;
@@ -92,7 +93,7 @@
     <pagebreak />
 
     @if ($seller->description)
-        
+
         <table style="width:100%; border-collapse:collapse;">
             <tbody>
                 <tr>
@@ -214,13 +215,13 @@
             $rows++;
         }
     @endphp
-    @if ($rows >= 2)
-        <div class="cover">
-            <div class="background2" style="padding: 40px;">
+    <div class="cover">
+        <div class="background2" style="padding: 40px;">
+            @if ($rows >= 1)
                 <div style="text-align:center; margin-bottom:20px;">
                     <p style="font-size:50px; font-family:Georgia, 'Times New Roman', Times, serif;">Details</p>
                 </div>
-        
+
                 <div style="padding: 0 100px;">
                     <table
                         style="width:100%; border-collapse:collapse; font-family:'Helvetica Neue', Arial, sans-serif; font-size:16px;">
@@ -262,33 +263,19 @@
                         @endif
                     </table>
                 </div>
-            </div>
-        </div>
+            @endif
 
-        <pagebreak />
-    @endif
-
-    <div class="cover">
-        <div class="background" style="padding: 40px;">
             <h2 style="font-size: 40px; margin-bottom: 20px; font-family:Georgia, 'Times New Roman', Times, serif;">
                 Connect With Our Stone Experts</h2>
             <p style="font-size: 20px; margin: 10px 0;">
-                <b style="color:#ffd700;">+91 987 654 3210</b>
+                <b style="color:#ffd700;">+91 935 270 3082</b>
             </p>
 
             <div style="display: flex; justify-content: center; font-size: 14px;">
                 <div style="flex:1; padding: 10px;">
-                    <h4 style="font-size: 20px; margin-bottom: 5px; color:#ffd700;">Delhi (Showroom)</h4>
-                    <p>A - 1/B, Mayapuri Industrial Area Phase - 1,<br>New Delhi - 110064</p>
-                </div>
-                <div style="flex:1; padding: 10px;">
-                    <h4 style="font-size: 20px; margin-bottom: 5px; color:#ffd700;">Gurugram (Warehouse)</h4>
-                    <p>42nd Milestone, NH - 48, Opposite Hyatt,<br>Gurugram, Haryana - 122004</p>
-                </div>
-                <div style="flex:1; padding: 10px;">
                     <h4 style="font-size: 20px; margin-bottom: 5px; color:#ffd700;">Kishangarh (Corporate Office)</h4>
-                    <p>Makrana Road, Madanganj - Kishangarh - 305801,<br>District Ajmer (Rajasthan) India<br>Tel :
-                        +91- 9352703082, 260101</p>
+                    <p>Stone Bazaar, Kishangarh, Rajasthan (Marble Hub of India) - 305801,<br>District Ajmer (Rajasthan)
+                        India<br></p>
                 </div>
             </div>
 

@@ -876,14 +876,14 @@
 
   $(window).on("load", function () {
     if ($(".preloader").length) {
-      // $(".preloader").fadeOut();
-      const startTime = performance.now(); 
-      const minTime = 2000; // 2 seconds 
-      // calculate elapsed time 
-      const elapsed = performance.now() - startTime; 
-      const remaining = Math.max(0, minTime - elapsed); setTimeout(function () { 
-        $(".preloader").fadeOut(500); // fade out smoothly 
-      }, remaining);
+      // // $(".preloader").fadeOut();
+      // const startTime = performance.now(); 
+      // const minTime = 2000; // 2 seconds 
+      // // calculate elapsed time 
+      // const elapsed = performance.now() - startTime; 
+      // const remaining = Math.max(0, minTime - elapsed); setTimeout(function () { 
+      // }, remaining);
+      $(".preloader").fadeOut(500); // fade out smoothly 
     }
     thmOwlInit();
     thmTinyInit();

@@ -18,17 +18,24 @@
             /* fixed height */
         }
 
-        @media (max-width: 768px) {
-            #vendors {
-                display: none;
-                /* hide sellers carousel on mobile */
-            }
-
-            .main-slider-two {
-                display: none;
-                /* hide slider only on mobile */
-            }
+        .project-card__image img {
+            width: 100%;
+            /* fill the card width */
+            height: 250px;
+            /* fixed height for consistency */
+            object-fit: cover;
+            /* crop/scale to fit without distortion */
         }
+
+        /* @media (max-width: 768px) {
+                #vendors {
+                    display: none;
+                }
+
+                .main-slider-two {
+                    display: none;
+                }
+            } */
 
         .hero-banner-mobile {
             display: none;
@@ -72,12 +79,33 @@
             width: 70%;
         }
 
-        /* Show only on mobile */
-        @media (max-width: 768px) {
-            .hero-banner-mobile {
-                display: block;
+        .hero-banner-mobile__stones img {
+            animation: float 10s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px) scale(1);
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-15px) scale(1.02);
+                transform: translateY(-15px) rotate(2deg);
+            }
+
+            100% {
+                transform: translateY(0px) scale(1);
+                transform: translateY(0px) rotate(0deg);
             }
         }
+
+        /* Show only on mobile */
+        /* @media (max-width: 768px) {
+                .hero-banner-mobile {
+                    display: block;
+                }
+            } */
 
         .stats-mobile {
             display: none;
@@ -120,11 +148,11 @@
         }
 
         /* Show only on mobile */
-        @media (max-width: 768px) {
-            .stats-mobile {
-                display: block;
-            }
-        }
+        /* @media (max-width: 768px) {
+                .stats-mobile {
+                    display: block;
+                }
+            } */
 
         .vendors-mobile {
             display: none;
@@ -186,11 +214,11 @@
         }
 
         /* Show only on mobile */
-        @media (max-width: 768px) {
-            .vendors-mobile {
-                display: block;
-            }
-        }
+        /* @media (max-width: 768px) {
+                .vendors-mobile {
+                    display: block;
+                }
+            } */
     </style>
 @endsection
 @section('content')
@@ -220,10 +248,10 @@
                         <div class="main-slider-two__content">
                             <p class="main-slider-two__tagline">Welcome to Stone Bazaar</p>
                             <!-- /.main-slider-two__tagline -->
-                            <h2 class="main-slider-two__title">Granite and Marble <br> -Versatile beauty for <br> modern
-                                living</h2>
+                            <h2 class="main-slider-two__title">Connect your business <br> with Architects, Builderss <br>
+                                and Interior Designers.</h2>
                             <!-- /.main-slider-two__title -->
-                            <a href="about.html" class="main-slider-two__btn floens-btn">
+                            <a href="{{ Route('sellers') }}" class="main-slider-two__btn floens-btn">
                                 <span>discover more</span>
                                 <i class="icon-right-arrow"></i>
                             </a><!-- /.main-slider-two__btn floens-btn -->
@@ -266,10 +294,10 @@
                         <div class="main-slider-two__content">
                             <p class="main-slider-two__tagline">Welcome to Stone Bazaar</p>
                             <!-- /.main-slider-two__tagline -->
-                            <h2 class="main-slider-two__title">From flooring to <br> feature walls — <br> redefine luxury
-                            </h2>
+                            <h2 class="main-slider-two__title">Granite and Marble <br> -Versatile beauty for <br> modern
+                                living</h2>
                             <!-- /.main-slider-two__title -->
-                            <a href="about.html" class="main-slider-two__btn floens-btn">
+                            <a href="{{ Route('sellers') }}" class="main-slider-two__btn floens-btn">
                                 <span>discover more</span>
                                 <i class="icon-right-arrow"></i>
                             </a><!-- /.main-slider-two__btn floens-btn -->
@@ -314,7 +342,7 @@
                             <!-- /.main-slider-two__tagline -->
                             <h2 class="main-slider-two__title">Timeless surfaces <br>for kitchens, <br>walls, and more</h2>
                             <!-- /.main-slider-two__title -->
-                            <a href="about.html" class="main-slider-two__btn floens-btn">
+                            <a href="{{ Route('sellers') }}" class="main-slider-two__btn floens-btn">
                                 <span>discover more</span>
                                 <i class="icon-right-arrow"></i>
                             </a><!-- /.main-slider-two__btn floens-btn -->
@@ -360,7 +388,7 @@
                             <h2 class="main-slider-two__title">Crafted for homes, <br> hotels, and heritage <br> projects
                                 alike</h2>
                             <!-- /.main-slider-two__title -->
-                            <a href="about.html" class="main-slider-two__btn floens-btn">
+                            <a href="{{ Route('sellers') }}" class="main-slider-two__btn floens-btn">
                                 <span>discover more</span>
                                 <i class="icon-right-arrow"></i>
                             </a><!-- /.main-slider-two__btn floens-btn -->
@@ -406,7 +434,7 @@
                             <h2 class="main-slider-two__title">Transforming spaces <br> with natural artistry <br> in every
                                 cut</h2>
                             <!-- /.main-slider-two__title -->
-                            <a href="about.html" class="main-slider-two__btn floens-btn">
+                            <a href="{{ Route('sellers') }}" class="main-slider-two__btn floens-btn">
                                 <span>discover more</span>
                                 <i class="icon-right-arrow"></i>
                             </a><!-- /.main-slider-two__btn floens-btn -->
@@ -513,11 +541,12 @@
             <div class="services-two__top">
                 <div class="row gutter-y-50 align-items-center">
                     <div class="col-lg-8 col-md-10">
-                        <div class="sec-title @@extraClassName">
+                        <div class="sec-title ">
 
                             <h6 class="sec-title__tagline">sellers</h6><!-- /.sec-title__tagline -->
 
-                            <h3 class="sec-title__title text-dark">We Connects Best Marbles and Granite Dealers with you</h3>
+                            <h3 class="sec-title__title text-dark">We Connects Best Marbles and Granite Dealers with you
+                            </h3>
                             <!-- /.sec-title__title -->
                         </div><!-- /.sec-title -->
 
@@ -572,7 +601,7 @@
                     <div class="item">
                         <div class="service-card-two">
                             <div class="service-card-two__bg"
-                                style="background-image: url('{{ $seller->seller->banner ?? asset('website-assets/images/services/service-bg-2-1.png') }}');">
+                                style="background-image: url('{{ $seller->seller->banner ?? asset('website-assets/images/services/service-bg-2-1.png') }}'); filter: blur(2px);">
                             </div>
                             <!-- /.service-card-two__bg -->
                             <div class="service-card-two__image">
@@ -638,7 +667,8 @@
                             <div>
                                 <h5>{{ $seller->seller->business_name ?? $seller->name }}</h5>
                                 <p><i class="fa fa-map-marker-alt"></i> {{ $seller->seller->address }}</p>
-                                <a href="{{ Route('seller-products', ['id' => $seller->id]) }}" class="btn btn-sm btn-primary mt-2">View Products</a>
+                                <a href="{{ Route('seller-products', ['id' => $seller->id]) }}"
+                                    class="btn btn-sm btn-primary mt-2">View Products</a>
                             </div>
                         </div>
                     </div>
@@ -650,7 +680,7 @@
                     </a>
                 </div>
             </div>
-            
+
             <!-- Explore Stones -->
             <div class="vendors-mobile__stones mt-3">
                 <h3 class="vendors-mobile__title">Explore Our Stones</h3>
@@ -690,7 +720,7 @@
     </section>
 
 
-    
+
     <!-- about start -->
     <section class="about-two section-space">
         <div class="about-two__bg" style="background-image: url(/website-assets/images/backgrounds/about-bg-2-1.png);">
@@ -724,54 +754,51 @@
                 <div class="col-lg-6">
                     <div class="about-two__content">
                         <div class="sec-title sec-title--border">
-
-                            <h6 class="sec-title__tagline">about us</h6><!-- /.sec-title__tagline -->
-
-                            <h3 class="sec-title__title">Your gateway to marble & granite excellence</h3>
-                            <!-- /.sec-title__title -->
-                        </div><!-- /.sec-title -->
-
+                            <h6 class="sec-title__tagline">About Us</h6>
+                            <h3 class="sec-title__title">Best Vendors from Kishangarh’s Marble Industry</h3>
+                        </div>
 
                         <div class="about-two__content__text wow fadeInUp" data-wow-duration="1500ms"
                             data-wow-delay="00ms">
-                            <h5 class="about-two__text-title">Connecting people with the timeless beauty of stone</h5>
-                            <!-- /.about-two__text-title -->
+                            <h5 class="about-two__text-title">Connecting the world with Kishangarh’s finest stones</h5>
                             <p class="about-two__text">
-                                Stone Bazaar connects end users with trusted dealers, architects, and designers — making it
-                                easy to discover, source, and create with the finest stones. We simplify the journey from
-                                inspiration to execution, ensuring quality and collaboration at every step.
+                                Known as the “Marble City of India,” Kishangarh is the hub of premium marble and granite.
+                                At Stone Bazaar, we bring together the best vendors from Kishangarh — trusted suppliers
+                                who deliver quality, variety, and craftsmanship. From Statuario and Calacatta to Granite
+                                and exotic stones, our network ensures you get authentic products straight from the source.
                             </p>
+                        </div>
 
-                        </div><!-- /.about-two__content__text -->
                         <div class="about-two__list wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="100ms">
                             <div class="about-two__list__left">
                                 <div class="about-two__list__item">
                                     <span class="icon-tick"></span>
-                                    Trusted Dealer Network
+                                    Direct Access to Kishangarh Vendors
                                 </div>
                                 <div class="about-two__list__item">
                                     <span class="icon-tick"></span>
-                                    Verified Quality Stones
+                                    Authentic Marble & Granite
                                 </div>
-                            </div><!-- /.about-two__list__left -->
+                            </div>
                             <div class="about-two__list__right">
                                 <div class="about-two__list__item">
                                     <span class="icon-tick"></span>
-                                    Architect & Designer Collaboration
+                                    Transparent Pricing & Quality
                                 </div>
                                 <div class="about-two__list__item">
                                     <span class="icon-tick"></span>
-                                    Easy Discovery & Sourcing
+                                    Export to 20+ Countries
                                 </div>
-                            </div><!-- /.about-two__list__right -->
-                        </div><!-- /.about-two__list -->
+                            </div>
+                        </div>
+
                         <div class="about-two__button wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="200ms">
-                            <a href="about.html" class="floens-btn">
-                                <span>more about us</span>
+                            <a href="{{ Route('sellers') }}" class="floens-btn">
+                                <span>Meet Our Vendors</span>
                                 <i class="icon-right-arrow"></i>
-                            </a><!-- /.floens-btn -->
-                        </div><!-- /.about-two__button -->
-                    </div><!-- /.about-two__content -->
+                            </a>
+                        </div>
+                    </div>
                 </div><!-- /.col-lg-6 -->
             </div><!-- /.row -->
         </div><!-- /.container -->
@@ -793,13 +820,15 @@
                         </div><!-- /.sec-title -->
 
 
-                        <p class="expertise-one__text text-dark">Stone Bazaar empowers architects and designers with access to
+                        <p class="expertise-one__text text-dark">Stone Bazaar empowers architects and designers with access
+                            to
                             premium marble and granite, curated for projects that demand both beauty and durability. We
                             simplify sourcing, connect you with trusted dealers, and provide inspiration to bring unique
                             design visions to life.</p><!-- /.expertise-one__text -->
                         <div class="expertise-one__progress">
                             <div class="progress-box">
-                                <h4 class="progress-box__title text-dark">Material Knowledge</h4><!-- /.progress-box__title -->
+                                <h4 class="progress-box__title text-dark">Material Knowledge</h4>
+                                <!-- /.progress-box__title -->
                                 <div class="progress-box__bar">
                                     <div class="progress-box__bar__inner count-bar" data-percent='90%'>
                                         <div class="progress-box__number count-text">95%</div>
@@ -844,7 +873,7 @@
             <div class="services-two__top">
                 <div class="row gutter-y-50 align-items-center">
                     <div class="col-lg-8 col-md-10">
-                        <div class="sec-title @@extraClassName">
+                        <div class="sec-title ">
 
                             <h6 class="sec-title__tagline">designers</h6><!-- /.sec-title__tagline -->
 
@@ -904,7 +933,7 @@
                     <div class="item">
                         <div class="service-card-two">
                             <div class="service-card-two__bg"
-                                style="background-image: url('{{ $architect->architect->banner ?? asset('website-assets/images/services/service-bg-2-1.png') }}');">
+                                style="background-image: url('{{ $architect->architect->banner ?? asset('website-assets/images/services/service-bg-2-1.png') }}'); filter: blur(2px);">
                             </div>
                             <!-- /.service-card-two__bg -->
                             <div class="service-card-two__image">
@@ -989,17 +1018,32 @@
         "navText": ["<span class=\"icon-slide-left-arrow\"></span>","<span class=\"icon-slide-right-arrow\"></span>"]
         }'>
                 <div class="item">
-                    <div class="project-card @@extraClassName">
-                        <a href="work-details.html" class="project-card__image">
-                            <img src="{{ asset('website-assets/images/works/project-2-3.jpg') }}" alt="Paradise beige">
+                    <div class="project-card ">
+                        <a href="#" class="project-card__image">
+                            <img src="{{ asset('website-assets/images/works/project-2-3.png') }}" alt="Paradise beige">
                         </a><!-- /.project-card__image -->
                         <div class="project-card__content">
                             <h3 class="project-card__tagline">Marble</h3><!-- /.project-card__tagline -->
                             <div class="project-card__links">
                                 <div class="project-card__links__inner">
-                                    <h3 class="project-card__title"><a href="work-details.html">Paradise Beige</a></h3>
+                                    <h3 class="project-card__title"><a href="#">Paradise Beige</a></h3>
+                                </div><!-- /.project-card__links__inner -->
+                            </div><!-- /.project-card__links -->
+                        </div><!-- /.project-card__content -->
+                    </div><!-- /.project-card -->
+                </div><!-- /.item -->
+                <div class="item">
+                    <div class="project-card">
+                        <a href="#" class="project-card__image">
+                            <img src="{{ asset('website-assets/images/works/project-2-4.png') }}" alt="Grigio D'istria">
+                        </a><!-- /.project-card__image -->
+                        <div class="project-card__content">
+                            <h3 class="project-card__tagline">Marble</h3><!-- /.project-card__tagline -->
+                            <div class="project-card__links">
+                                <div class="project-card__links__inner">
+                                    <h3 class="project-card__title"><a href="#">Grigio D'istria</a></h3>
                                     <!-- /.project-card__title -->
-                                    <a href="work-details.html" class="project-card__link floens-btn"><span
+                                    <a href="#" class="project-card__link floens-btn"><span
                                             class="icon-right-arrow"></span></a><!-- /.project-card__link -->
                                 </div><!-- /.project-card__links__inner -->
                             </div><!-- /.project-card__links -->
@@ -1007,72 +1051,45 @@
                     </div><!-- /.project-card -->
                 </div><!-- /.item -->
                 <div class="item">
-                    <div class="project-card @@extraClassName">
-                        <a href="work-details.html" class="project-card__image">
-                            <img src="{{ asset('website-assets/images/works/project-2-4.jpg') }}" alt="Grigio D'istria">
+                    <div class="project-card">
+                        <a href="#" class="project-card__image">
+                            <img src="{{ asset('website-assets/images/works/project-2-5.png') }}" alt="Statuario">
                         </a><!-- /.project-card__image -->
                         <div class="project-card__content">
                             <h3 class="project-card__tagline">Marble</h3><!-- /.project-card__tagline -->
                             <div class="project-card__links">
                                 <div class="project-card__links__inner">
-                                    <h3 class="project-card__title"><a href="work-details.html">Grigio D'istria</a></h3>
-                                    <!-- /.project-card__title -->
-                                    <a href="work-details.html" class="project-card__link floens-btn"><span
-                                            class="icon-right-arrow"></span></a><!-- /.project-card__link -->
+                                    <h3 class="project-card__title"><a href="#">Statuario</a></h3>
                                 </div><!-- /.project-card__links__inner -->
                             </div><!-- /.project-card__links -->
                         </div><!-- /.project-card__content -->
                     </div><!-- /.project-card -->
                 </div><!-- /.item -->
                 <div class="item">
-                    <div class="project-card project-card--large">
-                        <a href="work-details.html" class="project-card__image">
-                            <img src="{{ asset('website-assets/images/works/project-2-5.jpg') }}" alt="Statuario">
-                        </a><!-- /.project-card__image -->
-                        <div class="project-card__content">
-                            <h3 class="project-card__tagline">Marble</h3><!-- /.project-card__tagline -->
-                            <div class="project-card__links">
-                                <div class="project-card__links__inner">
-                                    <h3 class="project-card__title"><a href="work-details.html">Statuario</a></h3>
-                                    <!-- /.project-card__title -->
-                                    <a href="work-details.html" class="project-card__link floens-btn"><span
-                                            class="icon-right-arrow"></span></a><!-- /.project-card__link -->
-                                </div><!-- /.project-card__links__inner -->
-                            </div><!-- /.project-card__links -->
-                        </div><!-- /.project-card__content -->
-                    </div><!-- /.project-card -->
-                </div><!-- /.item -->
-                <div class="item">
-                    <div class="project-card @@extraClassName">
-                        <a href="work-details.html" class="project-card__image">
-                            <img src="{{ asset('website-assets/images/works/project-2-1.jpg') }}" alt="Lumix">
+                    <div class="project-card ">
+                        <a href="#" class="project-card__image">
+                            <img src="{{ asset('website-assets/images/works/project-2-1.png') }}" alt="Lumix">
                         </a><!-- /.project-card__image -->
                         <div class="project-card__content">
                             <h3 class="project-card__tagline">Granite</h3><!-- /.project-card__tagline -->
                             <div class="project-card__links">
                                 <div class="project-card__links__inner">
-                                    <h3 class="project-card__title"><a href="work-details.html">Lumix</a></h3>
-                                    <!-- /.project-card__title -->
-                                    <a href="work-details.html" class="project-card__link floens-btn"><span
-                                            class="icon-right-arrow"></span></a><!-- /.project-card__link -->
+                                    <h3 class="project-card__title"><a href="#">Lumix</a></h3>
                                 </div><!-- /.project-card__links__inner -->
                             </div><!-- /.project-card__links -->
                         </div><!-- /.project-card__content -->
                     </div><!-- /.project-card -->
                 </div><!-- /.item -->
                 <div class="item">
-                    <div class="project-card @@extraClassName">
-                        <a href="work-details.html" class="project-card__image">
-                            <img src="{{ asset('website-assets/images/works/project-2-2.jpg') }}" alt="Acadian Black">
+                    <div class="project-card ">
+                        <a href="#" class="project-card__image">
+                            <img src="{{ asset('website-assets/images/works/project-2-2.png') }}" alt="Acadian Black">
                         </a><!-- /.project-card__image -->
                         <div class="project-card__content">
                             <h3 class="project-card__tagline">Granite</h3><!-- /.project-card__tagline -->
                             <div class="project-card__links">
                                 <div class="project-card__links__inner">
-                                    <h3 class="project-card__title"><a href="work-details.html">Acadian Black</a></h3>
-                                    <!-- /.project-card__title -->
-                                    <a href="work-details.html" class="project-card__link floens-btn"><span
-                                            class="icon-right-arrow"></span></a><!-- /.project-card__link -->
+                                    <h3 class="project-card__title"><a href="#">Acadian Black</a></h3>
                                 </div><!-- /.project-card__links__inner -->
                             </div><!-- /.project-card__links -->
                         </div><!-- /.project-card__content -->
@@ -1090,10 +1107,10 @@
                 <div class="col-lg-6 wow fadeInLeft" data-wow-duration="1500ms">
                     <div class="faq-one__image">
                         <div class="faq-one__image__inner">
-                            <img src="{{ asset('website-assets/images/faq/faq-1-1.jpg') }}" alt="faq"
-                                class="faq-one__image__one">
-                            <img src="{{ asset('website-assets/images/faq/faq-1-2.jpg') }}" alt="faq"
-                                class="faq-one__image__two">
+                            {{-- <img src="{{ asset('website-assets/images/faq/faq-1-1.jpg') }}" alt="faq"
+                                class="faq-one__image__one"> --}}
+                            <img src="{{ asset('website-assets/images/faq/faq-1-2.png') }}" alt="faq"
+                                class="faq-one__image__one" style="height: auto; width: 100%; object-fit: cover;">
                         </div><!-- /.faq-one__image__inner -->
                     </div><!-- /.faq-one__image -->
                 </div><!-- /.col-lg-6 -->
@@ -1103,61 +1120,68 @@
 
                             <h6 class="sec-title__tagline">Our FAQ</h6><!-- /.sec-title__tagline -->
 
-                            <h3 class="sec-title__title text-dark">Frequently Asked <br> Questions ?</h3><!-- /.sec-title__title -->
+                            <h3 class="sec-title__title text-dark">Frequently Asked <br> Questions ?</h3>
+                            <!-- /.sec-title__title -->
                         </div><!-- /.sec-title -->
 
 
-                        <p class="faq-one__text text-dark">Mollis massa turpis, eu sodales sem maximus ut. Nullam condimentum eget
-                            arcu nec dapibus. Nullam tincidunt ex ut tempus malesuada.</p><!-- /.faq-one__text -->
+                        <p class="faq-one__text text-dark">Have questions about Stone Bazaar? We've got answers. Learn more
+                            about how our platform works, how to list your business, and how we ensure quality and trust in
+                            every transaction.</p><!-- /.faq-one__text -->
                         <div class="faq-accordion floens-accordion" data-grp-name="floens-accordion">
                             <div class="accordion active">
                                 <div class="accordion-title">
                                     <h4>
-                                        What types of marbles & granites are available from a company?
+                                        Is Stone Bazaar free to browse?
                                         <span class="accordion-title__icon"></span><!-- /.accordion-title__icon -->
                                     </h4>
                                 </div><!-- /.accordian-title -->
                                 <div class="accordion-content">
                                     <div class="inner">
-                                        <p>Bring to the table win-win survival strategies to ensure proactive domination. At
-                                            the
-                                            end of the day, going forward, a new normal that has evolved from generation X
-                                            is on
-                                            the</p>
+                                        <p>Yes, browsing sellers, architects, and products is completely free. You only need
+                                            to register if you want to list your business.</p>
                                     </div><!-- /.accordian-content -->
                                 </div>
                             </div><!-- /.accordian-item -->
                             <div class="accordion">
                                 <div class="accordion-title">
                                     <h4>
-                                        How do I choose the right marble or granite for my project?
+                                        How do I buy a product?
                                         <span class="accordion-title__icon"></span><!-- /.accordion-title__icon -->
                                     </h4>
                                 </div><!-- /.accordian-title -->
                                 <div class="accordion-content">
                                     <div class="inner">
-                                        <p>Bring to the table win-win survival strategies to ensure proactive domination. At
-                                            the
-                                            end of the day, going forward, a new normal that has evolved from generation X
-                                            is on
-                                            the</p>
+                                        <p>Stone Bazaar is inquiry-based. You submit an enquiry and the seller contacts you
+                                            directly to discuss pricing, quantity, and delivery.</p>
                                     </div><!-- /.accordian-content -->
                                 </div>
                             </div><!-- /.accordian-item -->
                             <div class="accordion">
                                 <div class="accordion-title">
                                     <h4>
-                                        Are there eco-friendly marble or granite options available?
+                                        How are sellers verified?
                                         <span class="accordion-title__icon"></span><!-- /.accordion-title__icon -->
                                     </h4>
                                 </div><!-- /.accordian-title -->
                                 <div class="accordion-content">
                                     <div class="inner">
-                                        <p>Bring to the table win-win survival strategies to ensure proactive domination. At
-                                            the
-                                            end of the day, going forward, a new normal that has evolved from generation X
-                                            is on
-                                            the</p>
+                                        <p>All sellers must upload their GST certificate and business documents. Our team
+                                            reviews each application before approving the listing.</p>
+                                    </div><!-- /.accordian-content -->
+                                </div>
+                            </div><!-- /.accordian-item -->
+                            <div class="accordion">
+                                <div class="accordion-title">
+                                    <h4>
+                                        Can I register as both a seller and architect?
+                                        <span class="accordion-title__icon"></span><!-- /.accordion-title__icon -->
+                                    </h4>
+                                </div><!-- /.accordian-title -->
+                                <div class="accordion-content">
+                                    <div class="inner">
+                                        <p>Currently each account can have one role — Seller or Architect. Contact us if you
+                                            need both.</p>
                                     </div><!-- /.accordian-content -->
                                 </div>
                             </div><!-- /.accordian-item -->
@@ -1168,181 +1192,6 @@
         </div><!-- /.container -->
     </section><!-- /.faq-one section-space -->
     <!-- faq end -->
-
-    <!-- team start -->
-    {{-- <section class="team-one team-one--about section-space-two" id="team">
-        <div class="team-one__bg" style="background-image: url('/website-assets/images/backgrounds/team-bg-1-1.png');">
-        </div>
-        <!-- /.team-one__bg -->
-        <div class="container">
-            <div class="team-one__top">
-                <div class="row gutter-y-50 align-items-center">
-                    <div class="col-lg-6">
-                        <div class="sec-title @@extraClassName">
-
-                            <h6 class="sec-title__tagline">our team</h6><!-- /.sec-title__tagline -->
-
-                            <h3 class="sec-title__title">Meet our Best Team <br> Members</h3><!-- /.sec-title__title -->
-                        </div><!-- /.sec-title -->
-
-
-                    </div><!-- /.col-lg-6 -->
-                    <div class="col-lg-6">
-                        <div class="team-one__top__right">
-                            <p class="team-one__top__text">Luctus enim vehicula nec. Ut auctor lobortis sapien et eleifend.
-                                Integer ac orci vitae neque porttitor efficitur ac vestibulum orci. Sed tincidunt magna sed
-                                leo luctus,</p><!-- /.team-one__top__text -->
-                        </div><!-- /.team-one__top__right -->
-                    </div><!-- /.col-lg-6 -->
-                </div><!-- /.row -->
-            </div><!-- /.team-one__top -->
-            <div class="team-one__carousel floens-owl__carousel floens-owl__carousel--with-shadow floens-owl__carousel--basic-nav owl-carousel owl-theme"
-                data-owl-options='{
-			"items": 1,
-			"margin": 0,
-			"loop": true,
-			"smartSpeed": 700,
-			"nav": false,
-			"navText": ["<span class=\"icon-slide-left-arrow\"></span>","<span class=\"icon-slide-right-arrow\"></span>"],
-			"dots": false,
-			"autoplay": 600,
-			"responsive": {
-				"0": {
-					"items": 1,
-					"nav": true,
-                    "dots": false,
-					"margin": 10
-				},
-                "576": {
-                    "items": 1,
-                    "dots": true,
-                    "nav": false,
-					"margin": 10
-                },
-				"768": {
-					"items": 2,
-                    "nav": false,
-                    "dots": true,
-					"margin": 30
-				},
-				"992": {
-					"items": 3,
-                    "loop": false,
-                    "nav": false,
-                    "dots": false,
-					"margin": 30
-				}
-			}
-		}'>
-                <div class="item">
-                    <div class="team-card wow fadeInUp" data-wow-duration='1500ms' data-wow-delay='000ms'>
-                        <div class="team-card__image">
-                            <img src="{{ asset('website-assets/images/team/team-1-1.jpg') }}" alt="Mike Hardson">
-                            <div class="team-card__hover">
-                                <div class="team-card__social">
-                                    <a href="https://facebook.com/">
-                                        <i class="icon-facebook" aria-hidden="true"></i>
-                                        <span class="sr-only">Facebook</span>
-                                    </a>
-                                    <a href="https://twitter.com/">
-                                        <i class="icon-twitter" aria-hidden="true"></i>
-                                        <span class="sr-only">Twitter</span>
-                                    </a>
-                                    <a href="https://instagram.com/">
-                                        <i class="icon-instagram" aria-hidden="true"></i>
-                                        <span class="sr-only">Instagram</span>
-                                    </a>
-                                    <a href="https://youtube.com/">
-                                        <i class="icon-youtube" aria-hidden="true"></i>
-                                        <span class="sr-only">Youtube</span>
-                                    </a>
-                                </div><!-- /.team-card__social -->
-                                <div class="team-card__identity">
-                                    <div class="team-card__identity__inner">
-                                        <h3 class="team-card__name"><a href="team-details.html">Mike Hardson</a></h3>
-                                        <!-- /.team-card__name -->
-                                        <span class="team-card__designation">marketing
-                                            manager</span><!-- /.team-card__designation -->
-                                    </div><!-- /.team-card__identity__inner -->
-                                </div><!-- /.team-card__identity -->
-                            </div><!-- /.team-card__hover -->
-                        </div><!-- /.team-card__image -->
-                    </div><!-- /.team-card -->
-                </div><!-- /.item -->
-                <div class="item">
-                    <div class="team-card wow fadeInUp" data-wow-duration='1500ms' data-wow-delay='200ms'>
-                        <div class="team-card__image">
-                            <img src="{{ asset('website-assets/images/team/team-1-2.jpg') }}" alt="Anthony B. Castillo">
-                            <div class="team-card__hover">
-                                <div class="team-card__social">
-                                    <a href="https://facebook.com/">
-                                        <i class="icon-facebook" aria-hidden="true"></i>
-                                        <span class="sr-only">Facebook</span>
-                                    </a>
-                                    <a href="https://twitter.com/">
-                                        <i class="icon-twitter" aria-hidden="true"></i>
-                                        <span class="sr-only">Twitter</span>
-                                    </a>
-                                    <a href="https://instagram.com/">
-                                        <i class="icon-instagram" aria-hidden="true"></i>
-                                        <span class="sr-only">Instagram</span>
-                                    </a>
-                                    <a href="https://youtube.com/">
-                                        <i class="icon-youtube" aria-hidden="true"></i>
-                                        <span class="sr-only">Youtube</span>
-                                    </a>
-                                </div><!-- /.team-card__social -->
-                                <div class="team-card__identity">
-                                    <div class="team-card__identity__inner">
-                                        <h3 class="team-card__name"><a href="team-details.html">Anthony B. Castillo</a>
-                                        </h3><!-- /.team-card__name -->
-                                        <span class="team-card__designation">marketing
-                                            manager</span><!-- /.team-card__designation -->
-                                    </div><!-- /.team-card__identity__inner -->
-                                </div><!-- /.team-card__identity -->
-                            </div><!-- /.team-card__hover -->
-                        </div><!-- /.team-card__image -->
-                    </div><!-- /.team-card -->
-                </div><!-- /.item -->
-                <div class="item">
-                    <div class="team-card wow fadeInUp" data-wow-duration='1500ms' data-wow-delay='400ms'>
-                        <div class="team-card__image">
-                            <img src="{{ asset('website-assets/images/team/team-1-3.jpg') }}" alt="david cooper">
-                            <div class="team-card__hover">
-                                <div class="team-card__social">
-                                    <a href="https://facebook.com/">
-                                        <i class="icon-facebook" aria-hidden="true"></i>
-                                        <span class="sr-only">Facebook</span>
-                                    </a>
-                                    <a href="https://twitter.com/">
-                                        <i class="icon-twitter" aria-hidden="true"></i>
-                                        <span class="sr-only">Twitter</span>
-                                    </a>
-                                    <a href="https://instagram.com/">
-                                        <i class="icon-instagram" aria-hidden="true"></i>
-                                        <span class="sr-only">Instagram</span>
-                                    </a>
-                                    <a href="https://youtube.com/">
-                                        <i class="icon-youtube" aria-hidden="true"></i>
-                                        <span class="sr-only">Youtube</span>
-                                    </a>
-                                </div><!-- /.team-card__social -->
-                                <div class="team-card__identity">
-                                    <div class="team-card__identity__inner">
-                                        <h3 class="team-card__name"><a href="team-details.html">david cooper</a></h3>
-                                        <!-- /.team-card__name -->
-                                        <span class="team-card__designation">marketing
-                                            manager</span><!-- /.team-card__designation -->
-                                    </div><!-- /.team-card__identity__inner -->
-                                </div><!-- /.team-card__identity -->
-                            </div><!-- /.team-card__hover -->
-                        </div><!-- /.team-card__image -->
-                    </div><!-- /.team-card -->
-                </div><!-- /.item -->
-            </div><!-- /.team-one__carousel -->
-        </div><!-- /.container -->
-    </section><!-- /.team-one section-space-two -->
-    <!-- team end -->  --}}
 
     <!-- testimonials start -->
     <section class="testimonials-two section-space-two bg-white-texture" id="testimonials">
@@ -1395,42 +1244,36 @@
                 }
             }'>
                 <div class="item">
-                    <div class="testimonials-card @@extraClassName">
+                    <div class="testimonials-card ">
                         <div class="testimonials-card__bg"
                             style="background-image: url(/website-assets/images/testimonials/testimonials-card-bg.png);">
                         </div>
                         <!-- /.testimonials-card__bg -->
                         <div class="testimonials-card__top">
-                            <div class="floens-ratings @@extraClassName">
+                            <div class="floens-ratings ">
                                 <span class="icon-star"></span>
                                 <span class="icon-star"></span>
                                 <span class="icon-star"></span>
                                 <span class="icon-star"></span>
                                 <span class="icon-star"></span>
                             </div><!-- /.product-ratings -->
-                            <a href="https://www.youtube.com/watch?v=h9MbznbxlLc"
-                                class="testimonials-card__video video-button video-popup">
-                                <span class="icon-play"></span>
-                                <i class="video-button__ripple"></i>
-                            </a><!-- /.testimonials-card__video -->
+
                         </div><!-- /.testimonials-card__top -->
                         <div class="testimonials-card__content">
                             <div class="testimonials-card__content__inner">
-                                <p class="testimonials-card__text">"I recently worked with <a href="about.html"
-                                        class="testimonials-card__text__highlight">Stone Bazaar</a> for my home renovation
-                                    project, and I couldn't be happier with the results. From the moment I walked into their
-                                    showroom, I was impressed by the extensive selection</p>
+                                <p class="testimonials-card__text">"Stone Bazaar helped me find the perfect Italian marble
+                                    supplier for my hotel renovation. The process gave me confidence in the quality."</p>
                                 <!-- /.testimonials-card__text -->
                             </div><!-- /.testimonials-card__content__inner -->
                             <div class="testimonials-card__person">
                                 <div class="testimonials-card__person__inner">
                                     <img src="{{ asset('website-assets/images/testimonials/testimonials-1-1.jpg') }}"
-                                        alt="Michael G. Ware" class="testimonials-card__person__image">
+                                        alt="Rajesh Mehta" class="testimonials-card__person__image">
                                     <div class="testimonials-card__person__info">
-                                        <h3 class="testimonials-card__person__name">Michael G. Ware</h3>
+                                        <h3 class="testimonials-card__person__name">Rajesh Mehta</h3>
                                         <!-- /.testimonials-card__person__name -->
-                                        <span class="testimonials-card__person__designation">managing
-                                            director</span><!-- /.testimonials-card__person__designation -->
+                                        <span class="testimonials-card__person__designation">Interior Designer,
+                                            Mumbai</span><!-- /.testimonials-card__person__designation -->
                                     </div><!-- /.testimonials-card__person__info -->
                                 </div><!-- /.testimonials-card__person__inner -->
                             </div><!-- /.testimonials-card__person -->
@@ -1451,42 +1294,36 @@
                     </div><!-- /.testimonials-card -->
                 </div><!-- /.item -->
                 <div class="item">
-                    <div class="testimonials-card @@extraClassName">
+                    <div class="testimonials-card ">
                         <div class="testimonials-card__bg"
                             style="background-image: url(/website-assets/images/testimonials/testimonials-card-bg.png);">
                         </div>
                         <!-- /.testimonials-card__bg -->
                         <div class="testimonials-card__top">
-                            <div class="floens-ratings @@extraClassName">
+                            <div class="floens-ratings ">
                                 <span class="icon-star"></span>
                                 <span class="icon-star"></span>
                                 <span class="icon-star"></span>
                                 <span class="icon-star"></span>
                                 <span class="icon-star"></span>
                             </div><!-- /.product-ratings -->
-                            <a href="https://www.youtube.com/watch?v=h9MbznbxlLc"
-                                class="testimonials-card__video video-button video-popup">
-                                <span class="icon-play"></span>
-                                <i class="video-button__ripple"></i>
-                            </a><!-- /.testimonials-card__video -->
+
                         </div><!-- /.testimonials-card__top -->
                         <div class="testimonials-card__content">
                             <div class="testimonials-card__content__inner">
-                                <p class="testimonials-card__text">"I recently worked with <a href="about.html"
-                                        class="testimonials-card__text__highlight">Stone Bazaar</a> for my home renovation
-                                    project, and I couldn't be happier with the results. From the moment I walked into their
-                                    showroom, I was impressed by the extensive selection</p>
+                                <p class="testimonials-card__text">"As a marble dealer from Kishangarh, Stone Bazaar
+                                    brought me clients from across India that I never could have reached otherwise."</p>
                                 <!-- /.testimonials-card__text -->
                             </div><!-- /.testimonials-card__content__inner -->
                             <div class="testimonials-card__person">
                                 <div class="testimonials-card__person__inner">
                                     <img src="{{ asset('website-assets/images/testimonials/testimonials-1-2.jpg') }}"
-                                        alt="Anthony B. Castillo" class="testimonials-card__person__image">
+                                        alt="Shreya Patil" class="testimonials-card__person__image">
                                     <div class="testimonials-card__person__info">
-                                        <h3 class="testimonials-card__person__name">Anthony B. Castillo</h3>
+                                        <h3 class="testimonials-card__person__name">Shreya Patil</h3>
                                         <!-- /.testimonials-card__person__name -->
-                                        <span class="testimonials-card__person__designation">managing
-                                            director</span><!-- /.testimonials-card__person__designation -->
+                                        <span class="testimonials-card__person__designation">Marble Dealer,
+                                            Kishangarh</span><!-- /.testimonials-card__person__designation -->
                                     </div><!-- /.testimonials-card__person__info -->
                                 </div><!-- /.testimonials-card__person__inner -->
                             </div><!-- /.testimonials-card__person -->
@@ -1520,7 +1357,7 @@
                 <!-- /.evaluation-schedule__tagline -->
                 <h2 class="evaluation-schedule__title">A Complete Solution for
                     Your Vision</h2><!-- /.evaluation-schedule__title -->
-                <a href="about.html" class="evaluation-schedule__btn floens-btn">
+                <a href="{{ Route('contact') }}" class="evaluation-schedule__btn floens-btn">
                     <span>Schedule a Free Evaluation</span>
                     <i class="icon-right-arrow"></i>
                 </a><!-- /.evaluation-schedule__btn floens-btn -->
@@ -1533,7 +1370,7 @@
     <section class="gallery-instagram gallery-instagram--two section-space-bottom">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="1500ms"
+                <div class="col-xl-2 col-lg-3 col-md-4 col-6 wow fadeInUp" data-wow-duration="1500ms"
                     data-wow-delay="00ms">
                     <div class="gallery-instagram__image">
                         <img src="{{ asset('website-assets/images/gallery/gallery-instagram-1-1.jpg') }}"
@@ -1543,7 +1380,7 @@
                         </a><!-- /.gallery-instagram__image__link -->
                     </div><!-- /.gallery-instagram__image -->
                 </div><!-- /.col-xl-2 col-lg-3 col-md-4 col-sm-6 -->
-                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="1500ms"
+                <div class="col-xl-2 col-lg-3 col-md-4 col-6 wow fadeInUp" data-wow-duration="1500ms"
                     data-wow-delay="200ms">
                     <div class="gallery-instagram__image">
                         <img src="{{ asset('website-assets/images/gallery/gallery-instagram-1-2.jpg') }}"
@@ -1553,7 +1390,7 @@
                         </a><!-- /.gallery-instagram__image__link -->
                     </div><!-- /.gallery-instagram__image -->
                 </div><!-- /.col-xl-2 col-lg-3 col-md-4 col-sm-6 -->
-                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="1500ms"
+                <div class="col-xl-2 col-lg-3 col-md-4 col-6 wow fadeInUp" data-wow-duration="1500ms"
                     data-wow-delay="400ms">
                     <div class="gallery-instagram__image">
                         <img src="{{ asset('website-assets/images/gallery/gallery-instagram-1-3.jpg') }}"
@@ -1562,8 +1399,8 @@
                             <span class="icon-instagram"></span>
                         </a><!-- /.gallery-instagram__image__link -->
                     </div><!-- /.gallery-instagram__image -->
-                </div><!-- /.col-xl-2 col-lg-3 col-md-4 col-sm-6 -->
-                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="1500ms"
+                </div><!-- /.col-xl-2 col-lg-3 col-md-4 col-6 -->
+                <div class="col-xl-2 col-lg-3 col-md-4 col-6 wow fadeInUp" data-wow-duration="1500ms"
                     data-wow-delay="600ms">
                     <div class="gallery-instagram__image">
                         <img src="{{ asset('website-assets/images/gallery/gallery-instagram-1-4.jpg') }}"
@@ -1572,8 +1409,8 @@
                             <span class="icon-instagram"></span>
                         </a><!-- /.gallery-instagram__image__link -->
                     </div><!-- /.gallery-instagram__image -->
-                </div><!-- /.col-xl-2 col-lg-3 col-md-4 col-sm-6 -->
-                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="1500ms"
+                </div><!-- /.col-xl-2 col-lg-3 col-md-4 col-6 -->
+                <div class="col-xl-2 col-lg-3 col-md-4 col-6 wow fadeInUp" data-wow-duration="1500ms"
                     data-wow-delay="800ms">
                     <div class="gallery-instagram__image">
                         <img src="{{ asset('website-assets/images/gallery/gallery-instagram-1-5.jpg') }}"
@@ -1582,8 +1419,8 @@
                             <span class="icon-instagram"></span>
                         </a><!-- /.gallery-instagram__image__link -->
                     </div><!-- /.gallery-instagram__image -->
-                </div><!-- /.col-xl-2 col-lg-3 col-md-4 col-sm-6 -->
-                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="1500ms"
+                </div><!-- /.col-xl-2 col-lg-3 col-md-4 col-6 -->
+                <div class="col-xl-2 col-lg-3 col-md-4 col-6 wow fadeInUp" data-wow-duration="1500ms"
                     data-wow-delay="1000ms">
                     <div class="gallery-instagram__image">
                         <img src="{{ asset('website-assets/images/gallery/gallery-instagram-1-6.jpg') }}"
@@ -1599,12 +1436,12 @@
     <!-- gallery instagram end -->
 
     <!-- blog start -->
-    <section class="blog-one blog-one--home-two section-space-two bg-white-texture">
+    {{-- <section class="blog-one blog-one--home-two section-space-two bg-white-texture">
         <div class="container">
             <div class="blog-one__top">
                 <div class="row gutter-y-50 align-items-center">
                     <div class="col-lg-8">
-                        <div class="sec-title @@extraClassName">
+                        <div class="sec-title ">
 
                             <h6 class="sec-title__tagline">news room</h6><!-- /.sec-title__tagline -->
 
@@ -1616,7 +1453,7 @@
                     </div><!-- /.col-lg-8 -->
                     <div class="col-lg-4">
                         <div class="blog-one__top__button">
-                            <a href="blog-grid-right.html" class="floens-btn floens-btn--border">
+                            <a href="#" class="floens-btn floens-btn--border">
                                 <span>view all</span>
                                 <i class="icon-right-arrow"></i>
                             </a><!-- /.floens-btn floens-btn--border -->
@@ -1632,13 +1469,13 @@
                             <li><a href="#"><i class="icon-comment"></i> 2 Comments</a></li>
                         </ul><!-- /.list-unstyled blog-card__meta -->
                         <div class="blog-card__content">
-                            <h3 class="blog-card__title"><a href="blog-details-right.html">Talk About the Three Major
+                            <h3 class="blog-card__title"><a href="#">Talk About the Three Major
                                     Types of Flooring Marbles</a></h3><!-- /.blog-card__title -->
                         </div><!-- /.blog-card__content -->
                         <div class="blog-card__image">
                             <img src="{{ asset('website-assets/images/blog/blog-1-2.jpg') }}"
                                 alt="Talk About the Three Major Types of Floor Tiles">
-                            <a href="blog-details-right.html" class="blog-card__image__link"><span class="sr-only">Talk
+                            <a href="#" class="blog-card__image__link"><span class="sr-only">Talk
                                     About the Three Major Types of Flooring Marbles</span>
                                 <!-- /.sr-only --></a>
                         </div><!-- /.blog-card__image -->
@@ -1655,13 +1492,13 @@
                             <li><a href="#"><i class="icon-comment"></i> 2 Comments</a></li>
                         </ul><!-- /.list-unstyled blog-card__meta -->
                         <div class="blog-card__content">
-                            <h3 class="blog-card__title"><a href="blog-details-right.html">Talk About the Three Major
+                            <h3 class="blog-card__title"><a href="#">Talk About the Three Major
                                     Types of Flooring Marbles</a></h3><!-- /.blog-card__title -->
                         </div><!-- /.blog-card__content -->
                         <div class="blog-card__image">
                             <img src="{{ asset('website-assets/images/blog/blog-1-3.jpg') }}"
                                 alt="Talk About the Three Major Types of Floor Tiles">
-                            <a href="blog-details-right.html" class="blog-card__image__link"><span class="sr-only">Talk
+                            <a href="#" class="blog-card__image__link"><span class="sr-only">Talk
                                     About the Three Major Types of Flooring Marbles</span>
                                 <!-- /.sr-only --></a>
                         </div><!-- /.blog-card__image -->
@@ -1678,13 +1515,13 @@
                             <li><a href="#"><i class="icon-comment"></i> 2 Comments</a></li>
                         </ul><!-- /.list-unstyled blog-card__meta -->
                         <div class="blog-card__content">
-                            <h3 class="blog-card__title"><a href="blog-details-right.html">Talk About the Three Major
+                            <h3 class="blog-card__title"><a href="#">Talk About the Three Major
                                     Types of Flooring Marbles</a></h3><!-- /.blog-card__title -->
                         </div><!-- /.blog-card__content -->
                         <div class="blog-card__image">
                             <img src="{{ asset('website-assets/images/blog/blog-1-10.jpg') }}"
                                 alt="Talk About the Three Major Types of Floor Tiles">
-                            <a href="blog-details-right.html" class="blog-card__image__link"><span class="sr-only">Talk
+                            <a href="#" class="blog-card__image__link"><span class="sr-only">Talk
                                     About the Three Major Types of Flooring Marbles</span>
                                 <!-- /.sr-only --></a>
                         </div><!-- /.blog-card__image -->
@@ -1696,7 +1533,7 @@
                 </div><!-- /.col-md-6 col-lg-4 -->
             </div><!-- /.row -->
         </div><!-- /.container -->
-    </section><!-- /.blog-one section-space-two -->
+    </section><!-- /.blog-one section-space-two --> --}}
     <!-- blog end -->
 @endsection
 @section('js-content')

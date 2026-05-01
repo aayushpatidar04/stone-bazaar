@@ -23,7 +23,7 @@
 @endsection
 @section('content')
     <section class="page-header">
-        <div class="page-header__bg" style="background-image: url({{ $seller->seller->banner }});"></div>
+        <div class="page-header__bg bg-white-texture" style="background: #bbbec1;"></div>
         <!-- /.page-header__bg -->
         <div class="container">
             <img src="{{ $seller->seller->logo ?? asset('assets/images/logo.png') }}"
@@ -38,7 +38,7 @@
                 <div class="team-details__image">
                     <img src="{{ $seller->seller->warehouse_image ? $seller->seller->warehouse_image : $seller->office_image }}"
                         alt="{{ $seller->seller->business_name ?? $seller->name }}"
-                        style="height: 100%; object-fit: cover;">
+                        style="height: auto; width: 100%; object-fit: cover;">
                 </div><!-- /.team-details__image -->
                 <div class="team-details__content">
                     <div class="team-details__top">
@@ -172,9 +172,9 @@
             <div class="text-center">
                 <h3 class="sec-title__title mb-2 text-dark">Gallery</h3>
                 <ul class="list-unstyled post-filter gallery-one__filter__list">
-                    <li class="active" data-filter=".filter-item"><span>all</span></li>
+                    <li class="active" data-filter=".filter-item"><span class="text-dark">all</span></li>
                     @foreach ($sellerGallery as $type => $images)
-                    <li data-filter=".{{ \Illuminate\Support\Str::slug($type, '-') }}"><span>{{ \Illuminate\Support\Str::slug($type, '-') }}</span></li>
+                    <li data-filter=".{{ \Illuminate\Support\Str::slug($type, '-') }}"><span class="text-dark">{{ \Illuminate\Support\Str::slug($type, '-') }}</span></li>
                     @endforeach
                 </ul><!-- /.list-unstyledf -->
             </div><!-- /.text-center -->

@@ -69,6 +69,13 @@ Route::group(['middleware' => ['auth', 'role:Admin']], function () {
 
     Route::get('/admin/plans', [AdminController::class, 'plans'])->name('admin.plans');
     Route::post('/admin/add-plan', [AdminController::class, 'addPlan'])->name('admin.addPlan');
+
+    Route::post('/sellers/{id}/feature', [AdminController::class, 'markAsFeatured'])->name('sellers.feature');
+    Route::post('/sellers/{id}/feature-x', [AdminController::class, 'removeFromFeatured'])->name('sellers.feature-x');
+
+    Route::post('/architects/{id}/feature', [AdminController::class, 'markAsFeaturedArch'])->name('architects.feature');
+    Route::post('/architects/{id}/feature-x', [AdminController::class, 'removeFromFeaturedArch'])->name('architects.feature-x');
+
 });
 
 
@@ -105,9 +112,12 @@ Route::group(['middleware' => ['auth', 'role:Seller', 'seller.verified']], funct
     Route::post('/seller/update-domain', [SellerController::class, 'updateDomain'])->name('seller.update-domain');
     Route::post('/seller/add-subcategory', [SellerController::class, 'addSubCategory'])->name('seller.addSubcategory');
     Route::post('/seller/add-product', [SellerController::class, 'addProduct'])->name('seller.addProduct');
+    Route::post('/seller/update-product/{id}', [SellerController::class, 'updateProduct'])->name('seller.updateProduct');
+    Route::post('/seller/delete-product/{id}', [SellerController::class, 'deleteProduct'])->name('seller.deleteProduct');
     // other seller routes...
 
     Route::post('/seller/close-seller-enquiry/{id}', [SellerController::class, 'closeSellerEnquiry'])->name('seller.close-seller-enquiry');
+    Route::post('/seller/fail-seller-enquiry/{id}', [SellerController::class, 'failSellerEnquiry'])->name('seller.fail-seller-enquiry');
     Route::post('/seller/close-product-enquiry/{id}', [SellerController::class, 'closeProductEnquiry'])->name('seller.close-product-enquiry');
 });
 

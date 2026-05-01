@@ -534,7 +534,20 @@ class SellerController extends Controller
         $enquiry->save();
 
         return response()->json([
-            'status' => true
+            'status' => true,
+            'message' => 'Enquiry closed successfully'
+        ]);
+    }
+
+    public function failSellerEnquiry($id)
+    {
+        $enquiry = SellerEnquiry::find($id);
+        $enquiry->status = 'failed';
+        $enquiry->save();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Enquiry marked as failed successfully'
         ]);
     }
 
@@ -546,6 +559,167 @@ class SellerController extends Controller
 
         return response()->json([
             'status' => true
+        ]);
+    }
+
+    public function deleteProduct($id)
+    {
+        $product = Product::find($id);
+
+        if (!$product) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Product not found'
+            ], 404);
+        }
+
+        // Verify the product belongs to the current seller
+        $subcategoryId = $product->seller_subcategory_id;
+        $subcategory = SellerSubcategory::find($subcategoryId);
+        
+        if (!$subcategory || $subcategory->domain->user_id != Auth::id()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Unauthorized'
+            ], 403);
+        }
+
+        // Delete images from storage
+        if ($product->images) {
+            foreach ($product->images as $imageData) {
+                $relativePath = str_replace(url('/'), '', $imageData['image']);
+                $fullPath = public_path($relativePath);
+                
+                if (file_exists($fullPath)) {
+                    unlink($fullPath);
+                }
+            }
+        }
+
+        $product->delete();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Product deleted successfully'
+        ]);
+    }
+
+    public function updateProduct(Request $request, $id)
+    {
+        $product = Product::find($id);
+
+        if (!$product) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Product not found'
+            ], 404);
+        }
+
+        // Verify the product belongs to the current seller
+        $subcategoryId = $product->seller_subcategory_id;
+        $subcategory = SellerSubcategory::find($subcategoryId);
+        
+        if (!$subcategory || $subcategory->domain->user_id != Auth::id()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Unauthorized'
+            ], 403);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'name'        => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'finishes'    => 'nullable|string',
+            'sizes'       => 'nullable|string',
+            'thickness'   => 'nullable|string|max:50',
+            'color'       => 'nullable|string|max:100',
+            'quality'     => 'nullable|string',
+            'usage_area'  => 'nullable|string',
+            'images'      => 'nullable|array',
+            'images.*'    => 'nullable|file|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'existing_images' => 'nullable|string', // JSON string from form
+            'removed_images' => 'nullable|array', // Array of image URLs to remove
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        // Handle existing images
+        $existingImages = [];
+        if ($request->input('existing_images')) {
+            $existingImages = json_decode($request->input('existing_images'), true) ?? [];
+        }
+
+        // Remove images that user wants to remove
+        $removedImages = $request->input('removed_images', []);
+        $existingImages = array_filter($existingImages, function($img) use ($removedImages) {
+            return !in_array($img['image'], $removedImages);
+        });
+
+        // Process new images
+        if ($request->has('images') && $request->file('images')) {
+            foreach ($request->file('images') as $index => $imageFile) {
+                if ($imageFile) {
+                    // Generate unique filename
+                    $filename = time() . '_' . $index . '.' . $imageFile->getClientOriginalExtension();
+
+                    // Move file to public/uploads/product_images
+                    $imageFile->move(public_path('uploads/product_images'), $filename);
+
+                    // Build full URL
+                    $imageUrl = url('uploads/product_images/' . $filename);
+
+                    // Get type from request
+                    $type = $request->input("type.{$index}");
+
+                    // Push into array
+                    $existingImages[] = [
+                        'type'  => $type,
+                        'image' => $imageUrl,
+                    ];
+                }
+            }
+        }
+
+        // Check if at least one image is marked as display
+        $hasDisplayImage = collect($existingImages)->contains('type', 'display');
+        if (!$hasDisplayImage) {
+            return response()->json([
+                'status' => false,
+                'errors' => ['type' => ['At least one image must be marked as Display.']]
+            ], 422);
+        }
+
+        // Delete removed images from storage
+        foreach ($removedImages as $removedImageUrl) {
+            $relativePath = str_replace(url('/'), '', $removedImageUrl);
+            $fullPath = public_path($relativePath);
+            
+            if (file_exists($fullPath)) {
+                unlink($fullPath);
+            }
+        }
+
+        // Update product
+        $product->name = $request->name;
+        $product->description = $request->description;
+        $product->images = array_values($existingImages); // Re-index array
+        $product->finishes = json_decode($request->finishes, true);
+        $product->sizes = json_decode($request->sizes, true);
+        $product->thickness = $request->thickness;
+        $product->color = $request->color;
+        $product->quality = $request->quality;
+        $product->usage_area = json_decode($request->usage_area, true);
+        $product->save();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Product updated successfully',
+            'product' => $product,
         ]);
     }
 }

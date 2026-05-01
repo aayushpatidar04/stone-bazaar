@@ -32,7 +32,7 @@
         $displayImage = collect($product->images)->firstWhere('type', 'display');
     @endphp
     <section class="page-header">
-        <div class="page-header__bg" style="background-image: url({{ $displayImage['image'] }}); filter: blur(2px);"></div>
+        <div class="page-header__bg bg-white-texture" style="background: #bbbec1;"></div>
         <!-- /.page-header__bg -->
         <div class="container">
             <h2 class="page-header__title"
@@ -90,25 +90,37 @@
                         @if ($product->quality)
                             <div class="product-details__excerpt">
                                 <p class="product-details__excerpt__text1 text-dark">
-                                    {!! nl2br(e($product->quality)) !!}
+                                    <span><b>Quality: </b></span>{!! nl2br(e($product->quality)) !!}
                                 </p>
                             </div><!-- /.excerp-text -->
                         @endif
-                        @if ($product->sizes)
+                        @if ($product->sizes || $product->finishes || $product->usage_area || $product->thickness)
                             <table class="my-3 product-details text-dark">
                                 <tbody>
+                                    @if ($product->sizes)
                                     <tr>
                                         <td style="width: 120px;"><b>Sizes : </b></td>
                                         <td>{{ implode(' | ', array_column($product->sizes, 'value')) }}</td>
                                     </tr>
+                                    @endif
+                                     @if ($product->finishes)
                                     <tr>
                                         <td><b>Finishes : </b></td>
                                         <td>{{ implode(' | ', array_column($product->finishes, 'value')) }}</td>
                                     </tr>
+                                    @endif
+                                    @if($product->usage_area)
                                     <tr>
-                                        <td><b>Usage Areas : </b></td>
+                                        <td style="width: 120px;"><b>Usage Areas : </b></td>
                                         <td>{{ implode(' | ', array_column($product->usage_area, 'value')) }}</td>
                                     </tr>
+                                    @endif
+                                    @if($product->thickness)
+                                    <tr>
+                                        <td><b>Thickness : </b></td>
+                                        <td>{{ $product->thickness }}</td>
+                                    </tr>
+                                    @endif
                                 </tbody>
                             </table>
                             <hr style="opacity: 1;">

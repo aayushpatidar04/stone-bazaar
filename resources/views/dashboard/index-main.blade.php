@@ -212,7 +212,7 @@
                             </li>
                         </ul>
                         <ul class="nav-right">
-                            <li class="header-notification">
+                            {{-- <li class="header-notification">
                                 <div class="dropdown-primary dropdown">
                                     <div class="dropdown-toggle" data-bs-toggle="dropdown">
                                         <i class="feather icon-bell"></i>
@@ -282,7 +282,7 @@
                                         <span class="badge bg-c-green">3</span>
                                     </div>
                                 </div>
-                            </li>
+                            </li> --}}
                             <li class="user-profile header-notification">
                                 <div class="dropdown-primary dropdown">
                                     <div class="dropdown-toggle" data-bs-toggle="dropdown">
@@ -305,16 +305,6 @@
                                                 </a>
                                             </li>
                                         @endif
-                                        {{-- <li>
-                                            <a href="email-inbox.html">
-                                                <i class="feather icon-mail"></i> My Messages
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="auth-lock-screen.html">
-                                                <i class="feather icon-lock"></i> Lock Screen
-                                            </a>
-                                        </li> --}}
                                         <li>
                                             <a href="{{ route('logout') }}"
                                                 onclick="event.preventDefault();
@@ -477,28 +467,11 @@
                         <div class="pcoded-inner-navbar main-menu">
                             <!-- Dashboard -->
                             <ul class="pcoded-item pcoded-left-item">
-                                <li class="pcoded-hasmenu" id="dashboard">
-                                    <a href="javascript:void(0)">
+                                <li id="dashboard">
+                                    <a href="{{ Route('home') }}">
                                         <span class="pcoded-micon"><i class="feather icon-home"></i></span>
                                         <span class="pcoded-mtext">Dashboard</span>
                                     </a>
-                                    <ul class="pcoded-submenu">
-                                        <li id="dashboard-default">
-                                            <a href="{{ Route('home') }}">
-                                                <span class="pcoded-mtext">Default</span>
-                                            </a>
-                                        </li>
-                                        <li id="dashboard-crm">
-                                            <a href="dashboard-crm.html">
-                                                <span class="pcoded-mtext">CRM</span>
-                                            </a>
-                                        </li>
-                                        <li id="dashboard-analytics">
-                                            <a href="dashboard-analytics.html">
-                                                <span class="pcoded-mtext">Analytics</span>
-                                            </a>
-                                        </li>
-                                    </ul>
                                 </li>
                                 @if (!Auth::user()->hasRole('Admin'))
                                     <li id="profile">

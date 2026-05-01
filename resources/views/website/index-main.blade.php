@@ -65,10 +65,9 @@
         }
 
         /* Show only on mobile */
-        @media (max-width: 768px) {
+        /* @media (max-width: 768px) {
             .main-header {
                 display: none;
-                /* hide the top header */
             }
 
             .mobile-bottom-nav {
@@ -102,7 +101,7 @@
             .mobile-bottom-nav__item span {
                 display: block;
             }
-        }
+        } */
     </style>
 </head>
 
@@ -169,7 +168,7 @@
                     <div class="main-header__left">
                         <div class="main-header__logo">
                             <a href="{{ Route('index') }}">
-                                <img src="{{ asset('website-assets/images/logo-yellow.png') }}" alt="Stone Bazaar"
+                                <img src="{{ asset('website-assets/images/logo-white.png') }}" alt="Stone Bazaar"
                                     width="125">
                             </a>
                         </div><!-- /.main-header__logo -->
@@ -179,23 +178,19 @@
                                 <li class="megamenu">
                                     <a href="{{ Route('index') }}">Home</a>
                                 </li>
-
-
-
-                                <li>
-                                    <a href="about.html">About</a>
-                                </li>
-
                                 <li>
                                     <a href="{{ Route('sellers') }}">Vendors</a>
                                 </li>
-
                                 <li>
+                                    <a href="{{ Route('architects') }}">Architects</a>
+                                </li>
+                                {{-- <li>
                                     <a href="{{ Route('contact') }}">Contact</a>
-                                </li>
+                                </li> --}}
                                 <li>
-                                    <a href="{{ Route('plans') }}">Pricing</a>
+                                    <a href="{{ Route('plans') }}">Plans</a>
                                 </li>
+
                             </ul>
                         </nav><!-- /.main-header__nav -->
                     </div><!-- /.main-header__left -->
@@ -332,9 +327,9 @@
                                     <h2 class="footer-widget__title">Explore</h2><!-- /.footer-widget__title -->
                                 </div><!-- /.footer-widget__top -->
                                 <ul class="list-unstyled footer-widget__links">
-                                    <li><a href="about.html">About Us</a></li>
-                                    <li><a href="services.html">Our Services</a></li>
-                                    <li><a href="team.html">Meet the Team</a></li>
+                                    <li><a href="#" class="sidebar-btn__toggler">About</a></li>
+                                    <li><a href="#">Our Services</a></li>
+                                    <li><a href="#">Meet the Team</a></li>
                                     <li><a href="{{ Route('plans') }}">Subscription Plans</a></li>
                                     <li><a href="{{ Route('contact') }}">Contact</a></li>
                                 </ul><!-- /.list-unstyled footer-widget__links -->
@@ -466,10 +461,10 @@
                     <a href="{{ Route('login') }}" class="btn btn-secondary mb-2">
                         <span>Sign In</span>
                     </a>
-                    <a href="#" class="btn btn-secondary mb-2">
+                    <a href="{{ Route('register', ['role' => 'Seller']) }}" class="btn btn-secondary mb-2">
                         Sign Up as Seller/Merchant
                     </a>
-                    <a href="#" class="btn btn-secondary mb-2">
+                    <a href="{{ Route('register', ['role' => 'Architect']) }}" class="btn btn-secondary mb-2">
                         Sign Up as Architect/Interior Designer
                     </a>
                 @else
@@ -489,10 +484,6 @@
         <a href="{{ Route('index') }}" class="mobile-bottom-nav__item">
             <i class="fa fa-home"></i>
             <span>Home</span>
-        </a>
-        <a href="about.html" class="mobile-bottom-nav__item">
-            <i class="fa fa-info-circle"></i>
-            <span>About</span>
         </a>
         <a href="{{ Route('plans') }}" class="mobile-bottom-nav__item">
             <i class="fa fa-tags"></i>
@@ -564,7 +555,7 @@
                     <span class="sr-only">Youtube</span>
                 </a>
             </div><!-- /sidebar-one__social -->
-            <div class="sidebar-one__newsletter sidebar-one__item">
+            {{-- <div class="sidebar-one__newsletter sidebar-one__item">
                 <label class="sidebar-one__title" for="sidebar-email">Newsletter Subscribe</label>
                 <form action="#" class="sidebar-one__newsletter__inner mc-form" data-url="MAILCHIMP_FORM_URL">
                     <input type="email" name="sidebar-email" id="sidebar-email"
@@ -573,7 +564,7 @@
                             aria-hidden="true"></span></button>
                 </form>
                 <div class="mc-form__response"></div><!-- /.mc-form__response -->
-            </div><!-- /.sidebar-one__form -->
+            </div><!-- /.sidebar-one__form --> --}}
         </div><!-- /.sidebar__content -->
     </aside><!-- /.sidebar-one -->
 

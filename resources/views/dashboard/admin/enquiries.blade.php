@@ -61,7 +61,7 @@
                                     <td>{{ $enquiry->type }}</td>
                                     <td>{!! nl2br(e($enquiry->message)) !!}</td>
                                     <td><label
-                                            class="label @if ($enquiry->status == 'pending') bg-danger @elseif($enquiry->status == 'forwarded') bg-success @else bg-warning @endif">{{ ucfirst($enquiry->status) }}</label>
+                                            class="label @if ($enquiry->status == 'pending') bg-danger @elseif($enquiry->status == 'forwarded') bg-success @elseif($enquiry->status == 'failed') bg-secondary @else bg-warning @endif">{{ ucfirst($enquiry->status) }}</label>
                                     </td>
                                     <td><a
                                             href="{{ Route('seller', ['id' => $enquiry->user_id]) }}">{{ $enquiry->user->seller->business_name ?? $enquiry->user->name }}</a><br>{{ $enquiry->user->phone_number }}<br>{{ $enquiry->user->email }}
@@ -70,7 +70,11 @@
                                         @if($enquiry->status == 'pending')
                                         <a href="javascript:void(0);" class="waves-effect md-trigger text-success forward-seller-enquiry"
                                             style="font-size: 24px;" data-bs-toggle="tooltip" data-bs-placement="left"
-                                            title="Forward Enquiry" data-id="{{ $enquiry->id }}"><i class="fa-solid fa-forward"></i></a>
+                                            title="Forward to Original Seller" data-id="{{ $enquiry->id }}"><i class="fa-solid fa-forward"></i></a>
+                                        @elseif($enquiry->status == 'forwarded' || $enquiry->status == 'failed')
+                                        <a href="javascript:void(0);" class="waves-effect md-trigger text-primary forward-to-seller"
+                                            style="font-size: 24px;" data-bs-toggle="tooltip" data-bs-placement="left"
+                                            title="Forward to Another Seller" data-id="{{ $enquiry->id }}"><i class="fa-solid fa-share"></i></a>
                                         @endif
                                     </td>
                                 </tr>
@@ -189,6 +193,34 @@
             </div>
         </div>
     </div>
+
+    <!-- Seller Selection Modal -->
+    <div class="modal fade" id="sellerSelectionModal" tabindex="-1" role="dialog" aria-labelledby="sellerSelectionModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="sellerSelectionModalLabel">Select Seller to Forward Enquiry</h5>
+                    
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="selectedEnquiryId">
+                    <div class="form-group">
+                        <label for="sellerSelect">Choose Seller:</label>
+                        <select class="form-control" id="sellerSelect" required>
+                            <option value="">Select a seller...</option>
+                            @foreach(\App\Models\User::role('Seller')->whereHas('seller', function($q) { $q->where('status', 'approved'); })->get() as $seller)
+                            <option value="{{ $seller->id }}">{{ $seller->seller->business_name ?? $seller->name }} ({{ $seller->phone_number }})</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="confirmForward">Forward Enquiry</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('js-content')
     <script>
@@ -215,9 +247,7 @@
                         }, function() {
                             const $row = $(`a.forward-seller-enquiry[data-id="${id}"]`).closest('tr'); 
                             const $badge = $row.find('label'); 
-                            $badge.removeClass('bg-danger bg-warning').addClass('bg-success').text('Forwarded');
-
-                            $row.find('a.forward-seller-enquiry').remove();
+                            $badge.removeClass('bg-danger bg-secondary bg-warning').addClass('bg-success').text('Forwarded');
                         });
                     }).fail(() => {
                         swal("Error!", "Something went wrong", "error");
@@ -225,6 +255,42 @@
                 });
 
 
+            });
+
+            $(document).on('click', '.forward-to-seller', function() {
+                const id = $(this).data('id');
+                $('#selectedEnquiryId').val(id);
+                $('#sellerSelectionModal').modal('show');
+            });
+
+            $('#confirmForward').on('click', function() {
+                const enquiryId = $('#selectedEnquiryId').val();
+                const sellerId = $('#sellerSelect').val();
+
+                if (!sellerId) {
+                    alert('Please select a seller');
+                    return;
+                }
+
+                $.post(`/admin/forward-seller-enquiry/${enquiryId}`, {
+                    _token: "{{ csrf_token() }}",
+                    seller_id: sellerId
+                }).done(res => {
+                    $('#sellerSelectionModal').modal('hide');
+                    $('#sellerSelect').val('');
+                    swal({
+                        title: "Success!",
+                        text: res.message,
+                        type: "success"
+                    }, function() {
+                        const $row = $(`a.forward-to-seller[data-id="${enquiryId}"]`).closest('tr');
+                        const $badge = $row.find('label');
+                        $badge.removeClass('bg-danger bg-secondary bg-warning').addClass('bg-success').text('Forwarded');
+                    });
+                }).fail(() => {
+                    $('#sellerSelectionModal').modal('hide');
+                    swal("Error!", "Something went wrong", "error");
+                });
             });
         
             $(document).on('click', '.forward-product-enquiry', function() {

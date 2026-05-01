@@ -3,7 +3,7 @@
 @section('content')
     <section class="page-header">
         <div class="page-header__bg"
-            style="background: url({{ asset('website-assets/images/backgrounds/slider-3-2.jpg') }});"></div>
+            style="background: url({{ asset('website-assets/images/backgrounds/banner.png') }});"></div>
         <!-- /.page-header__bg -->
         <div class="container">
             <h2 class="page-header__title">Contact Us</h2>

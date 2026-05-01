@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Architect;
 use App\Models\ArchitectEnquiry;
 use App\Models\ProductEnquiry;
 use App\Models\Query;
+use App\Models\Seller;
 use App\Models\SellerEnquiry;
 use App\Models\SubscriptionPlan;
 use App\Models\User;
@@ -111,14 +113,63 @@ class AdminController extends Controller
         ]);
     }
 
-    public function forwardSellerEnquiry($id)
+    public function markAsFeatured($id)
+    {
+        $seller = Seller::findOrFail($id);
+        $seller->is_featured = 1;
+        $seller->save();
+
+        return response()->json(['success' => true, 'message' => 'Seller marked as featured']);
+    }
+
+    public function removeFromFeatured($id)
+    {
+        $seller = Seller::findOrFail($id);
+        $seller->is_featured = 0;
+        $seller->save();
+
+        return response()->json(['success' => true, 'message' => 'Seller removed from featured']);
+    }
+
+    public function markAsFeaturedArch($id)
+    {
+        $architect = Architect::findOrFail($id);
+        $architect->is_featured = 1;
+        $architect->save();
+
+        return response()->json(['success' => true, 'message' => 'Architect marked as featured']);
+    }
+
+    public function removeFromFeaturedArch($id)
+    {
+        $architect = Architect::findOrFail($id);
+        $architect->is_featured = 0;
+        $architect->save();
+
+        return response()->json(['success' => true, 'message' => 'Architect removed from featured']);
+    }
+
+    public function forwardSellerEnquiry(Request $request, $id)
     {
         $enquiry = SellerEnquiry::find($id);
+
+        // Allow forwarding regardless of current status (pending, forwarded, failed)
         $enquiry->status = 'forwarded';
+
+        // If a specific seller is selected, we could store that information here
+        // For now, we just set the status to forwarded
+        if ($request->has('seller_id')) {
+            // Future: Store forwarding history or assign to specific seller
+            $enquiry->forwarded_to = $request->seller_id;
+        }else{
+            $enquiry->forwarded_to = $enquiry->user_id; // or some default value indicating it's forwarded but not assigned to a specific seller
+        }
+
         $enquiry->save();
 
         return response()->json([
-            'status' => true
+            'status' => true,
+            'message' => 'Enquiry forwarded successfully'
         ]);
     }
 

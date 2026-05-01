@@ -54,13 +54,18 @@
                                     <td>{{ $enquiry->name }}<br>{{ $enquiry->phone }}<br>{{ $enquiry->email }}</td>
                                     <td>{!! nl2br(e($enquiry->message)) !!}</td>
                                     <td><label
-                                            class="label @if ($enquiry->status == 'pending') bg-danger @elseif($enquiry->status == 'forwarded') bg-success @else bg-warning @endif">{{ ucfirst($enquiry->status) }}</label>
+                                            class="label @if ($enquiry->status == 'pending') bg-danger @elseif($enquiry->status == 'forwarded') bg-success @elseif($enquiry->status == 'failed') bg-secondary @else bg-warning @endif">{{ ucfirst($enquiry->status) }}</label>
                                     </td>
                                     <td>
                                         @if($enquiry->status == 'forwarded')
-                                        <a href="javascript:void(0);" class="waves-effect md-trigger text-success close-seller-enquiry"
-                                            style="font-size: 24px;" data-bs-toggle="tooltip" data-bs-placement="left"
-                                            title="Close Enquiry" data-id="{{ $enquiry->id }}"><i class="fa-solid fa-thumbs-up"></i></a>
+                                        <div class="btn-group" role="group">
+                                            <a href="javascript:void(0);" class="waves-effect md-trigger text-success close-seller-enquiry"
+                                                style="font-size: 18px;" data-bs-toggle="tooltip" data-bs-placement="left"
+                                                title="Close Enquiry" data-id="{{ $enquiry->id }}"><i class="fa-solid fa-thumbs-up"></i></a>
+                                            <a href="javascript:void(0);" class="waves-effect md-trigger text-danger fail-seller-enquiry"
+                                                style="font-size: 18px;" data-bs-toggle="tooltip" data-bs-placement="left"
+                                                title="Mark as Failed" data-id="{{ $enquiry->id }}"><i class="fa-solid fa-thumbs-down"></i></a>
+                                        </div>
                                         @endif
                                     </td>
                                 </tr>
@@ -156,6 +161,40 @@
                             $badge.removeClass('bg-danger bg-warning').addClass('bg-success').text('Closed');
 
                             $row.find('a.close-seller-enquiry').remove();
+                            $row.find('a.fail-seller-enquiry').remove();
+                        });
+                    }).fail(() => {
+                        swal("Error!", "Something went wrong", "error");
+                    });
+                });
+
+
+            });
+
+            $(document).on('click', '.fail-seller-enquiry', function() {
+                const id = $(this).data('id');
+                swal({
+                    title: "Confirm Action",
+                    text: `Do you want to mark this enquiry as failed?`,
+                    type: "warning",
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    showLoaderOnConfirm: true
+                }, function() {
+                    $.post(`/seller/fail-seller-enquiry/${id}`, {
+                        _token: "{{ csrf_token() }}"
+                    }).done(res => {
+                        swal({
+                            title: "Success!",
+                            text: res.message,
+                            type: "success"
+                        }, function() {
+                            const $row = $(`a.fail-seller-enquiry[data-id="${id}"]`).closest('tr'); 
+                            const $badge = $row.find('label'); 
+                            $badge.removeClass('bg-danger bg-warning bg-success').addClass('bg-secondary').text('Failed');
+
+                            $row.find('a.close-seller-enquiry').remove();
+                            $row.find('a.fail-seller-enquiry').remove();
                         });
                     }).fail(() => {
                         swal("Error!", "Something went wrong", "error");

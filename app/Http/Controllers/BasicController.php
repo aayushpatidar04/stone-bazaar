@@ -28,10 +28,14 @@ class BasicController extends Controller
     {
         $sellers = User::role('Seller')->whereHas('seller', function ($q) {
             $q->whereNotNull('warehouse_image')->orWhereNotNull('office_image')->orWhereNotNull('logo');
-        })->with('seller')->latest()->take(5)->get();
+        })->whereHas('seller', function ($q) {
+            $q->where('is_featured', 1);
+        })->with('seller')->get();
         $architects = User::role('Architect')->whereHas('architect', function ($q) {
             $q->WhereNotNull('logo');
-        })->with('architect')->latest()->take(5)->get();
+        })->whereHas('architect', function ($q) {
+            $q->where('is_featured', 1);
+        })->with('architect')->get();
 
         return view('website.index', compact('sellers', 'architects'));
     }
