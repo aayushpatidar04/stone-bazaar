@@ -97,9 +97,16 @@
                                     <span class="form-bar"></span>
                                 </div>
                                 <div class="mb-3 form-primary">
-                                    <input type="password" name="password"
-                                        class="form-control @error('password') is-invalid @enderror" required
-                                        autocomplete="current-password" placeholder="Password">
+                                    <div class="input-group">
+                                        <input type="password" id="password" name="password"
+                                            class="form-control @error('password') is-invalid @enderror" required
+                                            autocomplete="current-password" placeholder="Password">
+
+                                        <button type="button" class="btn btn-outline-secondary" id="togglePassword">
+                                            <i class="ti ti-eye"></i> <!-- Bootstrap Icons eye -->
+                                        </button>
+                                    </div>
+
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -111,8 +118,8 @@
                                     <div class="col-12">
                                         <div class="checkbox-fade fade-in-primary d-">
                                             <label class="form-label">
-                                                <input class="form-check-input" type="checkbox" name="remember" id="remember"
-                                            {{ old('remember') ? 'checked' : '' }}>
+                                                <input class="form-check-input" type="checkbox" name="remember"
+                                                    id="remember" {{ old('remember') ? 'checked' : '' }}>
                                                 <span class="cr"><i
                                                         class="cr-icon icofont icofont-ui-check txt-primary"></i></span>
                                                 <span class="text-inverse">Remember me</span>
@@ -120,9 +127,10 @@
                                         </div>
                                         <div class="forgot-phone text-end f-right">
                                             @if (Route::has('password.request'))
-                                            <a href="{{ route('password.request') }}" class="text-end f-w-600"> Forgot
-                                                Password?</a>
-                                                @endif
+                                                <a href="{{ route('password.request') }}" class="text-end f-w-600">
+                                                    Forgot
+                                                    Password?</a>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -174,6 +182,23 @@
     </script>
     <script src="{{ asset('plugins/jquery-i18next/jquery-i18next.min.js') }}"></script>
     <script src="{{ asset('assets/js/common-pages.js') }}"></script>
+
+    <script>
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            const icon = this.querySelector('i');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.remove('ti-eye');
+                icon.classList.add('ti-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.remove('ti-eye-slash');
+                icon.classList.add('ti-eye');
+            }
+        });
+    </script>
 
 </body>
 
