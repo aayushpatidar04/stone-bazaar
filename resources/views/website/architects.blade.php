@@ -94,15 +94,6 @@
     </style>
 @endsection
 @section('content')
-    <section class="page-header">
-        <div class="page-header__bg"
-            style="background: url({{ asset('website-assets/images/backgrounds/banner.png') }});"></div>
-        <!-- /.page-header__bg -->
-        <div class="container">
-            <h2 class="page-header__title">Architects</h2>
-            <img src="{{ asset('assets/images/logo-white.png') }}" alt="Stone Bazaar" style="width: 100px; height: auto;">
-        </div><!-- /.container -->
-    </section><!-- /.page-header -->
 
     {{-- <section class="vendors-mobile">
         <div class="container">
@@ -145,6 +136,10 @@
     </section> --}}
 
     <section class="team-one--page section-space bg-white-texture">
+        <div class="text-center">
+            <h2 class="page-header__title">Architects</h2>
+        </div>
+        <br>
         <div class="container">
             <div class="row gutter-y-30">
                 @foreach ($architects as $architect)

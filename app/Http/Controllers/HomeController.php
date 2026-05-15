@@ -26,7 +26,7 @@ class HomeController extends Controller
         }
 
         if ($user->hasRole('Architect')) {
-            return redirect()->route('architect.dashboard');
+            return redirect()->route('profile');
         }
 
         if ($user->hasRole('Admin')) {

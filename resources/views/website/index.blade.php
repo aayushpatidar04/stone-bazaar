@@ -28,14 +28,14 @@
         }
 
         /* @media (max-width: 768px) {
-                #vendors {
-                    display: none;
-                }
+                                        #vendors {
+                                            display: none;
+                                        }
 
-                .main-slider-two {
-                    display: none;
-                }
-            } */
+                                        .main-slider-two {
+                                            display: none;
+                                        }
+                                    } */
 
         .hero-banner-mobile {
             display: none;
@@ -102,10 +102,10 @@
 
         /* Show only on mobile */
         /* @media (max-width: 768px) {
-                .hero-banner-mobile {
-                    display: block;
-                }
-            } */
+                                        .hero-banner-mobile {
+                                            display: block;
+                                        }
+                                    } */
 
         .stats-mobile {
             display: none;
@@ -149,10 +149,10 @@
 
         /* Show only on mobile */
         /* @media (max-width: 768px) {
-                .stats-mobile {
-                    display: block;
-                }
-            } */
+                                        .stats-mobile {
+                                            display: block;
+                                        }
+                                    } */
 
         .vendors-mobile {
             display: none;
@@ -215,10 +215,32 @@
 
         /* Show only on mobile */
         /* @media (max-width: 768px) {
-                .vendors-mobile {
-                    display: block;
-                }
-            } */
+                                        .vendors-mobile {
+                                            display: block;
+                                        }
+                                    } */
+
+        .clients-section {
+            background: #f9f9f9;
+        }
+
+        .client-logo-frame {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .client-logo-frame img {
+            height: 100px;
+            width: 100px;
+            object-fit: contain;
+            border-radius: 50px;
+        }
+
+        .client-logo-frame:hover {
+            transform: translateY(-5px);
+        }
     </style>
 @endsection
 @section('content')
@@ -628,6 +650,7 @@
                                         <i class="icon-right-arrow"></i>
                                     </a>
                                     <span class="service-card-two__icon"><img src="{{ $seller->seller->logo }}"
+                                            style="width: 80px; height: 80px; border-radius: 50px; object-fit: cover;"
                                             alt="{{ $seller->seller->business_name ?? $seller->name }}"></span>
                                 </div><!-- /.service-card-two__bottom -->
                             </div><!-- /.service-card-two__content -->
@@ -805,6 +828,65 @@
     </section><!-- /.about-two section-space -->
     <!-- about end -->
 
+    <section class="clients-section py-5 bg-light">
+        <div class="container">
+            <div class="section-header text-center mb-4">
+                <h2 class="section-title text-dark">Our Clients</h2>
+                <p class="section-subtitle text-dark">Trusted by leading brands and businesses</p>
+            </div>
+
+            <!-- Slider -->
+            <div class="swiper clients-slider">
+                <div class="swiper-wrapper">
+                    {{-- @foreach ($clients as $client)
+                        <div class="swiper-slide">
+                            <div class="client-logo-frame d-flex align-items-center justify-content-center">
+                                <img src="{{ $client->logo }}" alt="{{ $client->name }}" class="img-fluid">
+                            </div>
+                        </div>
+                    @endforeach --}}
+                    <div class="swiper-slide">
+                        <div class="client-logo-frame d-flex align-items-center justify-content-center">
+                            <img src="{{ asset('assets/images/user-card/img-round2.jpg') }}" alt="Dev Aayush"
+                                class="img-fluid">
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="client-logo-frame d-flex align-items-center justify-content-center">
+                            <img src="{{ asset('assets/images/user-card/img-round2.jpg') }}" alt="Dev Aayush"
+                                class="img-fluid">
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="client-logo-frame d-flex align-items-center justify-content-center">
+                            <img src="{{ asset('assets/images/user-card/img-round2.jpg') }}" alt="Dev Aayush"
+                                class="img-fluid">
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="client-logo-frame d-flex align-items-center justify-content-center">
+                            <img src="{{ asset('assets/images/user-card/img-round2.jpg') }}" alt="Dev Aayush"
+                                class="img-fluid">
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="client-logo-frame d-flex align-items-center justify-content-center">
+                            <img src="{{ asset('assets/images/user-card/img-round2.jpg') }}" alt="Dev Aayush"
+                                class="img-fluid">
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="client-logo-frame d-flex align-items-center justify-content-center">
+                            <img src="{{ asset('assets/images/user-card/img-round2.jpg') }}" alt="Dev Aayush"
+                                class="img-fluid">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
     <!-- expertise start -->
     <section class="expertise-one section-space bg-light">
         <div class="container-fluid">
@@ -958,6 +1040,7 @@
                                         <i class="icon-right-arrow"></i>
                                     </a>
                                     <span class="service-card-two__icon"><img src="{{ $architect->architect->logo }}"
+                                            style="width: 80px; height: 80px; border-radius: 50px; object-fit: cover;"
                                             alt="{{ $architect->architect->firm_name ?? $architect->name }}"></span>
                                 </div><!-- /.service-card-two__bottom -->
                             </div><!-- /.service-card-two__content -->
@@ -1535,6 +1618,38 @@
         </div><!-- /.container -->
     </section><!-- /.blog-one section-space-two --> --}}
     <!-- blog end -->
+
+
 @endsection
 @section('js-content')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            new Swiper('.clients-slider', {
+                slidesPerView: 5,
+                spaceBetween: 20,
+                loop: true,
+                autoplay: {
+                    delay: 0, // no pause
+                    disableOnInteraction: false
+                },
+                speed: 2000, // controls continuous scroll speed (higher = slower)
+                freeMode: true, // enables momentum-like continuous scroll
+                freeModeMomentum: false, // disables bounce-back
+                breakpoints: {
+                    320: {
+                        slidesPerView: 2
+                    },
+                    768: {
+                        slidesPerView: 3
+                    },
+                    992: {
+                        slidesPerView: 4
+                    },
+                    1200: {
+                        slidesPerView: 5
+                    },
+                }
+            });
+        });
+    </script>
 @endsection

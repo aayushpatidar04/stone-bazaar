@@ -43,6 +43,15 @@
                         <thead>
                             <tr>
                                 <th>Details</th>
+                                <th>Project Type</th>
+                                <th>City</th>
+                                <th>Stone Requirement</th>
+                                <th>Quantity</th>
+                                <th>Budget Range</th>
+                                <th>Color</th>
+                                <th>Delivery Location</th>
+                                <th>Urgency</th>
+                                <th>Reference</th>
                                 <th>Message</th>
                                 <th>Status</th>
                                 <th>Action</th>
@@ -52,6 +61,15 @@
                             @foreach ($sellerEnquiries as $enquiry)
                                 <tr data-seller='@json($enquiry)'>
                                     <td>{{ $enquiry->name }}<br>{{ $enquiry->phone }}<br>{{ $enquiry->email }}</td>
+                                    <td>{{ $enquiry->project_type }}</td>
+                                    <td>{{ $enquiry->city }}</td>
+                                    <td>{{ $enquiry->stone_requirement }}</td>
+                                    <td>{{ $enquiry->quantity }}</td>
+                                    <td>{{ $enquiry->budget_range }}</td>
+                                    <td>{{ $enquiry->color_design }}</td>
+                                    <td>{{ $enquiry->delivery_location }}</td>
+                                    <td>{{ $enquiry->urgency }}</td>
+                                    <td>@if($enquiry->reference_image)<a href="{{ asset($enquiry->reference_image) }}" target="_blank">View Image</a>@endif</td>
                                     <td>{!! nl2br(e($enquiry->message)) !!}</td>
                                     <td><label
                                             class="label @if ($enquiry->status == 'pending') bg-danger @elseif($enquiry->status == 'forwarded') bg-success @elseif($enquiry->status == 'failed') bg-secondary @else bg-warning @endif">{{ ucfirst($enquiry->status) }}</label>
@@ -74,6 +92,15 @@
                         <tfoot>
                             <tr>
                                 <th>Details</th>
+                                <th>Project Type</th>
+                                <th>City</th>
+                                <th>Stone Requirement</th>
+                                <th>Quantity</th>
+                                <th>Budget Range</th>
+                                <th>Color</th>
+                                <th>Delivery Location</th>
+                                <th>Urgency</th>
+                                <th>Reference</th>
                                 <th>Message</th>
                                 <th>Status</th>
                                 <th>Action</th>

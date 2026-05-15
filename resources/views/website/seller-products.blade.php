@@ -26,15 +26,6 @@
     </style>
 @endsection
 @section('content')
-    <section class="page-header">
-        <div class="page-header__bg" style="background-image: url({{ $seller->seller->banner }});"></div>
-        <!-- /.page-header__bg -->
-        <div class="container">
-            <img src="{{ $seller->seller->logo ?? asset('assets/images/logo.png') }}"
-                alt="{{ $seller->seller->business_name ?? $seller->name }}" style="max-width: 200px; height: auto;">
-        </div><!-- /.container -->
-    </section><!-- /.page-header -->
-
     <section class="product-page product-page--left section-space-bottom bg-white-texture">
         <div class="container">
             <div class="row gutter-y-60">

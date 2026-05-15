@@ -30,6 +30,18 @@
                 <thead>
                     <tr>
                         <th>Details</th>
+                        <th>Project Type</th>
+                        <th>City</th>
+                        <th>Property Type</th>
+                        <th>Project Area</th>
+                        <th>Project Status</th>
+                        <th>Budget Range</th>
+                        <th>Services Required</th>
+                        <th>Scope of Work</th>
+                        <th>Design Preference</th>
+                        <th>Requirements</th>
+                        <th>Preferred contacting time</th>
+                        <th>Reference</th>
                         <th>Message</th>
                         <th>Status</th>
                         <th>Action</th>
@@ -39,15 +51,33 @@
                     @foreach ($architectEnquiries as $enquiry)
                         <tr data-architect='@json($enquiry)'>
                             <td>{{ $enquiry->name }}<br>{{ $enquiry->phone }}<br>{{ $enquiry->email }}</td>
+                            <td>{{ $enquiry->project_type }}</td>
+                            <td>{{ $enquiry->city }}</td>
+                            <td>{{ $enquiry->property_type }}</td>
+                            <td>{{ $enquiry->project_area }}</td>
+                            <td>{{ $enquiry->project_status }}</td>
+                            <td>{{ $enquiry->budget_range }}</td>
+                            <td>{{ $enquiry->services_required }}</td>
+                            <td>{{ $enquiry->scope_of_work }}</td>
+                            <td>{{ $enquiry->design_preference }}</td>
+                            <td>{{ $enquiry->requirements }}</td>
+                            <td>{{ $enquiry->preferred_time }}</td>
+                            <td>
+                                @if ($enquiry->reference_file)
+                                    <a href="{{ asset($enquiry->reference_file) }}" target="_blank">View File</a>
+                                @endif
+                            </td>
                             <td>{!! nl2br(e($enquiry->message)) !!}</td>
                             <td><label
                                     class="label @if ($enquiry->status == 'pending') bg-danger @elseif($enquiry->status == 'forwarded') bg-success @else bg-warning @endif">{{ ucfirst($enquiry->status) }}</label>
                             </td>
                             <td>
-                                @if($enquiry->status == 'forwarded')
-                                <a href="javascript:void(0);" class="waves-effect md-trigger text-success close-architect-enquiry"
-                                    style="font-size: 24px;" data-bs-toggle="tooltip" data-bs-placement="left"
-                                    title="Close Enquiry" data-id="{{ $enquiry->id }}"><i class="fa-solid fa-thumbs-up"></i></a>
+                                @if ($enquiry->status == 'forwarded')
+                                    <a href="javascript:void(0);"
+                                        class="waves-effect md-trigger text-success close-architect-enquiry"
+                                        style="font-size: 24px;" data-bs-toggle="tooltip" data-bs-placement="left"
+                                        title="Close Enquiry" data-id="{{ $enquiry->id }}"><i
+                                            class="fa-solid fa-thumbs-up"></i></a>
                                 @endif
                             </td>
                         </tr>
@@ -56,6 +86,18 @@
                 <tfoot>
                     <tr>
                         <th>Details</th>
+                        <th>Project Type</th>
+                        <th>City</th>
+                        <th>Property Type</th>
+                        <th>Project Area</th>
+                        <th>Project Status</th>
+                        <th>Budget Range</th>
+                        <th>Services Required</th>
+                        <th>Scope of Work</th>
+                        <th>Design Preference</th>
+                        <th>Requirements</th>
+                        <th>Preferred contacting time</th>
+                        <th>Reference</th>
                         <th>Message</th>
                         <th>Status</th>
                         <th>Action</th>
@@ -88,9 +130,12 @@
                             text: res.message,
                             type: "success"
                         }, function() {
-                            const $row = $(`a.close-architect-enquiry[data-id="${id}"]`).closest('tr'); 
-                            const $badge = $row.find('label'); 
-                            $badge.removeClass('bg-danger bg-warning').addClass('bg-success').text('Closed');
+                            const $row = $(
+                                    `a.close-architect-enquiry[data-id="${id}"]`)
+                                .closest('tr');
+                            const $badge = $row.find('label');
+                            $badge.removeClass('bg-danger bg-warning').addClass(
+                                'bg-success').text('Closed');
 
                             $row.find('a.close-architect-enquiry').remove();
                         });
@@ -101,7 +146,7 @@
 
 
             });
-        
+
             $('#dom-jqry').DataTable({
                 searching: true // explicitly enable search
             });

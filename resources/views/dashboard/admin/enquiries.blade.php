@@ -47,7 +47,15 @@
                         <thead>
                             <tr>
                                 <th>Details</th>
-                                <th>Stone Type</th>
+                                <th>Project Type</th>
+                                <th>City</th>
+                                <th>Stone Requirement</th>
+                                <th>Quantity</th>
+                                <th>Budget Range</th>
+                                <th>Color</th>
+                                <th>Delivery Location</th>
+                                <th>Urgency</th>
+                                <th>Reference</th>
                                 <th>Message</th>
                                 <th>Status</th>
                                 <th>Seller</th>
@@ -55,10 +63,19 @@
                             </tr>
                         </thead>
                         <tbody>
+                            
                             @foreach ($sellerEnquiries as $enquiry)
                                 <tr data-seller='@json($enquiry)'>
                                     <td>{{ $enquiry->name }}<br>{{ $enquiry->phone }}<br>{{ $enquiry->email }}</td>
-                                    <td>{{ $enquiry->type }}</td>
+                                    <td>{{ $enquiry->project_type }}</td>
+                                    <td>{{ $enquiry->city }}</td>
+                                    <td>{{ $enquiry->stone_requirement }}</td>
+                                    <td>{{ $enquiry->quantity }}</td>
+                                    <td>{{ $enquiry->budget_range }}</td>
+                                    <td>{{ $enquiry->color_design }}</td>
+                                    <td>{{ $enquiry->delivery_location }}</td>
+                                    <td>{{ $enquiry->urgency }}</td>
+                                    <td>@if($enquiry->reference_image)<a href="{{ asset($enquiry->reference_image) }}" target="_blank">View Image</a>@endif</td>
                                     <td>{!! nl2br(e($enquiry->message)) !!}</td>
                                     <td><label
                                             class="label @if ($enquiry->status == 'pending') bg-danger @elseif($enquiry->status == 'forwarded') bg-success @elseif($enquiry->status == 'failed') bg-secondary @else bg-warning @endif">{{ ucfirst($enquiry->status) }}</label>
@@ -83,7 +100,15 @@
                         <tfoot>
                             <tr>
                                 <th>Details</th>
-                                <th>Stone Type</th>
+                                <th>Project Type</th>
+                                <th>City</th>
+                                <th>Stone Requirement</th>
+                                <th>Quantity</th>
+                                <th>Budget Range</th>
+                                <th>Color</th>
+                                <th>Delivery Location</th>
+                                <th>Urgency</th>
+                                <th>Reference</th>
                                 <th>Message</th>
                                 <th>Status</th>
                                 <th>Seller</th>
@@ -152,6 +177,19 @@
                         <thead>
                             <tr>
                                 <th>Details</th>
+                                <th>Project Type</th>
+                                <th>City</th>
+                                <th>Property Type</th>
+                                <th>Project Area</th>
+                                <th>Project Status</th>
+                                <th>Budget Range</th>
+                                <th>Services Required</th>
+                                <th>Scope of Work</th>
+                                <th>Design Preference</th>
+                                <th>Requirements</th>
+                                <th>Preferred contacting time</th>
+                                <th>Referral Source</th>
+                                <th>Reference</th>
                                 <th>Message</th>
                                 <th>Status</th>
                                 <th>Architect</th>
@@ -162,6 +200,19 @@
                             @foreach ($architectEnquiries as $enquiry)
                                 <tr data-seller='@json($enquiry)'>
                                     <td>{{ $enquiry->name }}<br>{{ $enquiry->phone }}<br>{{ $enquiry->email }}</td>
+                                    <td>{{ $enquiry->project_type }}</td>
+                                    <td>{{ $enquiry->city }}</td>
+                                    <td>{{ $enquiry->property_type }}</td>
+                                    <td>{{ $enquiry->project_area }}</td>
+                                    <td>{{ $enquiry->project_status }}</td>
+                                    <td>{{ $enquiry->budget_range }}</td>
+                                    <td>{{ $enquiry->services_required }}</td>
+                                    <td>{{ $enquiry->scope_of_work }}</td>
+                                    <td>{{ $enquiry->design_preference }}</td>
+                                    <td>{{ $enquiry->requirements }}</td>
+                                    <td>{{ $enquiry->preferred_time }}</td>
+                                    <td>{{ $enquiry->referral_source }}</td>
+                                    <td>@if($enquiry->reference_file)<a href="{{ asset($enquiry->reference_file) }}" target="_blank">View File</a>@endif</td>
                                     <td>{!! nl2br(e($enquiry->message)) !!}</td>
                                     <td><label
                                             class="label @if ($enquiry->status == 'pending') bg-danger @elseif($enquiry->status == 'forwarded') bg-success @else bg-warning @endif">{{ ucfirst($enquiry->status) }}</label>
@@ -182,6 +233,19 @@
                         <tfoot>
                             <tr>
                                 <th>Details</th>
+                                <th>Project Type</th>
+                                <th>City</th>
+                                <th>Property Type</th>
+                                <th>Project Area</th>
+                                <th>Project Status</th>
+                                <th>Budget Range</th>
+                                <th>Services Required</th>
+                                <th>Scope of Work</th>
+                                <th>Design Preference</th>
+                                <th>Requirements</th>
+                                <th>Preferred contacting time</th>
+                                <th>Referral Source</th>
+                                <th>Reference</th>
                                 <th>Message</th>
                                 <th>Status</th>
                                 <th>Architect</th>

@@ -28,25 +28,6 @@
     </style>
 @endsection
 @section('content')
-    @php
-        $displayImage = collect($product->images)->firstWhere('type', 'display');
-    @endphp
-    <section class="page-header">
-        <div class="page-header__bg bg-white-texture" style="background: #bbbec1;"></div>
-        <!-- /.page-header__bg -->
-        <div class="container">
-            <h2 class="page-header__title"
-                style="@if (strtolower($product->color) == 'black') text-shadow: -1px -1px 2px white, 1px -1px 2px white, -1px  1px 2px white, 1px  1px 2px white; @else text-shadow: -1px -1px 2px black, 1px -1px 2px black, -1px  1px 2px black, 1px  1px 2px black; @endif">
-                {{ $product->name }}</h2>
-            @if ($seller->seller->logo)
-                <div>
-                    <img src="{{ $seller->seller->logo }}" alt="{{ $seller->seller->business_name ?? $seller->name }}"
-                        style="width: 100px; height: auto;">
-                </div>
-            @endif
-        </div><!-- /.container -->
-    </section><!-- /.page-header -->
-
     <section class="product-details section-space bg-white-texture">
         <div class="container">
             <!-- /.product-details -->

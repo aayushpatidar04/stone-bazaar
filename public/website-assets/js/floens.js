@@ -173,18 +173,20 @@
       },
 
       submitHandler: function (form) {
-        const $submitBtn = $(form).find('button[type="submit"]'); 
-        // Disable and change text 
+        const $submitBtn = $(form).find('button[type="submit"]');
         $submitBtn.prop('disabled', true).text('Submitting...');
+
+        // Build FormData from the form (includes files)
+        const formData = new FormData(form);
 
         $.ajax({
           url: $(form).attr("action"),
           type: "POST",
-          data: $(form).serialize(),
+          data: formData,
+          processData: false, // prevent jQuery from processing data
+          contentType: false, // prevent jQuery from setting content type
           success: function (response) {
-            // Show success alert
             showAlert('success', response.message || 'Submitted successfully!');
-            // Reset the entire form
             form.reset();
             $submitBtn.prop('disabled', false).html('<span>Send Message</span><i class="icon-right-arrow"></i>');
           },
@@ -192,30 +194,25 @@
             let errorMessage = 'Something went wrong';
 
             if (xhr.responseJSON) {
-              // Case 1: Validation errors (multiple)
               if (xhr.responseJSON.errors) {
-                // Flatten all error messages into a single string
                 errorMessage = Object.values(xhr.responseJSON.errors)
                   .map(errArr => errArr.join('<br>'))
                   .join('<br>');
-              }
-              // Case 2: Single error message
-              else if (xhr.responseJSON.message) {
+              } else if (xhr.responseJSON.message) {
                 errorMessage = xhr.responseJSON.message;
               }
             } else if (xhr.responseText) {
               errorMessage = xhr.responseText;
             }
 
-            // Show error alert
             showAlert('error', errorMessage);
             $submitBtn.prop('disabled', false).html('<span>Send Message</span><i class="icon-right-arrow"></i>');
           }
-
         });
 
-        return false; // prevent default form submit
+        return false;
       }
+
 
     });
   }

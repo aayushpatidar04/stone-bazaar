@@ -38,8 +38,51 @@ class SellerController extends Controller
 
     public function index()
     {
-        return view('dashboard.seller.index');
+        $sellerId = auth()->id();
+
+        // Total products
+        $totalProducts = Product::where('seller_id', $sellerId)->count();
+
+        // Product enquiries
+        $productEnquiriesCount = ProductEnquiry::whereHas('product', function ($q) use ($sellerId) {
+            $q->where('seller_id', $sellerId);
+        })->count();
+
+        $forwardedProductEnquiries = ProductEnquiry::whereHas('product', function ($q) use ($sellerId) {
+            $q->where('seller_id', $sellerId);
+        })->where('status', 'forwarded')->count();
+
+        $closedProductEnquiries = ProductEnquiry::whereHas('product', function ($q) use ($sellerId) {
+            $q->where('seller_id', $sellerId);
+        })->where('status', 'closed')->count();
+
+        $failedProductEnquiries = ProductEnquiry::whereHas('product', function ($q) use ($sellerId) {
+            $q->where('seller_id', $sellerId);
+        })->where('status', 'failed')->count();
+
+        // Seller enquiries
+        $sellerEnquiriesCount = SellerEnquiry::where('user_id', $sellerId)->count();
+        $forwardedSellerEnquiries = SellerEnquiry::where('user_id', $sellerId)->where('status', 'forwarded')->count();
+        $closedSellerEnquiries = SellerEnquiry::where('user_id', $sellerId)->where('status', 'closed')->count();
+        $failedSellerEnquiries = SellerEnquiry::where('user_id', $sellerId)->where('status', 'failed')->count();
+
+        $data = [
+            'total_products' => $totalProducts,
+
+            'product_enquiries_count' => $productEnquiriesCount,
+            'forwarded_product_enquiries' => $forwardedProductEnquiries,
+            'closed_product_enquiries' => $closedProductEnquiries,
+            'failed_product_enquiries' => $failedProductEnquiries,
+
+            'seller_enquiries_count' => $sellerEnquiriesCount,
+            'forwarded_seller_enquiries' => $forwardedSellerEnquiries,
+            'closed_seller_enquiries' => $closedSellerEnquiries,
+            'failed_seller_enquiries' => $failedSellerEnquiries,
+        ];
+
+        return view('dashboard.seller.index', compact('data'));
     }
+
 
     public function updateBanner(Request $request)
     {
@@ -187,9 +230,9 @@ class SellerController extends Controller
     public function addAwards(Request $request)
     {
         $request->validate([
-            'name'   => 'required|array|min:1',
+            'name' => 'required|array|min:1',
             'name.*' => 'required|string|max:255',
-            'image'  => 'required|array|min:1',
+            'image' => 'required|array|min:1',
             'image.*' => 'required|image|max:2048',
         ]);
 
@@ -208,7 +251,7 @@ class SellerController extends Controller
         }
 
         return response()->json([
-            'status'  => true,
+            'status' => true,
             'message' => 'Awards added successfully',
             'awards' => $sellerAward->where('user_id', Auth::id())->latest()->take(count($request->name))->get()
         ]);
@@ -225,11 +268,11 @@ class SellerController extends Controller
         $relativePath = str_replace(url('/'), '', $award->image);
 
         $fullPath = public_path($relativePath);
-        
 
-        if (file_exists($fullPath)) { 
-            unlink($fullPath); 
-        } 
+
+        if (file_exists($fullPath)) {
+            unlink($fullPath);
+        }
         $award->delete();
 
         return response()->json([
@@ -241,9 +284,9 @@ class SellerController extends Controller
     public function addCertificates(Request $request)
     {
         $request->validate([
-            'name'   => 'required|array|min:1',
+            'name' => 'required|array|min:1',
             'name.*' => 'required|string|max:255',
-            'image'  => 'required|array|min:1',
+            'image' => 'required|array|min:1',
             'image.*' => 'required|image|max:2048',
         ]);
 
@@ -262,7 +305,7 @@ class SellerController extends Controller
         }
 
         return response()->json([
-            'status'  => true,
+            'status' => true,
             'message' => 'Certificates added successfully',
             'certificates' => $sellerCertificate->where('user_id', Auth::id())->latest()->take(count($request->name))->get()
         ]);
@@ -279,11 +322,11 @@ class SellerController extends Controller
         $relativePath = str_replace(url('/'), '', $certificate->image);
 
         $fullPath = public_path($relativePath);
-        
 
-        if (file_exists($fullPath)) { 
-            unlink($fullPath); 
-        } 
+
+        if (file_exists($fullPath)) {
+            unlink($fullPath);
+        }
 
         $certificate->delete();
 
@@ -293,11 +336,12 @@ class SellerController extends Controller
         ]);
     }
 
-    public function uploadGallery(Request $request){
+    public function uploadGallery(Request $request)
+    {
         $request->validate([
-            'images'      => 'required|array|min:1',
-            'images.*'    => 'required|file|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'type'        => 'required|array|min:1',
+            'images' => 'required|array|min:1',
+            'images.*' => 'required|file|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'type' => 'required|array|min:1',
         ]);
 
         if ($request->has('images')) {
@@ -328,25 +372,27 @@ class SellerController extends Controller
 
     }
 
-    public function gallery(){
+    public function gallery()
+    {
         $seller = Auth::user();
         $images = $seller->sellerGallery()->latest()->paginate(9);
 
         return view('dashboard.seller.gallery', compact('seller', 'images'));
     }
 
-    public function deleteGallery($id){
+    public function deleteGallery($id)
+    {
         $gallery = SellerGallery::findOrFail($id); // Build full path from the stored URL 
 
         $imageUrl = $gallery->image;
         $relativePath = str_replace(url('/'), '', $imageUrl);
 
         $fullPath = public_path($relativePath);
-        
 
-        if (file_exists($fullPath)) { 
-            unlink($fullPath); 
-        } 
+
+        if (file_exists($fullPath)) {
+            unlink($fullPath);
+        }
 
         $gallery->delete();
 
@@ -456,17 +502,17 @@ class SellerController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'subcategory' => 'required|exists:seller_subcategories,id',
-            'name'        => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'type'        => 'required|array|min:1',
-            'finishes'    => 'nullable|string',
-            'sizes'       => 'nullable|string',
-            'thickness'   => 'nullable|string|max:50',
-            'color'       => 'nullable|string|max:100',
-            'quality'     => 'nullable|string',
-            'usage_area'  => 'nullable|string',
-            'images'      => 'required|array|min:1',
-            'images.*'    => 'required|file|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'type' => 'required|array|min:1',
+            'finishes' => 'nullable|string',
+            'sizes' => 'nullable|string',
+            'thickness' => 'nullable|string|max:50',
+            'color' => 'nullable|string|max:100',
+            'quality' => 'nullable|string',
+            'usage_area' => 'nullable|string',
+            'images' => 'required|array|min:1',
+            'images.*' => 'required|file|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         // Custom rule: ensure at least one type is "display"
@@ -499,7 +545,7 @@ class SellerController extends Controller
 
                     // Push into array
                     $imagesData[] = [
-                        'type'  => $type,
+                        'type' => $type,
                         'image' => $imageUrl,
                     ];
                 }
@@ -576,7 +622,7 @@ class SellerController extends Controller
         // Verify the product belongs to the current seller
         $subcategoryId = $product->seller_subcategory_id;
         $subcategory = SellerSubcategory::find($subcategoryId);
-        
+
         if (!$subcategory || $subcategory->domain->user_id != Auth::id()) {
             return response()->json([
                 'status' => false,
@@ -589,7 +635,7 @@ class SellerController extends Controller
             foreach ($product->images as $imageData) {
                 $relativePath = str_replace(url('/'), '', $imageData['image']);
                 $fullPath = public_path($relativePath);
-                
+
                 if (file_exists($fullPath)) {
                     unlink($fullPath);
                 }
@@ -618,7 +664,7 @@ class SellerController extends Controller
         // Verify the product belongs to the current seller
         $subcategoryId = $product->seller_subcategory_id;
         $subcategory = SellerSubcategory::find($subcategoryId);
-        
+
         if (!$subcategory || $subcategory->domain->user_id != Auth::id()) {
             return response()->json([
                 'status' => false,
@@ -627,16 +673,16 @@ class SellerController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'name'        => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'finishes'    => 'nullable|string',
-            'sizes'       => 'nullable|string',
-            'thickness'   => 'nullable|string|max:50',
-            'color'       => 'nullable|string|max:100',
-            'quality'     => 'nullable|string',
-            'usage_area'  => 'nullable|string',
-            'images'      => 'nullable|array',
-            'images.*'    => 'nullable|file|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'finishes' => 'nullable|string',
+            'sizes' => 'nullable|string',
+            'thickness' => 'nullable|string|max:50',
+            'color' => 'nullable|string|max:100',
+            'quality' => 'nullable|string',
+            'usage_area' => 'nullable|string',
+            'images' => 'nullable|array',
+            'images.*' => 'nullable|file|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'existing_images' => 'nullable|string', // JSON string from form
             'removed_images' => 'nullable|array', // Array of image URLs to remove
         ]);
@@ -656,7 +702,7 @@ class SellerController extends Controller
 
         // Remove images that user wants to remove
         $removedImages = $request->input('removed_images', []);
-        $existingImages = array_filter($existingImages, function($img) use ($removedImages) {
+        $existingImages = array_filter($existingImages, function ($img) use ($removedImages) {
             return !in_array($img['image'], $removedImages);
         });
 
@@ -678,7 +724,7 @@ class SellerController extends Controller
 
                     // Push into array
                     $existingImages[] = [
-                        'type'  => $type,
+                        'type' => $type,
                         'image' => $imageUrl,
                     ];
                 }
@@ -698,7 +744,7 @@ class SellerController extends Controller
         foreach ($removedImages as $removedImageUrl) {
             $relativePath = str_replace(url('/'), '', $removedImageUrl);
             $fullPath = public_path($relativePath);
-            
+
             if (file_exists($fullPath)) {
                 unlink($fullPath);
             }

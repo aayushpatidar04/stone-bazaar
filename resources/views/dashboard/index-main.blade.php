@@ -286,11 +286,36 @@
                             <li class="user-profile header-notification">
                                 <div class="dropdown-primary dropdown">
                                     <div class="dropdown-toggle" data-bs-toggle="dropdown">
-                                        <img src="{{ asset('assets/images/avatar-4.jpg') }}" class="img-radius"
-                                            alt="User-Profile-Image">
+                                        @if (Auth::user()->hasRole('Admin'))
+                                            <!-- Admin: fixed avatar -->
+                                            <img src="{{ asset('assets/images/avatar-4.jpg') }}" class="img-radius" style="object-fit: cover; width: 40px; height:40px; border-radius: 50px;"
+                                                alt="Admin-Profile-Image">
+                                        @elseif (Auth::user()->hasRole('Seller') && Auth::user()->seller)
+                                            <!-- Seller: logo, warehouse, or office image -->
+                                            @php
+                                                $seller = Auth::user()->seller;
+                                                $image =
+                                                    $seller->logo ??
+                                                    ($seller->warehouse_image ??
+                                                        ($seller->office_image ?? asset('assets/images/avatar-4.jpg')));
+                                            @endphp
+                                            <img src="{{ $image }}" class="img-radius" style="object-fit: cover; width: 40px; height:40px; border-radius: 50px;"
+                                                alt="{{ $seller->business_name }}">
+                                        @elseif (Auth::user()->hasRole('Architect') && Auth::user()->architect)
+                                            <!-- Architect: logo -->
+                                            <img src="{{ Auth::user()->architect->logo ?? asset('assets/images/avatar-4.jpg') }}"
+                                                class="img-radius" style="object-fit: cover; width: 40px; height:40px; border-radius: 50px;"
+                                                alt="{{ Auth::user()->architect->firm_name ?? Auth::user()->name }}">
+                                        @else
+                                            <!-- Fallback -->
+                                            <img src="{{ asset('assets/images/avatar-4.jpg') }}" class="img-radius" style="object-fit: cover; width: 40px; height:40px; border-radius: 50px;"
+                                                alt="User-Profile-Image">
+                                        @endif
+
                                         <span>{{ Auth::user()->name }}</span>
                                         <i class="feather icon-chevron-down"></i>
                                     </div>
+
                                     <ul class="show-notification profile-notification dropdown-menu"
                                         data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
                                         {{-- <li>
@@ -325,141 +350,7 @@
                 </div>
             </nav>
 
-            <!-- Sidebar chat start -->
-            <div id="sidebar" class="users p-chat-user showChat">
-                <div class="had-container">
-                    <div class="card card_main p-fixed users-main">
-                        <div class="user-box">
-                            <div class="chat-inner-header">
-                                <div class="back_chatBox">
-                                    <div class="right-icon-control">
-                                        <input type="text" class="form-control  search-text"
-                                            placeholder="Search Friend" id="search-friends">
-                                        <div class="form-icon">
-                                            <i class="icofont icofont-search"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="main-friend-list">
-                                <div class="d-flex userlist-box" data-id="1" data-status="online"
-                                    data-username="Josephin Doe" data-bs-toggle="tooltip" data-bs-placement="left"
-                                    title="Josephin Doe">
-                                    <a class="flex-shrink-0 me-3" href="javascript:void(0)">
-                                        <img class="rounded img-radius img-radius"
-                                            src="{{ asset('assets/images/avatar-3.jpg') }}"
-                                            alt="Generic placeholder image ">
-                                        <div class="live-status bg-success"></div>
-                                    </a>
-                                    <div class="flex-grow-1">
-                                        <div class="f-13 chat-header">Josephin Doe</div>
-                                    </div>
-                                </div>
-                                <div class="d-flex userlist-box" data-id="2" data-status="online"
-                                    data-username="Lary Doe" data-bs-toggle="tooltip" data-bs-placement="left"
-                                    title="Lary Doe">
-                                    <a class="flex-shrink-0 me-3" href="javascript:void(0)">
-                                        <img class="rounded img-radius"
-                                            src="{{ asset('assets/images/avatar-2.jpg') }}"
-                                            alt="Generic placeholder image">
-                                        <div class="live-status bg-success"></div>
-                                    </a>
-                                    <div class="flex-grow-1">
-                                        <div class="f-13 chat-header">Lary Doe</div>
-                                    </div>
-                                </div>
-                                <div class="d-flex userlist-box" data-id="3" data-status="online"
-                                    data-username="Alice" data-bs-toggle="tooltip" data-bs-placement="left"
-                                    title="Alice">
-                                    <a class="flex-shrink-0 me-3" href="javascript:void(0)">
-                                        <img class="rounded img-radius"
-                                            src="{{ asset('assets/images/avatar-4.jpg') }}"
-                                            alt="Generic placeholder image">
-                                        <div class="live-status bg-success"></div>
-                                    </a>
-                                    <div class="flex-grow-1">
-                                        <div class="f-13 chat-header">Alice</div>
-                                    </div>
-                                </div>
-                                <div class="d-flex userlist-box" data-id="4" data-status="online"
-                                    data-username="Alia" data-bs-toggle="tooltip" data-bs-placement="left"
-                                    title="Alia">
-                                    <a class="flex-shrink-0 me-3" href="javascript:void(0)">
-                                        <img class="rounded img-radius"
-                                            src="{{ asset('assets/images/avatar-3.jpg') }}"
-                                            alt="Generic placeholder image">
-                                        <div class="live-status bg-success"></div>
-                                    </a>
-                                    <div class="flex-grow-1">
-                                        <div class="f-13 chat-header">Alia</div>
-                                    </div>
-                                </div>
-                                <div class="d-flex userlist-box" data-id="5" data-status="online"
-                                    data-username="Suzen" data-bs-toggle="tooltip" data-bs-placement="left"
-                                    title="Suzen">
-                                    <a class="flex-shrink-0 me-3" href="javascript:void(0)">
-                                        <img class="rounded img-radius"
-                                            src="{{ asset('assets/images/avatar-2.jpg') }}"
-                                            alt="Generic placeholder image">
-                                        <div class="live-status bg-success"></div>
-                                    </a>
-                                    <div class="flex-grow-1">
-                                        <div class="f-13 chat-header">Suzen</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Sidebar inner chat start-->
-            <div class="showChat_inner">
-                <div class="d-flex chat-inner-header">
-                    <a class="back_chatBox">
-                        <i class="feather icon-chevron-left"></i> Josephin Doe
-                    </a>
-                </div>
-                <div class="d-flex chat-messages">
-                    <div class="flex-shrink-0">
-                        <a class="flex-shrink-0 me-3 photo-table" href="javascript:void(0)">
-                            <img class="rounded img-radius img-radius m-t-5"
-                                src="{{ asset('assets/images/avatar-3.jpg') }}" alt="Generic placeholder image">
-                        </a>
-                    </div>
-                    <div class="flex-grow-1 chat-menu-content">
-                        <div class="">
-                            <p class="chat-cont">I'm just looking around. Will you tell me something about yourself?
-                            </p>
-                            <p class="chat-time">8:20 a.m.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="d-flex chat-messages">
-                    <div class="flex-grow-1 chat-menu-reply">
-                        <div class="">
-                            <p class="chat-cont">I'm just looking around. Will you tell me something about yourself?
-                            </p>
-                            <p class="chat-time">8:20 a.m.</p>
-                        </div>
-                    </div>
-                    <div class="flex-shrink-0">
-                        <div class="flex-shrink-0 ms-3 photo-table">
-                            <a href="javascript:void(0)">
-                                <img class="rounded img-radius img-radius m-t-5"
-                                    src="{{ asset('assets/images/avatar-4.jpg') }}" alt="Generic placeholder image">
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="chat-reply-box p-b-20">
-                    <div class="right-icon-control">
-                        <input type="text" class="form-control search-text" placeholder="Share Your Thoughts">
-                        <div class="form-icon">
-                            <i class="feather icon-navigation"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
             <!-- Sidebar inner chat end-->
             <div class="pcoded-main-container">
                 <div class="pcoded-wrapper">
@@ -467,12 +358,14 @@
                         <div class="pcoded-inner-navbar main-menu">
                             <!-- Dashboard -->
                             <ul class="pcoded-item pcoded-left-item">
-                                <li id="dashboard">
-                                    <a href="{{ Route('home') }}">
-                                        <span class="pcoded-micon"><i class="feather icon-home"></i></span>
-                                        <span class="pcoded-mtext">Dashboard</span>
-                                    </a>
-                                </li>
+                                @if (!Auth::user()->hasRole('Architect'))
+                                    <li id="dashboard">
+                                        <a href="{{ Route('home') }}">
+                                            <span class="pcoded-micon"><i class="feather icon-home"></i></span>
+                                            <span class="pcoded-mtext">Dashboard</span>
+                                        </a>
+                                    </li>
+                                @endif
                                 @if (!Auth::user()->hasRole('Admin'))
                                     <li id="profile">
                                         <a href="{{ Route('profile') }}">
@@ -540,6 +433,14 @@
                                         </a>
                                     </li>
                                 @endif
+                                <li>
+                                    <a href="{{ Route('logout') }}"
+                                        onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        <span class="pcoded-micon"><i class="feather icon-log-out"></i></span>
+                                        <span class="pcoded-mtext">Logout</span>
+                                    </a>
+                                </li>
                             </ul>
                         </div>
 
@@ -736,7 +637,6 @@
     <script src="https://cdn.jsdelivr.net/npm/laravel-echo@1.11.3/dist/echo.iife.js"></script>
 
     <script>
-
         window.Echo = new Echo({
             broadcaster: 'pusher',
             key: '{{ config('app.pusher.app_key') }}',
@@ -819,18 +719,18 @@
                 // const listItem = document.createElement('li');
                 // listItem.classList.add('notification-message');
                 // listItem.innerHTML = `
-                //     <a href="${notification.data?.link || '#'}">
-                //         <div class="media d-flex">
-                //             <div class="media-body flex-grow-1">
-                //                 <p class="noti-details">
-                //                     <strong>${notification.sender?.name || 'System'}</strong>: ${notification.title}
-                //                 </p>
-                //                 <p class="noti-sub-details">${notification.body}</p>
-                //                 <p class="noti-time">${timeAgo}</p>
-                //             </div>
-                //         </div>
-                //     </a>
-                // `;
+            //     <a href="${notification.data?.link || '#'}">
+            //         <div class="media d-flex">
+            //             <div class="media-body flex-grow-1">
+            //                 <p class="noti-details">
+            //                     <strong>${notification.sender?.name || 'System'}</strong>: ${notification.title}
+            //                 </p>
+            //                 <p class="noti-sub-details">${notification.body}</p>
+            //                 <p class="noti-time">${timeAgo}</p>
+            //             </div>
+            //         </div>
+            //     </a>
+            // `;
 
                 // // Prepend to header list
                 // headerList.insertBefore(listItem, headerList.firstChild);

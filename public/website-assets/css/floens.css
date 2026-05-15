@@ -97,7 +97,7 @@
     --floens-yellow-rgb: 252, 183, 32;
     --floens-border-color: #ded8d3;
     --floens-border-color-rgb: 222, 216, 211;
-    --section-space: 120px;
+    --section-space: 50px;
     --floens-letter-space: 0.1em;
     --floens-letter-space-xl: -1.65px;
 }
@@ -420,7 +420,7 @@ p {
 }
 
 .section-space {
-    padding-top: var(--section-space, 120px);
+    padding-top: var(--section-space, 100px);
     padding-bottom: var(--section-space, 120px);
 }
 @media (max-width: 767px) {

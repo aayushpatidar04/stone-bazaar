@@ -112,6 +112,49 @@
             color: #000;
             line-height: 1;
         }
+
+        .page-header {
+            display: none;
+            /* hidden by default */
+        }
+
+        @media (max-width: 768px) {
+            .page-header {
+                display: block;
+                /* visible only on screens < 768px */
+            }
+        }
+
+        .verified-sellers-header{
+            display: none;
+            /* hidden by default */
+        }
+
+        @media (min-width: 769px) {
+            .verified-sellers-header {
+                display: block;
+                /* visible only on screens >= 769px */
+            }
+        }
+
+
+        .client-logo-frame {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .client-logo-frame img {
+            height: 150px;
+            width: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .client-logo-frame:hover {
+            transform: translateY(-5px);
+        }
     </style>
 @endsection
 @section('content')
@@ -156,47 +199,40 @@
 
     </section><!-- /.page-header -->
 
-    {{-- <section class="vendors-mobile">
-        <div class="container">
-            <!-- Featured Sellers -->
-            <div class="vendors-mobile__featured">
-                <h3 class="vendors-mobile__title">Verified Sellers</h3>
-                <div class="row">
-                    @foreach ($sellers as $seller)
-                        @php
-                            $image =
-                                $seller->seller->logo ??
-                                ($seller->seller->warehouse_image ??
-                                    ($seller->seller->office_image ??
-                                        asset('website-assets/images/services/service-2-1.jpg')));
-                        @endphp
-
-                        <div class="col-12 col-md-6 col-lg-4 mb-4">
-                            <div class="vendors-mobile__vendor">
-                                <div class="d-flex gap-3">
-                                    <img src="{{ $image }}" alt="{{ $seller->seller->business_name }}"
-                                        style="width: 100px; height: auto;">
-                                    <div>
-                                        <h5>
-                                            <a href="{{ Route('seller', ['id' => $seller->id]) }}">
-                                                {{ $seller->seller->business_name ?? $seller->name }}
-                                            </a>
-                                        </h5>
-                                        <p><i class="fa fa-map-marker-alt"></i> {{ $seller->seller->address }}</p>
-                                        <a href="{{ Route('seller-products', ['id' => $seller->id]) }}"
-                                            class="btn btn-sm btn-warning mt-2">View Products</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-    </section> --}}
-
 
     <section class="team-one--page section-space bg-white-texture">
+        <div class="text-center verified-sellers-header">
+            <h2 class="page-header__title">Our Verified Sellers</h2>
+        </div>
+        <br>
+
+        @if (count($featureds) > 0)
+            <div class="clients-section">
+                <div class="container">
+                    <div class="section-header mb-4">
+                        <h3 class="section-title text-dark">Top Vendors</h3>
+                    </div>
+                    <!-- Slider -->
+                    <div class="swiper clients-slider">
+                        <div class="swiper-wrapper">
+                            @foreach ($featureds as $featured)
+                                <div class="swiper-slide">
+                                    <div class="client-logo-frame d-flex align-items-center justify-content-center">
+                                        <img src="{{ $featured->seller->warehouse_image ? $featured->seller->warehouse_image : ($featured->seller->office_image ? $featured->seller->office_image : $featured->seller->logo) }}"
+                                            alt="{{ $featured->seller->business_name }}" class="img-fluid">
+                                    </div>
+                                    <div class="text-center">
+                                        <a href="{{ Route('seller', ['id' => $featured->id]) }}" class="text-dark">{{ $featured->seller->business_name }}</a>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr style="border: 1px solid #000; margin:30px;">
+        @endif
+
         <div class="container">
             <div class="row gutter-y-30">
                 @foreach ($sellers as $seller)
@@ -234,5 +270,34 @@
 
 @endsection
 @section('js-content')
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            new Swiper('.clients-slider', {
+                slidesPerView: 5,
+                spaceBetween: 20,
+                loop: true,
+                autoplay: {
+                    delay: 0, // no pause
+                    disableOnInteraction: false
+                },
+                speed: 2000, // controls continuous scroll speed (higher = slower)
+                freeMode: true, // enables momentum-like continuous scroll
+                freeModeMomentum: false, // disables bounce-back
+                breakpoints: {
+                    320: {
+                        slidesPerView: 2
+                    },
+                    768: {
+                        slidesPerView: 3
+                    },
+                    992: {
+                        slidesPerView: 4
+                    },
+                    1200: {
+                        slidesPerView: 5
+                    },
+                }
+            });
+        });
+    </script>
 @endsection

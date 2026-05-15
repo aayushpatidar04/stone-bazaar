@@ -35,7 +35,7 @@ class LoginController extends Controller
         }
 
         if ($user->hasRole('Architect')) {
-            return '/architect/dashboard';
+            return '/profile';
         }
 
         if ($user->hasRole('Admin')) {

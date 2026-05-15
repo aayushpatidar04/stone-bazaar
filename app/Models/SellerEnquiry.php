@@ -18,7 +18,17 @@ class SellerEnquiry extends Model
         'phone',
         'type',
         'message',
-        'status'
+        'status',
+        'city',
+        'project_type',
+        'stone_requirement',
+        'quantity',
+        'budget_range',
+        'color_design',
+        'delivery_location',
+        'urgency',
+        'reference_image',
+        'forwarded_to'
     ];
 
     public function user(){

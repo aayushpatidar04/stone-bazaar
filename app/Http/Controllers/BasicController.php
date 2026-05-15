@@ -47,10 +47,15 @@ class BasicController extends Controller
 
     public function sellers()
     {
+        $featureds = User::role('Seller')->whereHas('seller', function ($q) {
+            $q->whereNotNull('warehouse_image')->orWhereNotNull('office_image')->orWhereNotNull('logo');
+        })->whereHas('seller', function ($q) {
+            $q->where('is_featured', 1);
+        })->with('seller')->get();
         $sellers = User::role('Seller')->whereHas('seller', function ($q) {
             $q->whereNotNull('warehouse_image')->orWhereNotNull('office_image')->orWhereNotNull('logo');
         })->with('seller')->paginate(12);
-        return view('website.sellers', compact('sellers'));
+        return view('website.sellers', compact('sellers', 'featureds'));
     }
 
     public function seller($id)
@@ -110,11 +115,19 @@ class BasicController extends Controller
         try {
             $data = $request->validate([
                 'user_id' => 'required|exists:users,id',
-                'name' => 'required',
+                'name' => 'required|string|max:100',
                 'phone' => 'required|numeric|digits:10',
-                'email' => 'nullable',
-                'type' => 'required',
-                'message' => 'required',
+                'email' => 'nullable|email',
+                'city' => 'required|string|max:100',
+                'project_type' => 'required|string',
+                'stone_requirement' => 'required|string',
+                'quantity' => 'required|string|max:100',
+                'budget_range' => 'required|string|max:100',
+                'color_design' => 'required|string|max:100',
+                'delivery_location' => 'required|string',
+                'urgency' => 'required|string',
+                'message' => 'nullable|string',
+                'reference_image' => 'nullable|file|image|max:5120', // 5MB
             ]);
         } catch (ValidationException $e) {
             return response()->json([
@@ -123,11 +136,26 @@ class BasicController extends Controller
             ], 400);
         }
 
+        // Handle file upload if present
+        if ($request->hasFile('reference_image')) {
+            $file = $request->file('reference_image');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('enquiry_images'), $filename);
+            $data['reference_image'] = 'enquiry_images/' . $filename;
+        }
+
+        $data['type'] = $data['project_type'];
+        // Default status
+        $data['status'] = 'pending';
+
         $enquiry = SellerEnquiry::create($data);
 
-        if ($enquiry->email) {
+        // Notify customer if email provided
+        if (!empty($enquiry->email)) {
             Mail::to($enquiry->email)->send(new EnquirySubmitted($enquiry));
         }
+
+        // Notify admins
         $admins = User::role('Admin')->get();
         foreach ($admins as $admin) {
             Mail::to($admin->email)->send(new NewEnquiryMail($enquiry));
@@ -138,6 +166,7 @@ class BasicController extends Controller
             'message' => 'Enquiry submitted successfully! Team will connect with you soon.',
         ]);
     }
+
 
     public function productDetails($id)
     {
@@ -232,10 +261,24 @@ class BasicController extends Controller
         try {
             $data = $request->validate([
                 'user_id' => 'required|exists:users,id',
-                'name' => 'required',
+                'name' => 'required|string|max:100',
                 'phone' => 'required|numeric|digits:10',
-                'email' => 'required',
-                'message' => 'required',
+                'email' => 'nullable|email',
+                'city' => 'required|string|max:100',
+                'project_type' => 'required|string',
+                'property_type' => 'required|string',
+                'project_area' => 'nullable|string|max:100',
+                'project_status' => 'nullable|string|max:50',
+                'budget_range' => 'nullable|string|max:100',
+                'services_required' => 'required|string',
+                'scope_of_work' => 'nullable|array',
+                'scope_of_work.*' => 'string',
+                'design_preference' => 'nullable|string|max:100',
+                'requirements' => 'nullable|string|max:500',
+                'preferred_time' => 'nullable|string|max:50',
+                'referral_source' => 'nullable|string|max:100',
+                'reference_file' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:5120',
+                'message' => 'nullable|string|max:500',
             ]);
         } catch (ValidationException $e) {
             return response()->json([
@@ -244,11 +287,30 @@ class BasicController extends Controller
             ], 400);
         }
 
+        // Handle file upload
+        if ($request->hasFile('reference_file')) {
+            $file = $request->file('reference_file');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('architect_enquiries'), $filename);
+            $data['reference_file'] = 'architect_enquiries/' . $filename;
+        }
+
+        // Convert scope_of_work array to JSON
+        if (!empty($data['scope_of_work'])) {
+            $data['scope_of_work'] = json_encode($data['scope_of_work']);
+        }
+
+        // Default status
+        $data['status'] = 'pending';
+
         $enquiry = ArchitectEnquiry::create($data);
 
-        if ($enquiry->email) {
+        // Notify customer if email provided
+        if (!empty($enquiry->email)) {
             Mail::to($enquiry->email)->send(new EnquirySubmitted($enquiry));
         }
+
+        // Notify admins
         $admins = User::role('Admin')->get();
         foreach ($admins as $admin) {
             Mail::to($admin->email)->send(new NewArchitectEnquiryMail($enquiry));
@@ -259,6 +321,7 @@ class BasicController extends Controller
             'message' => 'Enquiry submitted successfully! Team will connect with you soon.',
         ]);
     }
+
 
     public function contact()
     {
